@@ -22,6 +22,6 @@
     <version>1.0.0</version>
     <name>ViHacker-Framework</name>
     <packaging>pom</packaging>
-    <description>ViHacker-Framework</description>
+    <description>ViHacker-Framework 系统模块</description>
 
 </project>
