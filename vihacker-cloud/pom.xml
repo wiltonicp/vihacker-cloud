@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.vihackerframework</groupId>
+    <artifactId>vihacker-cloud</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0</version>
+    <modules>
+        <module>../vihacker-auth</module>
+        <module>../vihacker-framework</module>
+    </modules>
+
+    <name>ViHacker-Cloud-CAS</name>
+    <url>https://blog.wiltonic.cn</url>
+    <description>ViHacker-Cloud-CAS：Spring Cloud，Spring Security OAuth2 微服务统一认证中心</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.1.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
+        <com-alibaba-cloud.version>2.1.1.RELEASE</com-alibaba-cloud.version>
+        <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
+        <docker.serverId>docker-aliyun</docker.serverId>
+        <docker.registry>registry.cn-shanghai.aliyuncs.com/vihacker</docker.registry>
+        <docker.registry.name>vihacker/tools</docker.registry.name>
+        <mysql-connector.version>8.0.11</mysql-connector.version>
+        <hutool.version>5.4.0</hutool.version>
+        <ip2region.version>1.7</ip2region.version>
+        <xml-api.version>1.4.01</xml-api.version>
+        <guava.version>27.0-jre</guava.version>
+        <excelkit.version>2.0.72</excelkit.version>
+        <knife4j.version>2.0.2</knife4j.version>
+        <springfox.version>2.9.2</springfox.version>
+        <swagger.version>1.6.0</swagger.version>
+        <spring-data-commons.version>2.3.0.RELEASE</spring-data-commons.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <aliyun-oss.version>2.5.0</aliyun-oss.version>
+        <mybatis-plus.version>3.2.0</mybatis-plus.version>
+        <p6spy.version>3.8.5</p6spy.version>
+        <fastjson.version>1.2.62</fastjson.version>
+        <dynamic-datasource.version>2.5.4</dynamic-datasource.version>
+        <logstash-logback.version>6.1</logstash-logback.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${com-alibaba-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <url>http://rep.wiltonic.cn:8331/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>http://rep.wiltonic.cn:8331/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
