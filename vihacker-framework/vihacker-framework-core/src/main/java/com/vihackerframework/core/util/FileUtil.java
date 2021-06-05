@@ -1,7 +1,7 @@
 package com.vihackerframework.core.util;
 
 import com.google.common.base.Preconditions;
-import com.vihackerframework.common.constant.ViHackerConstant;
+import com.vihackerframework.core.constant.ViHackerConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;

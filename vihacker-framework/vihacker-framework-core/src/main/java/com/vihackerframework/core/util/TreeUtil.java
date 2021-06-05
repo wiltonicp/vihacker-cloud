@@ -1,6 +1,6 @@
 package com.vihackerframework.core.util;
 
-import com.vihackerframework.common.entity.Tree;
+import com.vihackerframework.core.entity.Tree;
 
 import java.util.ArrayList;
 import java.util.List;

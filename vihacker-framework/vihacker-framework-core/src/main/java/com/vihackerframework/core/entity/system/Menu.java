@@ -1,10 +1,10 @@
 package com.vihackerframework.core.entity.system;
 
-import com.vihackerframework.common.entity.ViHackerEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.vihackerframework.core.entity.ViHackerEntity;
 import lombok.Data;
 
 import java.io.Serializable;

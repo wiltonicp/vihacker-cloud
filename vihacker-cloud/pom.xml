@@ -43,6 +43,7 @@
         <swagger.version>1.6.0</swagger.version>
         <spring-data-commons.version>2.3.0.RELEASE</spring-data-commons.version>
         <jjwt.version>0.9.1</jjwt.version>
+        <vjackson.version>2.12.3</vjackson.version>
         <aliyun-oss.version>2.5.0</aliyun-oss.version>
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
         <p6spy.version>3.8.5</p6spy.version>
