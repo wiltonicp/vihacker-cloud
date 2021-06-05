@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -140,13 +141,17 @@ public class ViHackerUtil {
     public static void printStartUpBanner(Environment environment) throws UnknownHostException {
         log.info("\n----------------------------------------------------------\n\t" +
                         "Application '{}' is running! Access URLs:\n\t" +
-                        "Login: \thttp://{}:{}{}/login\n\t" +
+                        "Running Time: \t{}\n\t" +
+                        "Application Name: \t{}\n\t" +
+                        "HostAddress: \t{}\n\t" +
+                        "Application Port: \t{}\n\t" +
                         "Doc: \thttp://{}:{}{}/doc.html\n" +
                         "----------------------------------------------------------",
                 environment.getProperty("spring.application.name"),
+                DateUtil.formatFullTime(LocalDateTime.now(), DateUtil.FULL_TIME_SPLIT_PATTERN),
+                environment.getProperty("spring.application.name"),
                 InetAddress.getLocalHost().getHostAddress(),
                 environment.getProperty("server.port"),
-                environment.getProperty("server.servlet.context-path"),
                 InetAddress.getLocalHost().getHostAddress(),
                 environment.getProperty("server.port"),
                 environment.getProperty("server.servlet.context-path"));

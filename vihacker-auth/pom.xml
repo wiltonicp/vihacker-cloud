@@ -16,9 +16,24 @@
     <description>ViHacker-Cloud-CAS 认证服务器</description>
 
     <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>com.vihackerframework</groupId>-->
+<!--            <artifactId>vihacker-framework-web-starter</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.vihackerframework</groupId>
             <artifactId>vihacker-framework-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vihackerframework</groupId>
+            <artifactId>vihacker-framework-datasource-starter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vihackerframework</groupId>
+            <artifactId>vihacker-framework-redis-starter</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

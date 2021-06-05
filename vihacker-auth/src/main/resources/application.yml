@@ -1,0 +1,54 @@
+server:
+  port: 8130
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: ViHacker-Auth
+  profiles:
+    active: dev
+  jackson:
+    generator:
+      write_numbers_as_strings: true
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+vihacker:
+  auth:
+    jwtAccessKey: vihacker-cloud-cas-secret
+  security:
+    ignored:
+      urls: #安全路径白名单
+        - /favicon.ico
+        - /static/assets/**/**
+        - /assets/**
+        - /assets/**/**
+        - /assets/**/**/**
+        - /wechat/**
+
+mybatis-plus:
+  type-aliases-package: com.vihackerframework.*.entity
+  type-enums-package: com.vihackerframework.entity.enums
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    jdbc-type-for-null: null
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+  global-config:
+    db-config:
+      #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: AUTO
+      logic-delete-field: deleted  # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      # 删除状态为1
+      logic-delete-value: 1
+      # 没有删除状态为0
+      logic-not-delete-value: 0
+    banner: false
+    configuration:
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: NOT_NULL
+      # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+      map-underscore-to-camel-case: true
+      # 返回map时true:当查询数据为空时字段返回为null,false:不加这个查询数据为空时，字段将被隐藏
+      call-setters-on-nulls: true
+
+logging:
+  config: classpath:logback-spring.xml

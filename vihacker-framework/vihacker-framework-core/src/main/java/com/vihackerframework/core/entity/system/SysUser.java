@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("t_user")
-public class SystemUser extends ViHackerEntity implements Serializable {
+public class SysUser extends ViHackerEntity implements Serializable {
 
     private static final long serialVersionUID = -4352868070794165001L;
 
@@ -130,7 +130,7 @@ public class SystemUser extends ViHackerEntity implements Serializable {
     @TableField(exist = false)
     private String roleName;
 
-    public void created(SystemUser user){
+    public void created(SysUser user){
         this.setSexVal(EnumUtil.getEnumByCode(SexEnum.class,user.getSex()));
         this.setStatusVal(EnumUtil.getEnumByCode(StatusEnum.class,user.getStatus()));
     }
