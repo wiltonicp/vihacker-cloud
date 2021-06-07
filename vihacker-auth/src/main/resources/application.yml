@@ -13,6 +13,10 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 vihacker:
+  captcha:
+    enable: false
+  redis:
+    enable: true
   auth:
     jwtAccessKey: vihacker-cloud-cas-secret
   security:

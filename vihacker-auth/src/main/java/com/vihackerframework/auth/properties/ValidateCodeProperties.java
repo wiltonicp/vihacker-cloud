@@ -1,6 +1,8 @@
 package com.vihackerframework.auth.properties;
 
 import lombok.Data;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @Description
@@ -9,7 +11,15 @@ import lombok.Data;
  * @Email: wilton.icp@gmail.com
  */
 @Data
+@SpringBootConfiguration
+@ConfigurationProperties(prefix = "vihacker.captcha")
 public class ValidateCodeProperties {
+
+    /**
+     * 是否启用验证码
+     */
+    private Boolean enable = true;
+
     /**
      * 验证码有效时间，单位秒
      */

@@ -1,12 +1,13 @@
 package com.vihackerframework.auth.filter;
 
+import com.vihackerframework.auth.properties.ValidateCodeProperties;
 import com.vihackerframework.auth.service.ValidateCodeService;
 import com.vihackerframework.core.api.ViHackerResult;
 import com.vihackerframework.core.exception.ValidateCodeException;
 import com.vihackerframework.core.util.ViHackerUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -29,10 +30,11 @@ import java.io.IOException;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class ValidateCodeFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private ValidateCodeService validateCodeService;
+    private final ValidateCodeService validateCodeService;
+    private final ValidateCodeProperties properties;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
@@ -41,7 +43,9 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
         if (matcher.matches(httpServletRequest)
                 && StringUtils.equalsIgnoreCase(httpServletRequest.getParameter("grant_type"), "password")) {
             try {
-                validateCode(httpServletRequest);
+                if(properties.getEnable()){
+                    validateCode(httpServletRequest);
+                }
                 filterChain.doFilter(httpServletRequest, httpServletResponse);
             } catch (ValidateCodeException e) {
                 ViHackerUtil.response(httpServletResponse, MediaType.APPLICATION_JSON_VALUE,

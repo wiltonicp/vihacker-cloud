@@ -37,7 +37,7 @@ public class SysUser extends ViHackerEntity implements Serializable {
      * 用户名
      */
     @TableField("USERNAME")
-    @Size(min = 4, max = 10, message = "用户名长度在 4-10 之间")
+    @Size(min = 4, max = 11, message = "用户名长度在 4-11 之间")
     private String username;
 
     /**
