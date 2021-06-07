@@ -1,10 +1,6 @@
 server:
   port: 8130
-  servlet:
-    context-path: /
 spring:
-  application:
-    name: ViHacker-Auth
   profiles:
     active: dev
   jackson:
@@ -22,12 +18,9 @@ vihacker:
   security:
     ignored:
       urls: #安全路径白名单
-        - /favicon.ico
-        - /static/assets/**/**
-        - /assets/**
-        - /assets/**/**
-        - /assets/**/**/**
-        - /wechat/**
+        - /social/**
+        - /v2/api-docs
+        - /v2/api-docs-ext
 
 mybatis-plus:
   type-aliases-package: com.vihackerframework.*.entity
@@ -53,6 +46,18 @@ mybatis-plus:
       map-underscore-to-camel-case: true
       # 返回map时true:当查询数据为空时字段返回为null,false:不加这个查询数据为空时，字段将被隐藏
       call-setters-on-nulls: true
+
+justauth:
+  enabled: true
+  cache:
+    type: redis
+    prefix: 'VIHACKER::CLOUD::SOCIAL::STATE::'
+    timeout: 1h
+  type:
+    github:
+      client-id: f6613c95a95f470866eb
+      client-secret: 5d2cea68dce0349ad850fd984435ad020135c988
+      redirect-uri: http://oauth.vihacker.top/social/github/callback
 
 logging:
   config: classpath:logback-spring.xml

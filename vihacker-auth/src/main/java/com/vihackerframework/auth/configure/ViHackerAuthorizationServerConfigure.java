@@ -86,6 +86,8 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
         tokenServices.setTokenStore(tokenStore());
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setClientDetailsService(redisClientDetailsService);
+        tokenServices.setAccessTokenValiditySeconds(properties.getAccessTokenValiditySeconds());
+        tokenServices.setRefreshTokenValiditySeconds(properties.getRefreshTokenValiditySeconds());
         return tokenServices;
     }
 

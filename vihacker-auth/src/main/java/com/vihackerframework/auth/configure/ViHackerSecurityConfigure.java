@@ -49,7 +49,7 @@ public class ViHackerSecurityConfigure extends WebSecurityConfigurerAdapter {
             http.requestMatchers().antMatchers(url);
         }
         http.authorizeRequests() //开启登录配置
-                .antMatchers("/oauth/**").authenticated()
+                .antMatchers("/oauth/**","/social/**").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")

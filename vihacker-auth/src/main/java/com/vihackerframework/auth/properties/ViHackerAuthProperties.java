@@ -25,4 +25,15 @@ public class ViHackerAuthProperties {
      * 社交登录所使用的 Client
      */
     private String socialLoginClientId;
+
+    /**
+     * token有效期自定义设置，默认12小时
+     */
+    private Integer accessTokenValiditySeconds = 60 * 60 * 12;
+
+    /**
+     * 刷新token 有效期默认30天
+     */
+    private Integer refreshTokenValiditySeconds = 60 * 60 * 24 * 7;
+
 }
