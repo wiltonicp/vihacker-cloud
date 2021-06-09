@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 
 /**
  * @author Ranger
- * @since 2021/3/10
  * @email wilton.icp@gmail.com
+ * @since 2021/3/10
  */
 @Data
 @TableName("t_dept")

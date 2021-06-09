@@ -22,13 +22,12 @@ public class ViHackerResourceServerConfigure extends ResourceServerConfigurerAda
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        for (String url : ignoreUrlsConfig.getUrls()) {
-            http.requestMatchers().antMatchers(url);
-        }
+        String[] anonUrls = ignoreUrlsConfig.getUrls().toArray(new String[ignoreUrlsConfig.getUrls().size()]);
         http.csrf().disable()
                 .requestMatchers().antMatchers("/**")
                 .and()
                 .authorizeRequests()
+                .antMatchers(anonUrls).permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
                 .httpBasic();

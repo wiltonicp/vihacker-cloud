@@ -1,6 +1,5 @@
 package com.vihackerframework.auth.configure;
 
-import com.vihackerframework.auth.config.IgnoreUrlsConfig;
 import com.vihackerframework.auth.filter.ValidateCodeFilter;
 import com.vihackerframework.auth.handler.LoginFailureHandler;
 import com.vihackerframework.auth.handler.LoginSuccessHandler;
@@ -9,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -30,7 +28,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class ViHackerSecurityConfigure extends WebSecurityConfigurerAdapter {
 
     private final ValidateCodeFilter validateCodeFilter;
-    private final IgnoreUrlsConfig ignoreUrlsConfig;
     private final LoginFailureHandler loginFailureHandler;
     private final LoginSuccessHandler loginSuccessHandler;
     private final UserDetailsService userDetailService;
@@ -44,12 +41,8 @@ public class ViHackerSecurityConfigure extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
-        //不需要保护的资源路径允许访问
-        for (String url : ignoreUrlsConfig.getUrls()) {
-            http.requestMatchers().antMatchers(url);
-        }
         http.authorizeRequests() //开启登录配置
-                .antMatchers("/oauth/**","/social/**").authenticated()
+                .antMatchers("/oauth/**", "/social/**").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -68,7 +61,7 @@ public class ViHackerSecurityConfigure extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

@@ -11,9 +11,10 @@ import java.util.Locale;
 
 /**
  * 基于 java8 的时间工具类
+ *
  * @author Ranger
- * @since 2021/3/15
  * @email wilton.icp@gmail.com
+ * @since 2021/3/15
  */
 public class DateUtil {
 

@@ -102,6 +102,7 @@ public abstract class FileUtil {
 
     /**
      * 校验文件类型是否是允许下载的类型
+     *
      * @param fileType fileType
      * @return Boolean
      */

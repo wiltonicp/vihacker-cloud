@@ -24,8 +24,8 @@
         LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
         LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id)
         LEFT JOIN t_role r ON r.role_id = ur.role_id
-        WHERE  u.username = #{username}
+        WHERE u.username = #{username}
         group by u.username,u.user_id,u.email,u.mobile,u.password, u.status,u.created_time,u.ssex,u.dept_id
-				,u.last_login_time,u.modify_time,u.description,u.avatar
+        ,u.last_login_time,u.modify_time,u.description,u.avatar
     </select>
 </mapper>

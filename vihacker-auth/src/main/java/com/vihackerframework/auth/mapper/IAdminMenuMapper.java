@@ -18,6 +18,7 @@ import java.util.List;
 public interface IAdminMenuMapper extends BaseMapper<Menu> {
     /**
      * 通过用户名查找用户权限集合
+     *
      * @param username
      * @return
      */

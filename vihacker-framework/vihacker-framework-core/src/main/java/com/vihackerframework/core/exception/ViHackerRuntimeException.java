@@ -8,7 +8,7 @@ import com.vihackerframework.core.api.IErrorCode;
  * @Date: 2021/3/4 15:32
  * @Email: wilton.icp@gmail.com
  */
-public class ViHackerRuntimeException extends RuntimeException{
+public class ViHackerRuntimeException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 

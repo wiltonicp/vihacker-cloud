@@ -4,6 +4,7 @@ import lombok.Data;
 
 /**
  * 通用api 返回对象
+ *
  * @Description
  * @Author: Ranger
  * @Date: 2021/1/15 10:24
@@ -40,6 +41,7 @@ public class ViHackerResult<T> {
 
     /**
      * 成功
+     *
      * @param <T>
      * @return
      */
@@ -49,6 +51,7 @@ public class ViHackerResult<T> {
 
     /**
      * 成功
+     *
      * @param <T>
      * @return
      */
@@ -58,6 +61,7 @@ public class ViHackerResult<T> {
 
     /**
      * 成功返回结果
+     *
      * @param data 获取的数据
      */
     public static <T> ViHackerResult<T> data(T data) {
@@ -66,8 +70,9 @@ public class ViHackerResult<T> {
 
     /**
      * 成功返回结果
-     * @param data 获取的数据
-     * @param  message 提示信息
+     *
+     * @param data    获取的数据
+     * @param message 提示信息
      */
     public static <T> ViHackerResult<T> success(T data, String message) {
         return new ViHackerResult<T>(ResultCode.SUCCESS.getCode(), message, data);
@@ -75,6 +80,7 @@ public class ViHackerResult<T> {
 
     /**
      * 失败返回结果
+     *
      * @param errorCode 错误码
      */
     public static <T> ViHackerResult<T> failed(IErrorCode errorCode) {
@@ -83,8 +89,9 @@ public class ViHackerResult<T> {
 
     /**
      * 失败返回结果
+     *
      * @param errorCode 错误码
-     * @param message 错误信息
+     * @param message   错误信息
      */
     public static <T> ViHackerResult<T> failed(IErrorCode errorCode, String message) {
         return new ViHackerResult<T>(errorCode.getCode(), message);
@@ -92,6 +99,7 @@ public class ViHackerResult<T> {
 
     /**
      * 失败返回结果
+     *
      * @param message 提示信息
      */
     public static <T> ViHackerResult<T> failed(String message) {
@@ -114,6 +122,7 @@ public class ViHackerResult<T> {
 
     /**
      * 参数验证失败返回结果
+     *
      * @param message 提示信息
      */
     public static <T> ViHackerResult<T> validateFailed(String message) {

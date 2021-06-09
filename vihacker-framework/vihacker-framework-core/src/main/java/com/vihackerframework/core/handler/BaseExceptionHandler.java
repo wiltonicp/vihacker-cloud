@@ -24,14 +24,15 @@ import java.util.List;
 import java.util.Set;
 
 /**
-* 全局统用异常处理器
-* 所谓的全局异常处理指的是全局处理Controller层抛出来的异常。因为全局异常处理器在各个服务系统里都能用到
-* 对于通用的异常类型捕获可以在BaseExceptionHandler中定义
-* @Description
-* @Author: Ranger
-* @Date: 2021/1/15 13:57
-* @Email: wilton.icp@gmail.com
-*/
+ * 全局统用异常处理器
+ * 所谓的全局异常处理指的是全局处理Controller层抛出来的异常。因为全局异常处理器在各个服务系统里都能用到
+ * 对于通用的异常类型捕获可以在BaseExceptionHandler中定义
+ *
+ * @Description
+ * @Author: Ranger
+ * @Date: 2021/1/15 13:57
+ * @Email: wilton.icp@gmail.com
+ */
 @Slf4j
 public class BaseExceptionHandler {
 
@@ -45,30 +46,33 @@ public class BaseExceptionHandler {
 
     /**
      * 处理自定义的业务异常
+     *
      * @param e
      * @return
      */
     @ExceptionHandler(value = ViHackerRuntimeException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ViHackerResult bizExceptionHandler(ViHackerRuntimeException e){
-        log.error("发生业务异常！原因是：{}",e.getErrorMsg());
+    public ViHackerResult bizExceptionHandler(ViHackerRuntimeException e) {
+        log.error("发生业务异常！原因是：{}", e.getErrorMsg());
         return ViHackerResult.failed(e.getMessage());
     }
 
     /**
      * 处理空指针的异常
+     *
      * @param e
      * @return
      */
-    @ExceptionHandler(value =NullPointerException.class)
+    @ExceptionHandler(value = NullPointerException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ViHackerResult exceptionHandler(NullPointerException e){
-        log.error("发生空指针异常！原因是:",e);
+    public ViHackerResult exceptionHandler(NullPointerException e) {
+        log.error("发生空指针异常！原因是:", e);
         return ViHackerResult.failed(ResultCode.BODY_NOT_MATCH);
     }
 
     /**
      * 校验异常
+     *
      * @param e
      * @return
      */
@@ -80,7 +84,7 @@ public class BaseExceptionHandler {
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
             errorMesssage += fieldError.getDefaultMessage() + "!";
         }
-        log.error("参数异常:",e);
+        log.error("参数异常:", e);
         return ViHackerResult.failed(errorMesssage);
     }
 
@@ -144,10 +148,9 @@ public class BaseExceptionHandler {
     }
 
 
-
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ViHackerResult handleAccessDeniedException(){
+    public ViHackerResult handleAccessDeniedException() {
         return ViHackerResult.failed(ResultCode.FORBIDDEN);
     }
 }

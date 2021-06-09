@@ -18,6 +18,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * <p> redis配置
+ *
  * @author Ranger
  * @email wilton.icp@gmail.com
  * @since 2020/6/4

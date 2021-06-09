@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * 授权码保存到Redis，确保认证服务器集群数据的一致性
+ *
  * @Author: Ranger
  * @Date: 2021/2/2 16:59
  * @Email: wilton.icp@gmail.com

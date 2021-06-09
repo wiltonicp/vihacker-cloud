@@ -4,6 +4,7 @@ import com.vihackerframework.core.api.IErrorCode;
 
 /**
  * 断言处理类，用于抛出各种API异常
+ *
  * @author Ranger
  * @email wilton.icp@gmail.com
  * @since 2021/4/22

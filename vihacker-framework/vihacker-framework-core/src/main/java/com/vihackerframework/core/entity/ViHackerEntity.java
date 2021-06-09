@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 
 /**
  * 基础实体类，所有实体需要继承
+ *
  * @Description
  * @Author: Ranger
  * @Date: 2021/1/15 11:17

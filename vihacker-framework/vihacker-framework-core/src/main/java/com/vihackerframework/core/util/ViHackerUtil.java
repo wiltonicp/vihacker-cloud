@@ -29,8 +29,8 @@ import java.util.stream.IntStream;
 
 /**
  * @author Ranger
- * @since 2021/4/15
  * @email wilton.icp@gmail.com
+ * @since 2021/4/15
  */
 @Slf4j
 public class ViHackerUtil {
@@ -62,6 +62,7 @@ public class ViHackerUtil {
 
     /**
      * 获取请求IP
+     *
      * @return String IP
      */
     public static String getHttpServletRequestIpAddress() {
@@ -93,7 +94,7 @@ public class ViHackerUtil {
      * @throws IOException IOException
      */
     public static void response(HttpServletResponse response, String contentType,
-                                    int status, Object value) throws IOException {
+                                int status, Object value) throws IOException {
         response.setContentType(contentType);
         response.setStatus(status);
         response.getOutputStream().write(JSONObject.toJSONString(value).getBytes());
@@ -130,6 +131,7 @@ public class ViHackerUtil {
 
     /**
      * 判断是否为 ajax请求
+     *
      * @param request HttpServletRequest
      * @return boolean
      */
@@ -139,14 +141,15 @@ public class ViHackerUtil {
     }
 
     public static void printStartUpBanner(Environment environment) throws UnknownHostException {
-        log.info("\n----------------------------------------------------------\n\t" +
-                        "Application '{}' is running! Access URLs:\n\t" +
+        String contextPath = environment.getProperty("server.servlet.context-path");
+        log.info("\n------------------------------------------------------------------\n\t" +
+                        "Application '{}' is running! Access Parameters:\n\t" +
                         "Running Time: \t{}\n\t" +
                         "Application Name: \t{}\n\t" +
                         "HostAddress: \t{}\n\t" +
                         "Application Port: \t{}\n\t" +
                         "Doc: \thttp://{}:{}{}/doc.html\n" +
-                        "----------------------------------------------------------",
+                        "------------------------------------------------------------------",
                 environment.getProperty("spring.application.name"),
                 DateUtil.formatFullTime(LocalDateTime.now(), DateUtil.FULL_TIME_SPLIT_PATTERN),
                 environment.getProperty("spring.application.name"),
@@ -154,7 +157,7 @@ public class ViHackerUtil {
                 environment.getProperty("server.port"),
                 InetAddress.getLocalHost().getHostAddress(),
                 environment.getProperty("server.port"),
-                environment.getProperty("server.servlet.context-path"));
+                StringUtils.isNotBlank(contextPath) ? contextPath : "");
     }
 
     /**

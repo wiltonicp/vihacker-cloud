@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * 用于配置白名单资源路径
+ *
  * @author Ranger
  * @email wilton.icp@gmail.com
  * @since 2021/1/25

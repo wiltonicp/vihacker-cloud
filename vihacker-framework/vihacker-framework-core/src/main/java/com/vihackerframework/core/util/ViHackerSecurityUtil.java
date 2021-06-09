@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * <p>
+ *
  * @author Ranger
  * @email wilton.icp@gmail.com
  * @since 2021/6/7
@@ -31,29 +32,32 @@ public class ViHackerSecurityUtil {
 
     /**
      * 获取当前用户认证信息
+     *
      * @return 认证对象
      */
-    public static Authentication getUserAuthentication(){
+    public static Authentication getUserAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
     /**
      * 获取当前用户信息
+     *
      * @return 用户对象
      */
-    public static Object getCurrentPrincipal(){
+    public static Object getCurrentPrincipal() {
         return getUserAuthentication().getPrincipal();
     }
 
     /**
      * 判断是否具有此权限
+     *
      * @param roleName
      * @return
      */
     public Boolean hasRole(String roleName) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<String> roleCodes=new ArrayList<>();
-        userDetails.getAuthorities().forEach(authority ->{
+        List<String> roleCodes = new ArrayList<>();
+        userDetails.getAuthorities().forEach(authority -> {
             roleCodes.add(authority.getAuthority());
         });
         return roleCodes.contains(roleName);

@@ -9,15 +9,16 @@ import java.util.Objects;
 
 /**
  * <p>用户状态
+ *
  * @author Ranger
  * @email wilton.icp@gmail.com
  * @since 2021/3/12
  */
 @Getter
-public enum StatusEnum implements EnumMessage{
+public enum StatusEnum implements EnumMessage {
 
-    STATUS_LOCK (0L,"锁定"),
-    STATUS_VALID (1L,"有效");
+    STATUS_LOCK(0L, "锁定"),
+    STATUS_VALID(1L, "有效");
 
     /**
      * 标记数据库存的值是code
@@ -27,7 +28,7 @@ public enum StatusEnum implements EnumMessage{
     @JsonValue
     private final String title;
 
-    StatusEnum (Long code,String title){
+    StatusEnum(Long code, String title) {
         this.code = code;
         this.title = title;
     }

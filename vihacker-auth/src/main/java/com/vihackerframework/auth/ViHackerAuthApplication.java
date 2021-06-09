@@ -6,9 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * 启动器
+ *
  * @author Ranger
- * @since 2021/6/5
  * @email wilton.icp@gmail.com
+ * @since 2021/6/5
  */
 @SpringBootApplication
 @MapperScan("com.vihackerframework.auth.mapper")

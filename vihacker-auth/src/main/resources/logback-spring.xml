@@ -3,9 +3,10 @@
     <contextName>Wilton-File</contextName>
     <!--应用名称-->
     <springProperty scope="context" name="vihacker-auth" source="spring.application.name"/>
-    <property name="log.path" value="log/vihacker-auth" />
-    <property name="log.maxHistory" value="15" />
-    <property name="log.colorPattern" value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %yellow(%thread) %green(%logger) %msg%n"/>
+    <property name="log.path" value="log/vihacker-auth"/>
+    <property name="log.maxHistory" value="15"/>
+    <property name="log.colorPattern"
+              value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %yellow(%thread) %green(%logger) %msg%n"/>
     <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5level %thread %logger %msg%n"/>
     <!--LogStash访问host-->
     <springProperty name="LOG_STASH_HOST" scope="context" source="logstash.host" defaultValue="localhost"/>
@@ -55,13 +56,13 @@
     <logger name="org.hibernate.validator" level="INFO"/>
 
     <root level="debug">
-        <appender-ref ref="console" />
-<!--        <appender-ref ref="LOG_STASH_DEBUG"/>-->
+        <appender-ref ref="console"/>
+        <!--        <appender-ref ref="LOG_STASH_DEBUG"/>-->
     </root>
 
     <root level="info">
-        <appender-ref ref="file_info" />
-        <appender-ref ref="file_error" />
+        <appender-ref ref="file_info"/>
+        <appender-ref ref="file_error"/>
     </root>
 
 </configuration>

@@ -6,8 +6,8 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author Ranger
- * @since 2021/3/10
  * @email wilton.icp@gmail.com
+ * @since 2021/3/10
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

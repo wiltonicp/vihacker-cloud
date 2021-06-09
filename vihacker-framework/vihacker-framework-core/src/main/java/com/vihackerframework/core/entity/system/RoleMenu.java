@@ -8,8 +8,8 @@ import java.io.Serializable;
 
 /**
  * @author Ranger
- * @since 2021/3/10
  * @email wilton.icp@gmail.com
+ * @since 2021/3/10
  */
 @TableName("t_role_menu")
 @Data

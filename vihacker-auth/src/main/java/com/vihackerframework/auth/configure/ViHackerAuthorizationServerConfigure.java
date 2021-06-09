@@ -62,6 +62,7 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
 
     /**
      * 配置token状态查询
+     *
      * @param security
      * @throws Exception
      */

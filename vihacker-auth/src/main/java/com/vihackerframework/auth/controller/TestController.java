@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping("auth/user")
-    public ViHackerResult user(){
+    public ViHackerResult user() {
         return ViHackerResult.data(ViHackerSecurityUtil.getLoginUser());
     }
 
 
     @GetMapping("test")
-    public ViHackerResult test(){
+    public ViHackerResult test() {
         return ViHackerResult.success();
     }
 }

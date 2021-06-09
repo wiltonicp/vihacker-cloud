@@ -24,6 +24,7 @@ import java.io.IOException;
 /**
  * 验证码过滤器
  * 用于拦截请求并校验验证码的正确性
+ *
  * @Author: Ranger
  * @Date: 2021/1/25 14:44
  * @Email: wilton.icp@gmail.com
@@ -43,7 +44,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
         if (matcher.matches(httpServletRequest)
                 && StringUtils.equalsIgnoreCase(httpServletRequest.getParameter("grant_type"), "password")) {
             try {
-                if(properties.getEnable()){
+                if (properties.getEnable()) {
                     validateCode(httpServletRequest);
                 }
                 filterChain.doFilter(httpServletRequest, httpServletResponse);

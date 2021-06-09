@@ -52,7 +52,7 @@ public class CoreUtil {
                     /*     下面的步骤与上面的步骤基本一致      */
 
                     //如果源复杂对象为null，直接跳过，不需要复制
-                    if(srcPropertyVal == null){
+                    if (srcPropertyVal == null) {
                         continue;
                     }
 

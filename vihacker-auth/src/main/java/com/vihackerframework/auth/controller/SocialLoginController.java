@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.List;
 
 /**
  * <p> 第三方认证
+ *
  * @author Ranger
  * @email wilton.icp@gmail.com
  * @since 2021/6/7
@@ -35,6 +37,7 @@ public class SocialLoginController {
         return factory.oauthList();
     }
 
+    @ResponseBody
     @GetMapping("/login/{type}")
     public void login(@PathVariable String type, HttpServletResponse response) throws IOException {
         AuthRequest authRequest = factory.get(type);
