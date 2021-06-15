@@ -17,6 +17,7 @@
         <module>vihacker-framework-doc-starter</module>
         <module>vihacker-framework-redis-starter</module>
         <module>vihacker-framework-web-starter</module>
+        <module>vihacker-framework-resource-server-starter</module>
     </modules>
 
     <artifactId>vihacker-framework</artifactId>

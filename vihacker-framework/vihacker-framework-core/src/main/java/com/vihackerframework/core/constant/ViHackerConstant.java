@@ -44,4 +44,18 @@ public class ViHackerConstant {
      * 允许下载的文件类型，根据需求自己添加（小写）
      */
     public static final String[] VALID_FILE_TYPE = {"xlsx", "zip"};
+
+    /**
+     * OAUTH2 令牌类型 https://oauth.net/2/bearer-tokens/
+     */
+    public static final String OAUTH2_TOKEN_TYPE = "bearer";
+
+    /**
+     * Gateway请求头TOKEN名称（不要有空格）
+     */
+    public static final String GATEWAY_TOKEN_HEADER = "GatewayToken";
+    /**
+     * Gateway请求头TOKEN值
+     */
+    public static final String GATEWAY_TOKEN_VALUE = "vihacker:gateway:123456";
 }
