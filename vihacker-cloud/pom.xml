@@ -9,11 +9,11 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <modules>
-        <module>../vihacker-auth</module>
+        <module>../vihacker-uaa</module>
         <module>../vihacker-framework</module>
     </modules>
 
-    <name>ViHacker-Cloud-CAS</name>
+    <name>ViHacker-Cloud</name>
     <url>https://blog.wiltonic.cn</url>
     <description>ViHacker-Cloud-CAS：Spring Cloud，Spring Security OAuth2 微服务统一认证中心</description>
     <licenses>

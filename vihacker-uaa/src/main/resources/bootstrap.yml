@@ -6,13 +6,12 @@ spring:
       server-addr: vihacker.top:8101
       config:
         group: TEST_GROUP
-        prefix: vihacker-gateway
+        prefix: vihacker-uaa
         file-extension: yaml
         namespace: 07230e1a-12e6-4209-838f-fa60cf013e7e
       discovery:
         namespace: 07230e1a-12e6-4209-838f-fa60cf013e7e
         group: TEST_GROUP
-
 
 logging:
   level:

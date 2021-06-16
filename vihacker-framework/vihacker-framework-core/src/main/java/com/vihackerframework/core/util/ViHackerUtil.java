@@ -144,11 +144,11 @@ public class ViHackerUtil {
         String contextPath = environment.getProperty("server.servlet.context-path");
         log.info("\n------------------------------------------------------------------\n\t" +
                         "Application '{}' is running! Access Parameters:\n\t" +
-                        "Running Time: \t{}\n\t" +
+                        "Running Time: \t\t{}\n\t" +
                         "Application Name: \t{}\n\t" +
-                        "HostAddress: \t{}\n\t" +
+                        "HostAddress: \t\t{}\n\t" +
                         "Application Port: \t{}\n\t" +
-                        "Doc: \thttp://{}:{}{}/doc.html\n" +
+                        "Application URL: \thttp://{}:{}{}\n" +
                         "------------------------------------------------------------------",
                 environment.getProperty("spring.application.name"),
                 DateUtil.formatFullTime(LocalDateTime.now(), DateUtil.FULL_TIME_SPLIT_PATTERN),

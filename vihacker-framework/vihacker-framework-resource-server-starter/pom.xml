@@ -11,9 +11,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>ViHacker-Framework-Resource-Server-Starter</name>
-    <description>资源服务器模块</description>
-    <packaging>jar</packaging>
     <artifactId>vihacker-framework-resource-server-starter</artifactId>
+    <packaging>jar</packaging>
+    <description>资源服务器模块</description>
 
     <dependencies>
         <dependency>
