@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @email wilton.icp@gmail.com
  * @since 2021/6/8
  */
+
 @SpringBootApplication
 public class ViHackerGatewayApplication {
 

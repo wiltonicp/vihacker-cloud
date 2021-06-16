@@ -1,6 +1,7 @@
 package com.vihackerframework.auth.controller;
 
 import com.vihackerframework.core.api.ViHackerResult;
+import com.vihackerframework.core.entity.system.AdminAuthUser;
 import com.vihackerframework.core.util.ViHackerSecurityUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @GetMapping("auth/user")
+    @GetMapping("user")
     public ViHackerResult user() {
-        return ViHackerResult.data(ViHackerSecurityUtil.getLoginUser());
+        AdminAuthUser loginUser = ViHackerSecurityUtil.getLoginUser();
+        return ViHackerResult.data(loginUser);
     }
 
 

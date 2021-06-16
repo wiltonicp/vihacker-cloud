@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.route.Route;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -29,7 +31,7 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.*
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ViHackerGatewayRequestFilter implements GlobalFilter {
+public class ViHackerGatewayRequestFilter implements GlobalFilter, Ordered {
 
 
     private final ViHackerGatewayProperties properties;
@@ -65,6 +67,11 @@ public class ViHackerGatewayRequestFilter implements GlobalFilter {
                     route.getId(), url.getScheme(), url.getAuthority(), url.getPath(), LocalDateTime.now()
             );
         }
+    }
+
+    @Override
+    public int getOrder() {
+        return -1000;
     }
 
 }
