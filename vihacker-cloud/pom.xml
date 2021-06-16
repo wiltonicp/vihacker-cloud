@@ -6,8 +6,8 @@
 
     <groupId>com.vihackerframework</groupId>
     <artifactId>vihacker-cloud</artifactId>
-    <packaging>pom</packaging>
     <version>1.0.0</version>
+    <packaging>pom</packaging>
     <modules>
         <module>../vihacker-auth</module>
         <module>../vihacker-framework</module>
@@ -16,6 +16,25 @@
     <name>ViHacker-Cloud-CAS</name>
     <url>https://blog.wiltonic.cn</url>
     <description>ViHacker-Cloud-CAS：Spring Cloud，Spring Security OAuth2 微服务统一认证中心</description>
+    <licenses>
+        <license>
+            <name>The ApacheSoftware License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Ranger</name>
+            <email>wilton.icp@gmail.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <tag>master</tag>
+        <connection>https://blog.vihacker.top</connection>
+        <developerConnection>https://blog.vihacker.top</developerConnection>
+        <url>https://blog.vihacker.top</url>
+    </scm>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

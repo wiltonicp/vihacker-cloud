@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
+    //@SentinelResource("resource")
     @GetMapping("user")
     public ViHackerResult user() {
         AdminAuthUser loginUser = ViHackerSecurityUtil.getLoginUser();
