@@ -1,8 +1,11 @@
 package com.vihackerframework.resource.starter.properties;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,6 +15,7 @@ import java.util.List;
  * @email wilton.icp@gmail.com
  * @since 2021/6/15
  */
+@Data
 @ConfigurationProperties(prefix = "vihacker.security")
 public class ViHackerSecurityProperties {
 
@@ -33,45 +37,26 @@ public class ViHackerSecurityProperties {
      */
     private Boolean onlyFetchByGateway = Boolean.TRUE;
 
-    public Boolean getEnable() {
-        return enable;
-    }
+    /**
+     * 认证中心默认忽略验证地址
+     */
+    private static final String[] SECURITY_ENDPOINTS = {
+            "/auth/**",
+            "/oauth/token",
+            "/login/*",
+            "/actuator/**",
+            "/v2/api-docs",
+            "/doc.html",
+            "/webjars/**",
+            "**/favicon.ico",
+            "/swagger-resources/**"
+    };
 
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
-    }
-
-    public String getAuthUri() {
-        return authUri;
-    }
-
-    public void setAuthUri(String authUri) {
-        this.authUri = authUri;
-    }
-
-    public List<String> getAnonUris() {
-        return anonUris;
-    }
-
-    public void setAnonUris(List<String> anonUris) {
-        this.anonUris = anonUris;
-    }
-
-    public Boolean getOnlyFetchByGateway() {
-        return onlyFetchByGateway;
-    }
-
-    public void setOnlyFetchByGateway(Boolean onlyFetchByGateway) {
-        this.onlyFetchByGateway = onlyFetchByGateway;
-    }
-
-    @Override
-    public String toString() {
-        return "ViHackerCloudSecurityProperties{" +
-                "enable=" + enable +
-                ", authUri='" + authUri + '\'' +
-                ", anonUris='" + anonUris + '\'' +
-                ", onlyFetchByGateway=" + onlyFetchByGateway +
-                '}';
+    /**
+     * 首次加载合并ENDPOINTS
+     */
+    @PostConstruct
+    public void initIgnoreSecurity() {
+        Collections.addAll(anonUris, SECURITY_ENDPOINTS);
     }
 }

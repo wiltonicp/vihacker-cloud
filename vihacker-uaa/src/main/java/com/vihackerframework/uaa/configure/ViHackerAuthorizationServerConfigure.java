@@ -4,7 +4,9 @@ import com.vihackerframework.uaa.exception.ViHackerAuthWebResponseExceptionTrans
 import com.vihackerframework.uaa.properties.ViHackerAuthProperties;
 import com.vihackerframework.uaa.service.RedisAuthenticationCodeService;
 import com.vihackerframework.uaa.service.RedisClientDetailsService;
+import com.vihackerframework.uaa.service.impl.SingleLoginTokenServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -44,6 +46,7 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
     private final RedisAuthenticationCodeService redisAuthenticationCodeService;
     private final ViHackerAuthWebResponseExceptionTranslator exceptionTranslator;
 
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(redisClientDetailsService);
@@ -82,7 +85,7 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
     @Bean
     @Primary
     public DefaultTokenServices defaultTokenServices() {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        DefaultTokenServices tokenServices = new SingleLoginTokenServices(properties.isSingleLogin());
 
         tokenServices.setTokenStore(tokenStore());
         tokenServices.setSupportRefreshToken(true);

@@ -13,8 +13,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @SpringBootConfiguration
-@ConfigurationProperties(prefix = "vihacker.auth")
+@ConfigurationProperties(prefix = "vihacker.uaa")
 public class ViHackerAuthProperties {
+
+    /**
+     * 开关：同应用账号互踢
+     */
+    private boolean isSingleLogin = false;
 
     /**
      * JWT加签密钥

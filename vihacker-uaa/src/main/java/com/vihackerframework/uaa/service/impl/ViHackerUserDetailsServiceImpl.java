@@ -1,14 +1,14 @@
-package com.vihackerframework.uaa.service;
+package com.vihackerframework.uaa.service.impl;
 
 import com.vihackerframework.uaa.manager.AdminUserManager;
 import com.vihackerframework.core.entity.enums.StatusEnum;
 import com.vihackerframework.core.entity.system.AdminAuthUser;
 import com.vihackerframework.core.entity.system.SysUser;
+import com.vihackerframework.uaa.service.ViHackerUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class ViHackerUserDetailsServiceImpl implements UserDetailsService {
+public class ViHackerUserDetailsServiceImpl implements ViHackerUserDetailsService {
 
     private final AdminUserManager manager;
 
@@ -42,5 +42,15 @@ public class ViHackerUserDetailsServiceImpl implements UserDetailsService {
             return authUser;
         }
         throw new UsernameNotFoundException("用户名或密码错误");
+    }
+
+    @Override
+    public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
+        return null;
+    }
+
+    @Override
+    public UserDetails loadUserBySocial(String openId) throws UsernameNotFoundException {
+        return null;
     }
 }

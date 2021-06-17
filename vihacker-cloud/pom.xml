@@ -11,6 +11,7 @@
     <modules>
         <module>../vihacker-uaa</module>
         <module>../vihacker-framework</module>
+        <module>../vihacker-platform</module>
     </modules>
 
     <name>ViHacker-Cloud</name>

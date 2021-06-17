@@ -11,6 +11,11 @@
         <relativePath>../vihacker-cloud/pom.xml</relativePath>
     </parent>
 
+    <artifactId>vihacker-framework</artifactId>
+    <name>ViHacker-Framework</name>
+    <packaging>pom</packaging>
+    <description>ViHacker-Framework 系统模块</description>
+
     <modules>
         <module>vihacker-framework-core</module>
         <module>vihacker-framework-datasource-starter</module>
@@ -20,11 +25,5 @@
         <module>vihacker-framework-resource-server-starter</module>
         <module>vihacker-framework-sentinel-starter</module>
     </modules>
-
-    <artifactId>vihacker-framework</artifactId>
-    <version>1.0.0</version>
-    <name>ViHacker-Framework</name>
-    <packaging>pom</packaging>
-    <description>ViHacker-Framework 系统模块</description>
 
 </project>
