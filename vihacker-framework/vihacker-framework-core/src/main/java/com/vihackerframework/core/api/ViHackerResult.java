@@ -2,16 +2,20 @@ package com.vihackerframework.core.api;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 通用api 返回对象
  *
- * @Description
- * @Author: Ranger
- * @Date: 2021/1/15 10:24
- * @Email: wilton.icp@gmail.com
+ * @author Ranger
+ * @since 2021/1/15
+ * @email wilton.icp@gmail.com
  */
 @Data
-public class ViHackerResult<T> {
+public class ViHackerResult<T> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 状态码
      */
@@ -20,6 +24,10 @@ public class ViHackerResult<T> {
      * 提示信息
      */
     private String message;
+    /**
+     * 时间戳
+     */
+    private long time;
     /**
      * 数据封装
      */
@@ -31,12 +39,14 @@ public class ViHackerResult<T> {
     protected ViHackerResult(long code, String message) {
         this.code = code;
         this.message = message;
+        this.time = System.currentTimeMillis();
     }
 
     protected ViHackerResult(long code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
+        this.time = System.currentTimeMillis();
     }
 
     /**

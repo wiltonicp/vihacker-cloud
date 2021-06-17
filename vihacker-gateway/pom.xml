@@ -50,6 +50,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.vihackerframework</groupId>
+            <artifactId>vihacker-framework-sentinel-starter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>

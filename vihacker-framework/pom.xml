@@ -18,6 +18,7 @@
         <module>vihacker-framework-redis-starter</module>
         <module>vihacker-framework-web-starter</module>
         <module>vihacker-framework-resource-server-starter</module>
+        <module>vihacker-framework-sentinel-starter</module>
     </modules>
 
     <artifactId>vihacker-framework</artifactId>
