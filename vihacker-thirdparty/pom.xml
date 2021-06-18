@@ -2,23 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <artifactId>vihacker-cloud</artifactId>
         <groupId>com.vihackerframework</groupId>
         <version>1.0.0</version>
         <relativePath>../vihacker-cloud/pom.xml</relativePath>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>vihacker-platform</artifactId>
-    <name>ViHacker-Platform</name>
+    <artifactId>vihacker-thirdparty</artifactId>
     <packaging>pom</packaging>
-    <description>ViHacker-Platform 平台</description>
-
+    <description>ViHacker-ThirdParty 第三方平台接入</description>
     <modules>
-
-        <module>vihacker-system</module>
+        <module>sso-demo</module>
     </modules>
 
 </project>
