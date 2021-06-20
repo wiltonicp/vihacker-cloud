@@ -1,5 +1,6 @@
 package com.vihackerframework.uaa.configure;
 
+import com.vihackerframework.uaa.constant.SecurityConstant;
 import com.vihackerframework.uaa.filter.ValidateCodeFilter;
 import com.vihackerframework.uaa.handler.LoginFailureHandler;
 import com.vihackerframework.uaa.handler.LoginSuccessHandler;
@@ -42,11 +43,11 @@ public class ViHackerSecurityConfigure extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
         http.authorizeRequests() //开启登录配置
-                .antMatchers("/oauth/**", "/social/**").authenticated()
+                .antMatchers(SecurityConstant.AUTH_PATH, SecurityConstant.SOCIAL_PATH).authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
+                //.loginPage("/login")
+                //.loginProcessingUrl("/login")
                 .successHandler(loginSuccessHandler)
                 .failureHandler(loginFailureHandler)
                 .permitAll()
