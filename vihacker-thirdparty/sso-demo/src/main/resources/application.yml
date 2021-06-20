@@ -1,0 +1,24 @@
+server:
+  port: 8322
+  servlet:
+    session:
+      cookie:
+        name: VIHACKER
+
+vihacker:
+  security:
+    enable: true
+  auth-server: http://127.0.0.1:8301
+
+
+security:
+  oauth2:
+    client:
+      client-id: vihacker-sso
+      client-secret: vihacker-sso-secret
+      access-token-uri: ${vihacker.auth-server}/uaa/oauth/token
+      user-authorization-uri: ${vihacker.auth-server}/uaa/oauth/authorize
+    resource:
+      token-info-uri: ${vihacker.auth-server}/uaa/oauth/check_token
+    sso:
+      login-path: /login
