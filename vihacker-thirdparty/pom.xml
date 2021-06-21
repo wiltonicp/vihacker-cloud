@@ -15,6 +15,7 @@
     <description>ViHacker-ThirdParty 第三方平台接入</description>
     <modules>
         <module>sso-demo</module>
+        <module>vihacker-demo</module>
     </modules>
 
 </project>
