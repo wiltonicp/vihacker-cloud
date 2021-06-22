@@ -12,7 +12,6 @@
 
     <artifactId>vihacker-uaa</artifactId>
     <version>1.0.0</version>
-    <name>ViHacker-UAA</name>
     <description>ViHacker-Cloud 认证服务器</description>
 
     <dependencies>

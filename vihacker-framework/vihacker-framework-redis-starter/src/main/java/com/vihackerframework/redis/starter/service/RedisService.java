@@ -1,5 +1,7 @@
 package com.vihackerframework.redis.starter.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.vihackerframework.redis.starter.util.RedisLockUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class RedisService {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private RedisLockUtil redisLockUtil;
 
     /**
      * 指定缓存失效时间
@@ -562,5 +567,26 @@ public class RedisService {
             log.error(e.getMessage(), e);
             return 0L;
         }
+    }
+
+    /**
+     * 分布式锁
+     *
+     * @param key        分布式锁key
+     * @param expireTime 持有锁的最长时间 (redis过期时间) 秒为单位
+     * @return 返回获取锁状态 成功失败
+     */
+    public boolean tryLock(String key, int expireTime) {
+        final JSONObject lock = new JSONObject();
+        lock.put("id", key);
+        // startTime
+        lock.put("st", System.currentTimeMillis());
+        // keepSeconds
+        lock.put("ks", expireTime);
+        return redisLockUtil.tryLock(key, "", expireTime);
+    }
+
+    public void unLock(String key) {
+        redisLockUtil.releaseLock(key, "");
     }
 }

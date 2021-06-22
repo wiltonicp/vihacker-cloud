@@ -27,6 +27,7 @@
         <module>vihacker-framework-kafka-starter</module>
         <module>vihacker-framework-log-starter</module>
         <module>vihacker-framework-mail-starter</module>
+        <module>vihacker-framework-feign-starter</module>
     </modules>
 
 </project>

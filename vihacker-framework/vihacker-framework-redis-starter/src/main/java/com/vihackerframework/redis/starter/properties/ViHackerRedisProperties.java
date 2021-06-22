@@ -9,8 +9,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @email wilton.icp@gmail.com
  * @since 2021/6/4
  */
-@ConfigurationProperties(prefix = "vihacker.redis")
-public class ViHackerLettuceRedisProperties {
+@ConfigurationProperties(prefix = ViHackerRedisProperties.PREFIX)
+public class ViHackerRedisProperties {
+
+    /**
+     * 前缀
+     */
+    public static final String PREFIX = "vihacker.redis";
 
     /**
      * 是否开启Lettuce Redis

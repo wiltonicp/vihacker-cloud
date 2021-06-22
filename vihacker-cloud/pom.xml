@@ -95,6 +95,80 @@
         </dependencies>
     </dependencyManagement>
 
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <!--当前环境-->
+                <spring.active>local</spring.active>
+                <config.server-addr>127.0.0.1:8848</config.server-addr>
+                <config.namespace></config.namespace>
+                <config.group>DEFAULT_GROUP</config.group>
+                <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
+                <sentinel.port>8719</sentinel.port>
+                <sentinel.dashboard>127.0.0.1:8088</sentinel.dashboard>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <spring.active>dev</spring.active>
+                <config.server-addr>127.0.0.1:8848</config.server-addr>
+                <config.namespace>8c29b21f-c146-4925-9168-3590e754f9da</config.namespace>
+                <config.group>DEFAULT_GROUP</config.group>
+                <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
+                <sentinel.port>8719</sentinel.port>
+                <sentinel.dashboard>127.0.0.1:8080</sentinel.dashboard>
+            </properties>
+            <!--            <activation>-->
+            <!--                <activeByDefault>true</activeByDefault>-->
+            <!--            </activation>-->
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.active>test</spring.active>
+                <config.server-addr>172.26.85.32:8848</config.server-addr>
+                <config.namespace>568b8eaa-f25d-4f2a-8c87-83dcb4caa955</config.namespace>
+                <config.group>DEFAULT_GROUP</config.group>
+                <discovery.server-addr>172.26.85.32:8848</discovery.server-addr>
+                <sentinel.port>8719</sentinel.port>
+                <sentinel.dashboard>localhost:8080</sentinel.dashboard>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.active>prod</spring.active>
+                <config.server-addr>172.26.85.32:8848</config.server-addr>
+                <config.namespace>568b8eaa-f25d-4f2a-8c87-83dcb4caa955</config.namespace>
+                <config.group>DEFAULT_GROUP</config.group>
+                <discovery.server-addr>172.26.85.32:8848</discovery.server-addr>
+                <sentinel.port>8719</sentinel.port>
+                <sentinel.dashboard>localhost:8080</sentinel.dashboard>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <spring.active>docker</spring.active>
+                <config.server-addr>172.30.0.48:8848</config.server-addr>
+                <config.namespace></config.namespace>
+                <config.group>DEFAULT_GROUP</config.group>
+                <discovery.server-addr>172.30.0.48:8848</discovery.server-addr>
+                <sentinel.port>8719</sentinel.port>
+                <sentinel.dashboard>172.30.0.80:8088</sentinel.dashboard>
+            </properties>
+            <!--            <activation>-->
+            <!--                <activeByDefault>true</activeByDefault>-->
+            <!--            </activation>-->
+        </profile>
+    </profiles>
+
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
