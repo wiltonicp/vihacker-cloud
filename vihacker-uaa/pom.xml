@@ -22,6 +22,11 @@
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
+            <artifactId>vihacker-framework-log-starter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vihackerframework</groupId>
             <artifactId>vihacker-framework-web-starter</artifactId>
             <version>1.0.0</version>
         </dependency>

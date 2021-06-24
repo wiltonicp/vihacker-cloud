@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.wuwenze.poi.annotation.Excel;
 import com.wuwenze.poi.annotation.ExcelField;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,9 +18,10 @@ import java.time.LocalDateTime;
  * @email: wilton.icp@gmail.com
  */
 @Data
+@Accessors(chain = true)
 @TableName("t_log")
 @Excel("系统日志表")
-public class Log implements Serializable {
+public class SysLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,6 +51,11 @@ public class Log implements Serializable {
     @TableField("TIME")
     @ExcelField(value = "耗时（毫秒）")
     private Long time;
+
+    /**
+     * 请求路径
+     */
+    private String url;
 
     /**
      * 操作方法
@@ -90,6 +97,11 @@ public class Log implements Serializable {
      */
     @TableField("RESULT")
     private Object result;
+
+    /**
+     * 异常信息
+     */
+    private String exception;
 
     private transient String createTimeFrom;
     private transient String createTimeTo;

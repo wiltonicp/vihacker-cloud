@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,17 @@ import java.util.List;
  * @email wilton.icp@gmail.com
  * @since 2021/6/7
  */
-public class ViHackerSecurityUtil {
+public class SecurityUtil {
+
+    /**
+     * 从HttpServletRequest里获取token
+     *
+     * @param request HttpServletRequest
+     * @return token
+     */
+    public static String getHeaderToken(HttpServletRequest request) {
+        return request.getHeader("ViHacker-Uaa");
+    }
 
     /**
      * 从ThreadLocal获取其自己的SecurityContext，从而获取在Security上下文中缓存的登录用户
