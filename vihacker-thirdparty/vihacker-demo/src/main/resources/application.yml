@@ -1,0 +1,44 @@
+spring:
+  cloud:
+    stream:
+      # 设置当前消费者的总的实例个数和当前实例的索引
+      instance-count: 2
+      instance-index: 0
+      # 需要指定一个默认的binder，不然会报错
+      #default-binder: vihacker-clould-stream-binder
+      bindings:
+        # 以下是设置输入通道及分组和输出通道及类型
+        inputChannel:
+          # 使用消息队列名字，在kafka就是topic的名字，然后rabbitmq的话就是Exchange 的名字
+          destination: vihacker-clould-stream-binder
+          content-type: application/json
+          group: vihacker-group1
+          #开启消息分区
+          consumer:
+            partitioned: true
+        outputChannel:
+          # 使用消息队列名字，在kafka就是topic的名字，然后rabbitmq的话就是Exchange 的名字
+          destination: vihacker-clould-stream-binder
+          content-type: application/json
+          producer:
+            #设置分区键的表达式规则和设置消息分区数量
+            partitionKeyExpression: payload
+            partitionCount: 2
+      # 设置成使用kafka
+      kafka:
+        binder:
+          # Kafka的服务端列表，默认localhost
+          brokers: cloud.vihacker.top:9092
+          # Kafka服务端连接的ZooKeeper节点列表，默认localhost
+          zkNodes: cloud.vihacker.top:2181
+          minPartitionCount: 1
+          autoCreateTopics: true
+          autoAddPartitions: true
+        bindings:
+          sms-out-0:
+            producer:
+              group: sms-binder-group
+              sync: true
+            sms-in-0:
+              consumer:
+                orderly: true

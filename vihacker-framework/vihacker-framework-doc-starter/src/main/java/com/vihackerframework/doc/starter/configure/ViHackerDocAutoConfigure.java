@@ -2,12 +2,14 @@ package com.vihackerframework.doc.starter.configure;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.google.common.collect.Lists;
+import com.vihackerframework.core.factory.YamlPropertySourceFactory;
 import com.vihackerframework.doc.starter.properties.VihackerDocProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -33,7 +35,8 @@ import java.util.List;
 @EnableKnife4j
 @Import(BeanValidatorPluginsConfiguration.class)
 @EnableConfigurationProperties(VihackerDocProperties.class)
-@ConditionalOnProperty(value = "vihacker.doc.enable", havingValue = "true", matchIfMissing = true)
+@PropertySource(factory = YamlPropertySourceFactory.class, value = "classpath:vihacker-swagger.yml")
+@ConditionalOnProperty(value = VihackerDocProperties.PREFIX + ".enable", havingValue = "true", matchIfMissing = true)
 public class ViHackerDocAutoConfigure {
 
     private final VihackerDocProperties properties;
@@ -63,7 +66,7 @@ public class ViHackerDocAutoConfigure {
         return new ApiInfoBuilder()
                 .title(properties.getTitle())
                 .description(description)
-                .termsOfServiceUrl(properties.getTermsOfServiceUrl())
+                .termsOfServiceUrl(properties.getServiceUrl())
                 .contact(contact)
                 .license(properties.getLicense())
                 .licenseUrl(properties.getLicenseUrl())

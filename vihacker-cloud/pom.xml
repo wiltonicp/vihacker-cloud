@@ -13,6 +13,7 @@
         <module>../vihacker-framework</module>
         <module>../vihacker-platform</module>
         <module>../vihacker-thirdparty</module>
+        <module>../vihacker-pay</module>
     </modules>
 
     <name>ViHacker-Cloud</name>
@@ -59,7 +60,7 @@
         <xml-api.version>1.4.01</xml-api.version>
         <guava.version>27.0-jre</guava.version>
         <excelkit.version>2.0.72</excelkit.version>
-        <knife4j.version>2.0.2</knife4j.version>
+        <knife4j.version>2.0.8</knife4j.version>
         <springfox.version>2.9.2</springfox.version>
         <swagger.version>1.6.0</swagger.version>
         <spring-data-commons.version>2.3.0.RELEASE</spring-data-commons.version>
