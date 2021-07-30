@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
+import org.springframework.boot.autoconfigure.web.WebProperties.Resources;
 import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.cloud.gateway.support.TimeoutException;
@@ -25,15 +27,16 @@ import java.util.Map;
 @Slf4j
 public class ViHackerGatewayExceptionHandler extends DefaultErrorWebExceptionHandler {
 
-    public ViHackerGatewayExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties, ErrorProperties errorProperties, ApplicationContext applicationContext) {
-        super(errorAttributes, resourceProperties, errorProperties, applicationContext);
+    public ViHackerGatewayExceptionHandler(ErrorAttributes errorAttributes, Resources resource,
+                                           ErrorProperties errorProperties, ApplicationContext applicationContext) {
+        super(errorAttributes, resource, errorProperties, applicationContext);
     }
 
     /**
      * 异常处理，定义返回报文格式
      */
     @Override
-    protected Map<String, Object> getErrorAttributes(ServerRequest request, boolean includeStackTrace) {
+    protected Map<String, Object> getErrorAttributes(ServerRequest request, ErrorAttributeOptions options) {
         Throwable error = super.getError(request);
         log.error(
                 "请求发生异常，请求URI：{}，请求方法：{}，异常信息：{}",

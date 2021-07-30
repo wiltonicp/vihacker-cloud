@@ -1,5 +1,6 @@
 package com.vihackerframework.core.api;
 
+
 /**
  * 枚举了一些常用API操作码
  *
@@ -9,13 +10,37 @@ package com.vihackerframework.core.api;
  * @Email: wilton.icp@gmail.com
  */
 public enum ResultCode implements IErrorCode {
+    /**
+     * 操作成功
+     */
     SUCCESS(200, "操作成功"),
+    /**
+     * 操作失败
+     */
     FAILED(500, "操作失败"),
+    /**
+     * 请求的数据格式不符
+     */
     BODY_NOT_MATCH(400, "请求的数据格式不符!"),
+    /**
+     * 暂未登录或token已经过期
+     */
     UNAUTHORIZED(401, "暂未登录或token已经过期"),
+    /**
+     * 没有相关权限
+     */
     FORBIDDEN(403, "没有相关权限"),
+    /**
+     * 未找到该资源
+     */
     VALIDATE_FAILED(404, "未找到该资源!"),
+    /**
+     * 服务器正忙，请稍后再试
+     */
     SERVER_BUSY(503, "服务器正忙，请稍后再试!"),
+    /**
+     * 当前请求方法不支持
+     */
     REQUEST_METHOD_SUPPORT_ERROR(40001, "当前请求方法不支持"),
     /**
      * Too Many Requests

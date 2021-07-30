@@ -1,6 +1,8 @@
 spring:
   application:
     name: @artifactId@
+  profiles:
+    active: prod
   cloud:
     nacos:
       server-addr: vihacker.top:8101

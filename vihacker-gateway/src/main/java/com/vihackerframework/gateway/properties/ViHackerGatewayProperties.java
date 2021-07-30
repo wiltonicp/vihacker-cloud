@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  * @author Ranger
@@ -20,7 +23,7 @@ public class ViHackerGatewayProperties {
     public final static String PREFIX = "vihacker.gateway";
 
     /**
-     * 禁止外部访问的 URI，多个值的话以逗号分隔
+     * 忽略URL，List列表形式
      */
-    private String forbidRequestUri;
+    private List<String> forbidRequestUri = new ArrayList<>();
 }

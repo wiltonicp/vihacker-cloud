@@ -1,5 +1,6 @@
 package com.vihackerframework.uaa.properties;
 
+import com.vihackerframework.core.constant.Oauth2Constant;
 import lombok.Data;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -24,7 +25,7 @@ public class ViHackerAuthProperties {
     /**
      * JWT加签密钥
      */
-    private String jwtAccessKey;
+    private String jwtAccessKey = Oauth2Constant.SIGN_KEY;
 
     /**
      * 社交登录所使用的 Client

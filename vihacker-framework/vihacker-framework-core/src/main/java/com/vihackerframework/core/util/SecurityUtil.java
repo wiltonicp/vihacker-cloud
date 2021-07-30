@@ -1,6 +1,12 @@
 package com.vihackerframework.core.util;
 
+import com.vihackerframework.core.api.IErrorCode;
+import com.vihackerframework.core.api.ResultCode;
 import com.vihackerframework.core.entity.system.AdminAuthUser;
+import com.vihackerframework.core.exception.ViHackerAuthException;
+import com.vihackerframework.core.exception.ViHackerException;
+import com.vihackerframework.core.exception.ViHackerRuntimeException;
+import io.jsonwebtoken.Claims;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +24,44 @@ import java.util.List;
  * @since 2021/6/7
  */
 public class SecurityUtil {
+
+    public static String BEARER = "bearer";
+    public static Integer AUTH_LENGTH = 7;
+
+    /**
+     * 获取token串
+     *
+     * @param auth token
+     * @return String
+     */
+    public static String getToken(String auth) {
+        if ((auth != null) && (auth.length() > AUTH_LENGTH)) {
+            String headStr = auth.substring(0, 6).toLowerCase();
+            if (headStr.compareTo(BEARER) == 0) {
+                auth = auth.substring(7);
+            }
+            return auth;
+        }
+        return null;
+    }
+
+    /**
+     * 从Token解析获取Claims对象
+     *
+     * @param token Mate-Auth获取的token
+     * @return Claims
+     */
+    public static Claims getClaims(String token) {
+        Claims claims = null;
+        if (StringUtil.isNotBlank(token)) {
+            try {
+                claims = TokenUtil.getClaims(token);
+            } catch (Exception e) {
+                throw new ViHackerAuthException(ResultCode.UNAUTHORIZED.getMessage());
+            }
+        }
+        return claims;
+    }
 
     /**
      * 从HttpServletRequest里获取token

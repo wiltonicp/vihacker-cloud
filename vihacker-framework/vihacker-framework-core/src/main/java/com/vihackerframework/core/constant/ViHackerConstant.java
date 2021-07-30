@@ -58,4 +58,9 @@ public class ViHackerConstant {
      * Gateway请求头TOKEN值
      */
     public static final String GATEWAY_TOKEN_VALUE = "vihacker:gateway:123456";
+
+    /**
+     * json类型报文，UTF-8字符集
+     */
+    public static final String JSON_UTF8 = "application/json;charset=UTF-8";
 }
