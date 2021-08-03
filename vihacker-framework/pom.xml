@@ -22,7 +22,7 @@
         <module>vihacker-framework-doc-starter</module>
         <module>vihacker-framework-redis-starter</module>
         <module>vihacker-framework-web-starter</module>
-        <module>vihacker-framework-resource-server-starter</module>
+        <module>vihacker-framework-security-starter</module>
         <module>vihacker-framework-sentinel-starter</module>
         <module>vihacker-framework-kafka-starter</module>
         <module>vihacker-framework-log-starter</module>

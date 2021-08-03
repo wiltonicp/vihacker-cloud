@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-resource-server-starter</artifactId>
+            <artifactId>vihacker-framework-security-starter</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>

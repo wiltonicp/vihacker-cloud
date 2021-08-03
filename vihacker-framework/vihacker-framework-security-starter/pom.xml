@@ -10,8 +10,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <name>ViHacker-Framework-Resource-Server-Starter</name>
-    <artifactId>vihacker-framework-resource-server-starter</artifactId>
+    <name>ViHacker-Framework-Security-Starter</name>
+    <artifactId>vihacker-framework-security-starter</artifactId>
     <packaging>jar</packaging>
     <description>资源服务器模块</description>
 
