@@ -142,6 +142,13 @@ public class ViHackerResult<T> implements Serializable {
     /**
      * 未登录返回结果
      */
+    public static <T> ViHackerResult<T> unauthorized(String message) {
+        return new ViHackerResult<T>(ResultCode.UNAUTHORIZED.getCode(), message);
+    }
+
+    /**
+     * 未登录返回结果
+     */
     public static <T> ViHackerResult<T> unauthorized(T data) {
         return new ViHackerResult<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
     }

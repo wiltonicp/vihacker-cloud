@@ -12,8 +12,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @SpringBootConfiguration
-@ConfigurationProperties(prefix = "vihacker.captcha")
+@ConfigurationProperties(ValidateCodeProperties.PREFIX)
 public class ValidateCodeProperties {
+
+    public static final String PREFIX = "vihacker.captcha";
 
     /**
      * 是否启用验证码

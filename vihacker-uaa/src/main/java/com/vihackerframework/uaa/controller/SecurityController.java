@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 /**
  * <p>
@@ -22,6 +23,11 @@ public class SecurityController {
 
     private final ConsumerTokenServices consumerTokenServices;
 
+
+    @GetMapping("user/info")
+    public@ResponseBody Principal currentUser(Principal principal) {
+        return principal;
+    }
 
     @GetMapping("login")
     public String login() {

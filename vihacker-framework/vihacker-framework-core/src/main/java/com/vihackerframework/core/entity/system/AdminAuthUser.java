@@ -32,6 +32,16 @@ public class AdminAuthUser extends User {
 
     private String sex;
 
+    /**
+     * 登录类型
+     */
+    private String type;
+
+    /**
+     * 租户ID
+     */
+    private String tenantId;
+
     private Long deptId;
 
     private String deptName;

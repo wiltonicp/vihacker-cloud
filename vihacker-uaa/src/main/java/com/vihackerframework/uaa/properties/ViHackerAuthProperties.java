@@ -1,9 +1,10 @@
 package com.vihackerframework.uaa.properties;
 
 import com.vihackerframework.core.constant.Oauth2Constant;
-import lombok.Data;
-import org.springframework.boot.SpringBootConfiguration;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -12,15 +13,19 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @email wilton.icp@gmail.com
  * @since 2021/6/5
  */
-@Data
-@SpringBootConfiguration
-@ConfigurationProperties(prefix = "vihacker.uaa")
+@Getter
+@Setter
+@Component
+@ConfigurationProperties(ViHackerAuthProperties.PREFIX)
 public class ViHackerAuthProperties {
+
+    public static final String PREFIX = "vihacker.uaa";
 
     /**
      * 开关：同应用账号互踢
      */
-    private boolean isSingleLogin = false;
+
+    private boolean isSingleLogin = Boolean.FALSE;
 
     /**
      * JWT加签密钥

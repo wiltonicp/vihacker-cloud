@@ -3,7 +3,7 @@ spring:
     name: @artifactId@
   cloud:
     nacos:
-      server-addr: vihacker.top:8101
+      server-addr: cloud.vihacker.top:8101
       config:
         group: TEST_GROUP
         prefix: vihacker-uaa

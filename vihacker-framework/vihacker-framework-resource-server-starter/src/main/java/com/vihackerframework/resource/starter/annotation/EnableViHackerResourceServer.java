@@ -6,7 +6,8 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * <p>
+ * 资源服务注解
+ *
  * @author Ranger
  * @email wilton.icp@gmail.com
  * @since 2021/6/15

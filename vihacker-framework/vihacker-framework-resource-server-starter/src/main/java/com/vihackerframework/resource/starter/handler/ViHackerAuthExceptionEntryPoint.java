@@ -26,7 +26,7 @@ public class ViHackerAuthExceptionEntryPoint implements AuthenticationEntryPoint
         String requestUri = request.getRequestURI();
         int status = HttpServletResponse.SC_UNAUTHORIZED;
         String message = "访问令牌不合法";
-        log.error("客户端访问{}请求失败: {}", requestUri, message, authException);
-        ViHackerUtil.response(response, MediaType.APPLICATION_JSON_VALUE,status, ViHackerResult.failed(message));
+        log.error("客户端访问:{},请求失败: {}", requestUri, message, authException);
+        ViHackerUtil.response(response, MediaType.APPLICATION_JSON_VALUE,status, ViHackerResult.unauthorized(message));
     }
 }

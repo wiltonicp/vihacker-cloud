@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceS
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -29,6 +30,7 @@ import org.springframework.util.Base64Utils;
  * @email wilton.icp@gmail.com
  * @since 2021/6/15
  */
+@Order(6)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties(ViHackerSecurityProperties.class)
 @ConditionalOnProperty(value = "vihacker.security.enable", havingValue = "true", matchIfMissing = true)
@@ -40,7 +42,7 @@ public class ViHackerCloudSecurityAutoConfigure extends GlobalMethodSecurityConf
         return new ViHackerAccessDeniedHandler();
     }
 
-   @Bean
+    @Bean
     @ConditionalOnMissingBean(name = "authenticationEntryPoint")
     public ViHackerAuthExceptionEntryPoint authenticationEntryPoint() {
         return new ViHackerAuthExceptionEntryPoint();
@@ -55,13 +57,6 @@ public class ViHackerCloudSecurityAutoConfigure extends GlobalMethodSecurityConf
     @Bean
     public ViHackerCloudSecurityInteceptorConfigure cloudSecurityInteceptorConfigure() {
         return new ViHackerCloudSecurityInteceptorConfigure();
-    }
-
-    @Bean
-    @Primary
-    @ConditionalOnMissingBean(DefaultTokenServices.class)
-    public ViHackerUserInfoTokenServices userInfoTokenServices(ResourceServerProperties properties) {
-        return new ViHackerUserInfoTokenServices(properties.getUserInfoUri(), properties.getClientId());
     }
 
     @Bean

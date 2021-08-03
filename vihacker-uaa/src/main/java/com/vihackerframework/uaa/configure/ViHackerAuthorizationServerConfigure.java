@@ -1,31 +1,48 @@
 package com.vihackerframework.uaa.configure;
 
+import com.vihackerframework.core.constant.Oauth2Constant;
+import com.vihackerframework.core.entity.system.AdminAuthUser;
+import com.vihackerframework.redis.starter.service.RedisService;
 import com.vihackerframework.uaa.exception.ViHackerAuthWebResponseExceptionTranslator;
+import com.vihackerframework.uaa.granter.CaptchaTokenGranter;
+import com.vihackerframework.uaa.granter.SmsCodeTokenGranter;
+import com.vihackerframework.uaa.granter.SocialTokenGranter;
 import com.vihackerframework.uaa.properties.ViHackerAuthProperties;
 import com.vihackerframework.uaa.service.RedisAuthenticationCodeService;
 import com.vihackerframework.uaa.service.RedisClientDetailsService;
 import com.vihackerframework.uaa.service.impl.SingleLoginTokenServices;
+import com.xkcoding.justauth.AuthRequestFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.CompositeTokenGranter;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
-import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
+
+import java.util.*;
 
 /**
  * <p>
@@ -34,18 +51,30 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
  * @email wilton.icp@gmail.com
  * @since 2021/6/5
  */
+@Order(2)
 @Configuration
 @RequiredArgsConstructor
 @EnableAuthorizationServer
 public class ViHackerAuthorizationServerConfigure extends AuthorizationServerConfigurerAdapter {
 
+    private final RedisService redisService;
+    private final AuthRequestFactory factory;
     private final ViHackerAuthProperties properties;
     private final UserDetailsService userDetailService;
     private final AuthenticationManager authenticationManager;
+    private final RedisConnectionFactory redisConnectionFactory;
     private final RedisClientDetailsService redisClientDetailsService;
     private final RedisAuthenticationCodeService redisAuthenticationCodeService;
     private final ViHackerAuthWebResponseExceptionTranslator exceptionTranslator;
 
+
+    /**
+     * 配置token存储到redis中
+     */
+    @Bean
+    public RedisTokenStore redisTokenStore() {
+        return new RedisTokenStore(redisConnectionFactory);
+    }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -55,10 +84,21 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
     @Override
     @SuppressWarnings("unchecked")
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints.tokenStore(tokenStore())
-                .userDetailsService(userDetailService)
-                .authorizationCodeServices(redisAuthenticationCodeService)
-                .authenticationManager(authenticationManager)
+        DefaultTokenServices tokenServices = createDefaultTokenServices();
+
+        // token增强链
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        // 把jwt增强，与额外信息增强加入到增强链
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), jwtAccessTokenConverter()));
+        tokenServices.setTokenEnhancer(tokenEnhancerChain);
+
+        // 配置tokenServices参数
+        addUserDetailsService(tokenServices);
+        endpoints
+                .tokenGranter(tokenGranter(endpoints, tokenServices))
+                .tokenServices(tokenServices)
+//                .authorizationCodeServices(redisAuthenticationCodeService)
+//                .authenticationManager(authenticationManager)
                 .exceptionTranslator(exceptionTranslator)
                 .accessTokenConverter(jwtAccessTokenConverter());
     }
@@ -72,49 +112,98 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         //开启支持通过表单方式提交client_id和client_secret,否则请求时以basic auth方式,头信息传递Authorization发送请求
-        security.allowFormAuthenticationForClients();
-        security.checkTokenAccess("isAuthenticated()");
-        security.tokenKeyAccess("isAuthenticated()");
+        security
+                .checkTokenAccess("isAuthenticated()")
+                .tokenKeyAccess("isAuthenticated()")
+                .allowFormAuthenticationForClients();
     }
 
-    @Bean
-    public TokenStore tokenStore() {
-        return new JwtTokenStore(jwtAccessTokenConverter());
-    }
-
-    @Bean
-    @Primary
-    public DefaultTokenServices defaultTokenServices() {
+    /**
+     * 创建默认的tokenServices
+     * @return
+     */
+    private DefaultTokenServices createDefaultTokenServices() {
         DefaultTokenServices tokenServices = new SingleLoginTokenServices(properties.isSingleLogin());
-
-        tokenServices.setTokenStore(tokenStore());
-        tokenServices.setSupportRefreshToken(true);
+        tokenServices.setTokenStore(redisTokenStore());
+        // 支持刷新Token
+        tokenServices.setSupportRefreshToken(Boolean.TRUE);
+        tokenServices.setReuseRefreshToken(Boolean.FALSE);
         tokenServices.setClientDetailsService(redisClientDetailsService);
-        tokenServices.setAccessTokenValiditySeconds(properties.getAccessTokenValiditySeconds());
-        tokenServices.setRefreshTokenValiditySeconds(properties.getRefreshTokenValiditySeconds());
+        addUserDetailsService(tokenServices);
         return tokenServices;
     }
+
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
-        DefaultAccessTokenConverter defaultAccessTokenConverter = (DefaultAccessTokenConverter) accessTokenConverter.getAccessTokenConverter();
-        DefaultUserAuthenticationConverter userAuthenticationConverter = new DefaultUserAuthenticationConverter();
-        userAuthenticationConverter.setUserDetailsService(userDetailService);
-        defaultAccessTokenConverter.setUserTokenConverter(userAuthenticationConverter);
         accessTokenConverter.setSigningKey(properties.getJwtAccessKey());
         return accessTokenConverter;
     }
 
-    @Bean
-    public ResourceOwnerPasswordTokenGranter resourceOwnerPasswordTokenGranter(AuthenticationManager authenticationManager, OAuth2RequestFactory oAuth2RequestFactory) {
-        DefaultTokenServices defaultTokenServices = defaultTokenServices();
-        defaultTokenServices.setTokenEnhancer(jwtAccessTokenConverter());
-        return new ResourceOwnerPasswordTokenGranter(authenticationManager, defaultTokenServices, redisClientDetailsService, oAuth2RequestFactory);
+    private void addUserDetailsService(DefaultTokenServices tokenServices) {
+        if (userDetailService != null) {
+            PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+            provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailService));
+            tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
+        }
     }
 
+    /**
+     * 重点
+     * 先获取已经有的五种授权，然后添加我们自己的进去
+     *
+     * @param endpoints AuthorizationServerEndpointsConfigurer
+     * @return TokenGranter
+     */
+    private TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints, DefaultTokenServices tokenServices) {
+        List<TokenGranter> granters = new ArrayList<>(Collections.singletonList(endpoints.getTokenGranter()));
+        // 短信验证码模式
+        granters.add(new SmsCodeTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), redisService));
+        // 验证码模式
+        granters.add(new CaptchaTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), redisService));
+        // 社交登录模式
+        granters.add(new SocialTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), redisService, factory));
+        // 增加密码模式
+        granters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
+        return new CompositeTokenGranter(granters);
+    }
+
+    /**
+     * jwt token增强，添加额外信息
+     *
+     * @return TokenEnhancer
+     */
     @Bean
-    public DefaultOAuth2RequestFactory oAuth2RequestFactory() {
-        return new DefaultOAuth2RequestFactory(redisClientDetailsService);
+    public TokenEnhancer tokenEnhancer() {
+        return new TokenEnhancer() {
+            @Override
+            public OAuth2AccessToken enhance(OAuth2AccessToken oAuth2AccessToken, OAuth2Authentication oAuth2Authentication) {
+
+                // 添加额外信息的map
+                final Map<String, Object> additionMessage = new HashMap<>(2);
+                // 对于客户端鉴权模式，直接返回token
+                if (oAuth2Authentication.getUserAuthentication() == null) {
+                    return oAuth2AccessToken;
+                }
+                // 获取当前登录的用户
+                AdminAuthUser user = (AdminAuthUser) oAuth2Authentication.getUserAuthentication().getPrincipal();
+
+                // 如果用户不为空 则把id放入jwt token中
+                if (user != null) {
+                    additionMessage.put(Oauth2Constant.MATE_USER_ID, String.valueOf(user.getUserId()));
+                    additionMessage.put(Oauth2Constant.MATE_USER_NAME, user.getUsername());
+                    additionMessage.put(Oauth2Constant.MATE_AVATAR, user.getAvatar());
+                    additionMessage.put(Oauth2Constant.MATE_ROLE_ID, String.valueOf(user.getRoleId()));
+                    additionMessage.put(Oauth2Constant.MATE_TYPE, user.getType());
+                    additionMessage.put(Oauth2Constant.MATE_TENANT_ID, user.getTenantId());
+                }
+                ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(additionMessage);
+                return oAuth2AccessToken;
+            }
+        };
     }
 }
