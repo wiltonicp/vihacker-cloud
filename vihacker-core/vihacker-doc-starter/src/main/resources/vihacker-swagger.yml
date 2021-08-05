@@ -1,0 +1,32 @@
+vihacker:
+  doc:
+    enable: true
+    basic:
+      username: admin
+      password: vihacker
+    title: ViHackerCLoud文档管理中心
+    description: ViHackerCLoud文档管理
+    service-url: http://cloud.vihacker.top
+    name: Ranger
+    url: https://blog.wiltonic.cn
+    email: wilton.icp@gmail.com
+    license: Powered by ViHackerCLoud
+    license-url: https://github.com/wiltonicp/vihacker-cloud/blob/master/LICENSE
+
+
+# knife4j配置
+knife4j:
+  enable: ${vihacker.doc.enable}
+  # 开启生产环境屏蔽
+  production: false
+  basic:
+    enable: true
+    username: ${vihacker.doc.basic.username}
+    password: ${vihacker.doc.basic.password}
+  setting:
+    # 是否不显示Knife4j默认的footer，默认为true(显示)
+    enableFooter: false
+    # 是否自定义Footer，默认为false(非自定义)
+    enableFooterCustom: true
+    # 自定义Footer内容,支持Markdown语法
+    footerCustomContent: Apache License 2.0 | Copyright  2020-[ViHacker-Cloud](https://github.com/wiltonicp/vihacker-cloud)

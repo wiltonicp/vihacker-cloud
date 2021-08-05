@@ -6,20 +6,20 @@
     <parent>
         <groupId>com.vihackerframework</groupId>
         <artifactId>vihacker-cloud</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.2</version>
         <relativePath>../vihacker-cloud/pom.xml</relativePath>
     </parent>
 
     <artifactId>vihacker-gateway</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
     <name>ViHacker-Gateway</name>
-    <description>ViHacker-Cloud-CAS 网关服务器</description>
+    <description>ViHacker-Cloud 网关服务器</description>
 
     <dependencies>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-core</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-common</artifactId>
+            <version>1.0.2</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.baomidou</groupId>
@@ -33,8 +33,7 @@
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-web-starter</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-web-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -44,18 +43,15 @@
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-log-starter</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-log-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-sentinel-starter</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-sentinel-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-feign-starter</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-feign-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

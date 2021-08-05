@@ -2,35 +2,33 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
-        <artifactId>vihacker-platform</artifactId>
+        <artifactId>vihacker-core</artifactId>
         <groupId>com.vihackerframework</groupId>
         <version>1.0.2</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-
-    <artifactId>vihacker-system</artifactId>
-    <version>1.0.0</version>
-    <description>系统服务</description>
+    <packaging>jar</packaging>
+    <artifactId>vihacker-log-starter</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.vihackerframework</groupId>
             <artifactId>vihacker-common</artifactId>
+            <version>1.0.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-web-starter</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-redis-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-security-starter</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

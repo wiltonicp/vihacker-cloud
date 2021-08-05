@@ -6,19 +6,21 @@
 
     <groupId>com.vihackerframework</groupId>
     <artifactId>vihacker-cloud</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
     <packaging>pom</packaging>
+
+    <name>ViHacker-Cloud</name>
+    <url>https://blog.wiltonic.cn</url>
+    <description>ViHacker-Cloud：Spring Cloud，Spring Security OAuth2 微服务统一认证中心</description>
+
     <modules>
+        <module>../vihacker-core</module>
         <module>../vihacker-uaa</module>
-        <module>../vihacker-framework</module>
         <module>../vihacker-platform</module>
         <module>../vihacker-thirdparty</module>
         <module>../vihacker-pay</module>
     </modules>
 
-    <name>ViHacker-Cloud</name>
-    <url>https://blog.wiltonic.cn</url>
-    <description>ViHacker-Cloud-CAS：Spring Cloud，Spring Security OAuth2 微服务统一认证中心</description>
     <licenses>
         <license>
             <name>The ApacheSoftware License, Version 2.0</name>
@@ -39,62 +41,65 @@
         <url>https://blog.vihacker.top</url>
     </scm>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.1</version>
-        <relativePath/>
-    </parent>
-
     <properties>
-        <java.version>1.8</java.version>
-        <spring-cloud.version>2020.0.3</spring-cloud.version>
-        <com-alibaba-cloud.version>2021.1</com-alibaba-cloud.version>
+        <vihacker.core.version>1.0.2</vihacker.core.version>
+        <java.version>11</java.version>
+        <maven.plugin.version>3.8.1</maven.plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring.boot.version>2.5.1</spring.boot.version>
+
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
+        <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
+        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <maven-dockerfile-plugin.version>1.4.10</maven-dockerfile-plugin.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
         <docker.serverId>docker-aliyun</docker.serverId>
         <docker.registry>registry.cn-shanghai.aliyuncs.com/vihacker</docker.registry>
         <docker.registry.name>vihacker/tools</docker.registry.name>
-        <mysql-connector.version>8.0.11</mysql-connector.version>
-        <hutool.version>5.4.0</hutool.version>
-        <ip2region.version>1.7</ip2region.version>
-        <xml-api.version>1.4.01</xml-api.version>
-        <guava.version>27.0-jre</guava.version>
-        <excelkit.version>2.0.72</excelkit.version>
-        <knife4j.version>2.0.8</knife4j.version>
-        <springfox.version>2.9.2</springfox.version>
-        <swagger.version>1.6.0</swagger.version>
-        <spring-data-commons.version>2.3.0.RELEASE</spring-data-commons.version>
-        <jjwt.version>0.9.1</jjwt.version>
-        <vjackson.version>2.12.3</vjackson.version>
-        <justauth.version>1.3.5</justauth.version>
-        <aliyun-oss.version>2.5.0</aliyun-oss.version>
-        <mybatis-plus.version>3.2.0</mybatis-plus.version>
-        <p6spy.version>3.8.5</p6spy.version>
-        <fastjson.version>1.2.62</fastjson.version>
-        <dynamic-datasource.version>2.5.4</dynamic-datasource.version>
-        <logstash-logback.version>6.1</logstash-logback.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${com-alibaba-cloud.version}</version>
+                <groupId>com.vihackerframework</groupId>
+                <artifactId>vihacker-dependencies-starter</artifactId>
+                <version>${vihacker.core.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <id>releases</id>-->
+<!--            <name>Release Repository</name>-->
+<!--            <url>http://nexus.mate.vip/repository/maven-releases/</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>nexus-snapshots</id>-->
+<!--            <url>http://nexus.mate.vip/repository/maven-snapshots/</url>-->
+<!--        </snapshotRepository>-->
+<!--    </distributionManagement>-->
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id> <!-- nexus认证id -->
+            <url>http://rep.wiltonic.cn:8331/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id> <!-- nexus认证id -->
+            <url>http://rep.wiltonic.cn:8331/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 
     <profiles>
@@ -170,14 +175,4 @@
         </profile>
     </profiles>
 
-    <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <url>http://rep.wiltonic.cn:8331/repository/maven-releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <url>http://rep.wiltonic.cn:8331/repository/maven-snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>

@@ -6,49 +6,42 @@
     <parent>
         <groupId>com.vihackerframework</groupId>
         <artifactId>vihacker-cloud</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.2</version>
         <relativePath>../vihacker-cloud/pom.xml</relativePath>
     </parent>
 
     <artifactId>vihacker-uaa</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
     <description>ViHacker-Cloud 认证服务器</description>
 
     <dependencies>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-core</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-common</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-log-starter</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-log-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-web-starter</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-web-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-security-starter</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-security-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-datasource-starter</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-datasource-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-redis-starter</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-redis-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.xkcoding.justauth</groupId>
             <artifactId>justauth-spring-boot-starter</artifactId>
-            <version>${justauth.version}</version>
         </dependency>
 
     </dependencies>
@@ -58,6 +51,12 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
             </resource>
         </resources>
         <plugins>

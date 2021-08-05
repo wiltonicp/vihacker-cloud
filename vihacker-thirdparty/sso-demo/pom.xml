@@ -5,7 +5,7 @@
     <parent>
         <artifactId>vihacker-thirdparty</artifactId>
         <groupId>com.vihackerframework</groupId>
-        <version>1.0.0</version>
+        <version>1.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,8 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-web-starter</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-web-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>com.alibaba.cloud</groupId>
@@ -29,8 +28,7 @@
         </dependency>
         <dependency>
             <groupId>com.vihackerframework</groupId>
-            <artifactId>vihacker-framework-resource-server-starter</artifactId>
-            <version>1.0.0</version>
+            <artifactId>vihacker-security-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>com.baomidou</groupId>
