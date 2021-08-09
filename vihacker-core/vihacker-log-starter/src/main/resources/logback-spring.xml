@@ -99,10 +99,10 @@
         <appender-ref ref="audit_log"/>
     </appender>
 
-    <logger name="com.vihackerframework.log.util" level="debug" addtivity="false">
+    <logger name="cc.vihackerframework.log.util" level="debug" addtivity="false">
         <appender-ref ref="track_log_async"/>
     </logger>
-    <logger name="com.vihackerframework.system.service.impl.SysLogServiceImpl" level="debug" addtivity="false">
+    <logger name="cc.vihackerframework.system.service.impl.SysLogServiceImpl" level="debug" addtivity="false">
         <appender-ref ref="audit_log_async"/>
     </logger>
 
@@ -119,7 +119,7 @@
     <logger name="org.hibernate.validator.internal.util.Version" level="off" />
 
     <!--可以输出项目中的debug日志，包括mybatis的sql日志-->
-    <logger name="com.vihackerframework.**.mapper" level="INFO" />
+    <logger name="cc.vihackerframework.**.mapper" level="INFO" />
 
     <root level="INFO">
         <appender-ref ref="StdoutAppender"/>

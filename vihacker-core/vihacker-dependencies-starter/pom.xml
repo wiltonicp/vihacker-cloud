@@ -10,7 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.vihackerframework</groupId>
+    <groupId>cc.vihackerframework</groupId>
     <artifactId>vihacker-dependencies-starter</artifactId>
     <version>1.0.2</version>
     <packaging>pom</packaging>
@@ -22,7 +22,6 @@
         <license>
             <name>The ApacheSoftware License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
         </license>
     </licenses>
 
@@ -34,7 +33,6 @@
     </developers>
 
     <scm>
-        <tag>master</tag>
         <connection>scm:git:git@github.com:wiltonicp/vihacker-cloud.git</connection>
         <developerConnection>scm:git:git@github.com:wiltonicp/vihacker-cloud.git</developerConnection>
         <url>https://github.com/wiltonicp/vihacker-cloud</url>
@@ -85,7 +83,7 @@
         <commons-collections.version>3.2.2</commons-collections.version>
 
         <lombok.version>1.18.20</lombok.version>
-<!--        <poi.version>4.1.2</poi.version>-->
+        <!--  <poi.version>4.1.2</poi.version>-->
         <easypoi.version>4.4.0</easypoi.version>
         <hutool.version>5.6.3</hutool.version>
         <jetcache.version>2.6.0</jetcache.version>
@@ -572,77 +570,67 @@
                 </executions>
             </plugin>
             <!-- GPG -->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-gpg-plugin</artifactId>-->
-<!--                <version>1.6</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>sign-artifacts</id>-->
-<!--                        <phase>verify</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>sign</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-javadoc-plugin</artifactId>-->
-<!--                <version>2.9.1</version>-->
-<!--                <configuration>-->
-<!--                    <show>private</show>-->
-<!--                    <nohelp>true</nohelp>-->
-<!--                    <charset>UTF-8</charset>-->
-<!--                    <encoding>UTF-8</encoding>-->
-<!--                    <docencoding>UTF-8</docencoding>-->
-<!--                    <additionalparam>-Xdoclint:none</additionalparam>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>jar</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash;自动发布&ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.sonatype.plugins</groupId>-->
-<!--                <artifactId>nexus-staging-maven-plugin</artifactId>-->
-<!--                <version>1.6.8</version>-->
-<!--                <extensions>true</extensions>-->
-<!--                <configuration>-->
-<!--                    <serverId>sonatype</serverId>-->
-<!--                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>-->
-<!--                    <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <show>private</show>
+                    <nohelp>true</nohelp>
+                    <charset>UTF-8</charset>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--自动发布-->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>sonatype</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <!-- 发布项目到 sonatype -->
-<!--    <distributionManagement>-->
-<!--        <snapshotRepository>-->
-<!--            <id>sonatype</id>-->
-<!--            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>-->
-<!--        </snapshotRepository>-->
-<!--        <repository>-->
-<!--            <id>sonatype</id>-->
-<!--            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
-<!--        </repository>-->
-<!--    </distributionManagement>-->
-
     <distributionManagement>
-        <repository>
-            <id>nexus-releases</id> <!-- nexus认证id -->
-            <url>http://rep.wiltonic.cn:8331/repository/maven-releases</url>
-        </repository>
         <snapshotRepository>
-            <id>nexus-snapshots</id> <!-- nexus认证id -->
-            <url>http://rep.wiltonic.cn:8331/repository/maven-snapshots</url>
+            <id>sonatype</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
+        <repository>
+            <id>sonatype</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
 
 </project>

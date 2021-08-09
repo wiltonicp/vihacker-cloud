@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.vihackerframework</groupId>
+        <groupId>cc.vihackerframework</groupId>
         <artifactId>vihacker-cloud</artifactId>
         <version>1.0.2</version>
         <relativePath>../vihacker-cloud/pom.xml</relativePath>
@@ -16,27 +16,27 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-log-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-web-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-security-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-datasource-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-redis-starter</artifactId>
         </dependency>
         <dependency>
