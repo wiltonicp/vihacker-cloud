@@ -6,10 +6,10 @@
 
     <groupId>cc.vihackerframework</groupId>
     <artifactId>vihacker-cloud</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>pom</packaging>
 
-    <name>ViHacker-Cloud</name>
+    <name>vihacker-cloud</name>
     <url>https://blog.wiltonic.cn</url>
     <description>ViHacker-Cloud：Spring Cloud，Spring Security OAuth2 微服务统一认证中心</description>
 
@@ -44,7 +44,7 @@
     </scm>
 
     <properties>
-        <vihacker.core.version>1.0.2</vihacker.core.version>
+        <vihacker.core.version>1.0.3</vihacker.core.version>
         <java.version>11</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

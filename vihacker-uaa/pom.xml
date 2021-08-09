@@ -6,12 +6,12 @@
     <parent>
         <groupId>cc.vihackerframework</groupId>
         <artifactId>vihacker-cloud</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
         <relativePath>../vihacker-cloud/pom.xml</relativePath>
     </parent>
 
     <artifactId>vihacker-uaa</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <description>ViHacker-Cloud 认证服务器</description>
 
     <dependencies>

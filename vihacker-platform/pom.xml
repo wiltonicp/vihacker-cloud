@@ -7,7 +7,7 @@
     <parent>
         <artifactId>vihacker-cloud</artifactId>
         <groupId>cc.vihackerframework</groupId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
         <relativePath>../vihacker-cloud/pom.xml</relativePath>
     </parent>
 

@@ -7,11 +7,11 @@
     <parent>
         <artifactId>vihacker-core</artifactId>
         <groupId>cc.vihackerframework</groupId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>ViHacker-Common</name>
+    <name>vihacker-common</name>
     <packaging>jar</packaging>
     <artifactId>vihacker-common</artifactId>
     <description>ViHacker--Common系统核心模块</description>
