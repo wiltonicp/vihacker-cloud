@@ -5,12 +5,12 @@
     <parent>
         <artifactId>vihacker-core</artifactId>
         <groupId>cc.vihackerframework</groupId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <name>ViHacker-Redis-Starter</name>
+    <name>vihacker-redis-starter</name>
     <description>redis模块</description>
     <packaging>jar</packaging>
     <artifactId>vihacker-redis-starter</artifactId>

@@ -6,10 +6,10 @@
 
     <artifactId>vihacker-core</artifactId>
     <groupId>cc.vihackerframework</groupId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>pom</packaging>
 
-    <name>ViHacker-Core</name>
+    <name>vihacker-core</name>
     <description>ViHacker-Core microservice components</description>
     <url>https://github.com/wiltonicp/vihacker-cloud</url>
 
@@ -52,7 +52,7 @@
     </modules>
 
     <properties>
-        <vihacker.core.version>1.0.2</vihacker.core.version>
+        <vihacker.core.version>1.0.3</vihacker.core.version>
 
         <java.version>11</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>

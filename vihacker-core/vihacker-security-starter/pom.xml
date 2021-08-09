@@ -5,12 +5,12 @@
     <parent>
         <artifactId>vihacker-core</artifactId>
         <groupId>cc.vihackerframework</groupId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <name>ViHacker-Security-Starter</name>
+    <name>vihacker-security-starter</name>
     <artifactId>vihacker-security-starter</artifactId>
     <packaging>jar</packaging>
     <description>资源服务器模块</description>
