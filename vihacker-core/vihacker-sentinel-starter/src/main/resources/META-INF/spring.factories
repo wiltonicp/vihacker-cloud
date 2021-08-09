@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.vihackerframework.sentinel.starter.config.ViHackerSentinelConfiguration
+  cc.vihackerframework.sentinel.starter.config.ViHackerSentinelConfiguration
 
 

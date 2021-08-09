@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>vihacker-core</artifactId>
-        <groupId>com.vihackerframework</groupId>
+        <groupId>cc.vihackerframework</groupId>
         <version>1.0.2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -14,9 +14,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-common</artifactId>
-            <version>1.0.2</version>
             <scope>provided</scope>
         </dependency>
         <!--feign 依赖-->

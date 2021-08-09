@@ -6,7 +6,7 @@
 
     <parent>
         <artifactId>vihacker-platform</artifactId>
-        <groupId>com.vihackerframework</groupId>
+        <groupId>cc.vihackerframework</groupId>
         <version>1.0.2</version>
     </parent>
 
@@ -17,19 +17,19 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-web-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-redis-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.vihackerframework</groupId>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-security-starter</artifactId>
         </dependency>
     </dependencies>
