@@ -118,7 +118,12 @@
             <!-- ViHacker Core-->
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>vihacker-common</artifactId>
+                <artifactId>vihacker-common-starter</artifactId>
+                <version>${vihacker.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>vihacker-cloud-starter</artifactId>
                 <version>${vihacker.core.version}</version>
             </dependency>
             <dependency>

@@ -37,8 +37,9 @@
     </scm>
 
     <modules>
-        <module>vihacker-common</module>
         <module>vihacker-dependencies-starter</module>
+        <module>vihacker-common-starter</module>
+        <module>vihacker-cloud-starter</module>
         <module>vihacker-datasource-starter</module>
         <module>vihacker-doc-starter</module>
         <module>vihacker-redis-starter</module>

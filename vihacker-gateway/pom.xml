@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-common</artifactId>
+            <artifactId>vihacker-cloud-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>com.baomidou</groupId>
@@ -30,26 +30,9 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Nacos -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-log-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-sentinel-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-feign-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

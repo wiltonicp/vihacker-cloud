@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-common</artifactId>
+            <artifactId>vihacker-common-starter</artifactId>
             <scope>provided</scope>
         </dependency>
         <!--feign 依赖-->

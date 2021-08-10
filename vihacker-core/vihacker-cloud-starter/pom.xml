@@ -10,10 +10,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <name>vihacker-datasource-starter</name>
-    <description>通用数据库模块</description>
-    <packaging>jar</packaging>
-    <artifactId>vihacker-datasource-starter</artifactId>
+    <name>vihacker-cloud-starter</name>
+    <artifactId>vihacker-cloud-starter</artifactId>
 
     <dependencies>
         <dependency>
@@ -21,17 +19,21 @@
             <artifactId>vihacker-common-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-feign-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>p6spy</groupId>
-            <artifactId>p6spy</artifactId>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-sentinel-starter</artifactId>
+        </dependency>
+        <!-- Nacos -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
     </dependencies>
 

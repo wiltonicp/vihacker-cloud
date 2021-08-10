@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-common</artifactId>
+            <artifactId>vihacker-cloud-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>

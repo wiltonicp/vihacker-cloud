@@ -11,10 +11,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>vihacker-common</name>
-    <packaging>jar</packaging>
-    <artifactId>vihacker-common</artifactId>
-    <description>ViHacker--Common系统核心模块</description>
+    <name>vihacker-common-starter</name>
+    <artifactId>vihacker-common-starter</artifactId>
+    <description>ViHacker--Common-Starter系统核心模块</description>
 
     <dependencies>
         <dependency>
