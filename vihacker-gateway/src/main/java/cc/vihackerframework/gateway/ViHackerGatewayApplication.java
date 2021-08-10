@@ -2,6 +2,7 @@ package cc.vihackerframework.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * <p>
@@ -9,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @email wilton.icp@gmail.com
  * @since 2021/6/8
  */
-
+@EnableDiscoveryClient
 @SpringBootApplication
 public class ViHackerGatewayApplication {
 

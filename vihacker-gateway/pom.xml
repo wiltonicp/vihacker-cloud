@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-common</artifactId>
+            <artifactId>vihacker-cloud-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>com.baomidou</groupId>
@@ -32,25 +32,7 @@
         </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-web-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-log-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-sentinel-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-feign-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -74,10 +56,6 @@
                     <artifactId>sentinel-zuul-adapter</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
