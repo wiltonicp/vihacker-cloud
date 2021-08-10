@@ -1,6 +1,8 @@
 spring:
   application:
     name: @artifactId@
+  profiles:
+    active: ${spring.active}
   cloud:
     nacos:
       server-addr: ${config.server-addr}

@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 @RestController
 public class IndexHandler {
 
-	@Value("${spring.profiles.active:dev}")
+	@Value("${spring.profiles.active}")
 	private String env;
 
 	@GetMapping("/")
