@@ -55,6 +55,8 @@
         <vihacker.core.version>1.0.3</vihacker.core.version>
 
         <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <maven.plugin.version>3.8.1</maven.plugin.version>
         <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -199,7 +201,7 @@
                 <configuration>
                     <serverId>sonatype</serverId>
                     <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>
@@ -212,8 +214,8 @@
                 <!--当前环境-->
                 <spring.active>local</spring.active>
                 <config.server-addr>127.0.0.1:8848</config.server-addr>
-                <config.namespace></config.namespace>
-                <config.group>DEFAULT_GROUP</config.group>
+                <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
+                <config.group>TEST_GROUP</config.group>
                 <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
                 <sentinel.dashboard>127.0.0.1:8088</sentinel.dashboard>
@@ -227,7 +229,7 @@
             <properties>
                 <spring.active>dev</spring.active>
                 <config.server-addr>127.0.0.1:8848</config.server-addr>
-                <config.namespace>8c29b21f-c146-4925-9168-3590e754f9da</config.namespace>
+                <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
                 <config.group>DEFAULT_GROUP</config.group>
                 <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
@@ -239,7 +241,7 @@
             <properties>
                 <spring.active>test</spring.active>
                 <config.server-addr>172.26.85.32:8848</config.server-addr>
-                <config.namespace>568b8eaa-f25d-4f2a-8c87-83dcb4caa955</config.namespace>
+                <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
                 <config.group>DEFAULT_GROUP</config.group>
                 <discovery.server-addr>172.26.85.32:8848</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
@@ -251,7 +253,7 @@
             <properties>
                 <spring.active>prod</spring.active>
                 <config.server-addr>172.26.85.32:8848</config.server-addr>
-                <config.namespace>568b8eaa-f25d-4f2a-8c87-83dcb4caa955</config.namespace>
+                <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
                 <config.group>DEFAULT_GROUP</config.group>
                 <discovery.server-addr>172.26.85.32:8848</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
@@ -263,12 +265,15 @@
             <properties>
                 <spring.active>docker</spring.active>
                 <config.server-addr>172.30.0.48:8848</config.server-addr>
-                <config.namespace></config.namespace>
+                <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
                 <config.group>DEFAULT_GROUP</config.group>
                 <discovery.server-addr>172.30.0.48:8848</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
                 <sentinel.dashboard>172.30.0.80:8088</sentinel.dashboard>
             </properties>
+            <!--            <activation>-->
+            <!--                <activeByDefault>true</activeByDefault>-->
+            <!--            </activation>-->
         </profile>
     </profiles>
 

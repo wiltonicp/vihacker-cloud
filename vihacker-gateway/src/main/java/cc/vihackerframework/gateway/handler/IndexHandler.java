@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 @RestController
 public class IndexHandler {
 
-	@Value("${spring.profiles.active}")
+	@Value("${spring.profiles.active:dev}")
 	private String env;
 
 	@GetMapping("/")
@@ -26,10 +26,10 @@ public class IndexHandler {
 
 	private String desc() {
 		StringBuilder sb = new StringBuilder(100);
-		sb.append("<div style='color: blue'>MateCloud gateway has been started!</div>");
+		sb.append("<div style='color: blue;text-align: center;'>ViHackerCloud gateway has been started!</div>");
 		if (!EnvType.PROD.getValue().equals(env)) {
 			sb.append("<br/>");
-			sb.append("<div><ul><li>文档地址：<a href='doc.html'>doc.html</a></li></ul></div>");
+			sb.append("<div style='text-align: center;'><ul style='list-style: none;'><li>文档地址：<a href='doc.html'>doc.html</a></li></ul></div>");
 		}
 		return sb.toString();
 	}

@@ -18,11 +18,11 @@
         <dependency>
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-common</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-            <version>2021.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -33,7 +33,6 @@
         <dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-nacos</artifactId>
-            <version>1.8.0</version>
             <optional>true</optional>
         </dependency>
         <dependency>

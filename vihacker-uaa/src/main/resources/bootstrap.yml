@@ -3,15 +3,15 @@ spring:
     name: @artifactId@
   cloud:
     nacos:
-      server-addr: cloud.vihacker.top:8101
+      server-addr: ${config.server-addr}
       config:
-        group: TEST_GROUP
-        prefix: vihacker-uaa
+        group: ${config.group}
+        prefix: @artifactId@
         file-extension: yaml
-        namespace: 07230e1a-12e6-4209-838f-fa60cf013e7e
+        namespace: ${config.namespace}
       discovery:
-        namespace: 07230e1a-12e6-4209-838f-fa60cf013e7e
-        group: TEST_GROUP
+        namespace: ${config.namespace}
+        group: ${config.group}
 
 logging:
   level:

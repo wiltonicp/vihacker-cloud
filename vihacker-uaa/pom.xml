@@ -43,7 +43,6 @@
             <groupId>com.xkcoding.justauth</groupId>
             <artifactId>justauth-spring-boot-starter</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>

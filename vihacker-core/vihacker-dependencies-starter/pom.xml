@@ -84,6 +84,7 @@
 
         <lombok.version>1.18.20</lombok.version>
         <!--  <poi.version>4.1.2</poi.version>-->
+        <jaxb.version>2.3.0</jaxb.version>
         <easypoi.version>4.4.0</easypoi.version>
         <hutool.version>5.6.3</hutool.version>
         <jetcache.version>2.6.0</jetcache.version>
@@ -494,6 +495,28 @@
                 <version>${seata.version}</version>
             </dependency>
 
+            <!-- 解决 java.lang.NoClassDefFoundError: javax/xml/bind/DatatypeConverter -->
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-core</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -615,7 +638,7 @@
                 <configuration>
                     <serverId>sonatype</serverId>
                     <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>
