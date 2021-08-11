@@ -1,15 +1,13 @@
 package cc.vihackerframework.doc.starter.configure;
 
+import cc.vihackerframework.doc.starter.properties.ViHackerDocProperties;
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.google.common.collect.Lists;
-import cc.vihackerframework.core.factory.YamlPropertySourceFactory;
-import cc.vihackerframework.doc.starter.properties.VihackerDocProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -34,14 +32,13 @@ import java.util.List;
 @EnableSwagger2
 @EnableKnife4j
 @Import(BeanValidatorPluginsConfiguration.class)
-@EnableConfigurationProperties(VihackerDocProperties.class)
-@PropertySource(factory = YamlPropertySourceFactory.class, value = "classpath:vihacker-swagger.yml")
-@ConditionalOnProperty(value = VihackerDocProperties.PREFIX + ".enable", havingValue = "true", matchIfMissing = true)
+@EnableConfigurationProperties(ViHackerDocProperties.class)
+@ConditionalOnProperty(value = ViHackerDocProperties.PREFIX + ".enable", havingValue = "true", matchIfMissing = true)
 public class ViHackerDocAutoConfigure {
 
-    private final VihackerDocProperties properties;
+    private final ViHackerDocProperties properties;
 
-    public ViHackerDocAutoConfigure(VihackerDocProperties properties) {
+    public ViHackerDocAutoConfigure(ViHackerDocProperties properties) {
         this.properties = properties;
     }
 
@@ -75,7 +72,7 @@ public class ViHackerDocAutoConfigure {
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("Bearer", "Authorization", "header");
+        return new ApiKey("BearerToken", "Authorization", "header");
     }
 
     private SecurityContext securityContext() {
@@ -89,6 +86,6 @@ public class ViHackerDocAutoConfigure {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(new SecurityReference("Bearer", authorizationScopes));
+        return Lists.newArrayList(new SecurityReference("BearerToken", authorizationScopes));
     }
 }

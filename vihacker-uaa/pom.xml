@@ -29,6 +29,10 @@
         </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-doc-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-security-starter</artifactId>
         </dependency>
         <dependency>

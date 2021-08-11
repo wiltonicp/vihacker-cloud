@@ -91,11 +91,11 @@
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <ip2region.version>1.7.2</ip2region.version>
         <xml-api.version>1.4.01</xml-api.version>
-        <guava.version>27.0-jre</guava.version>
+        <guava.version>30.1.1-jre</guava.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <spring-boot-admin.version>2.4.1</spring-boot-admin.version>
 
-        <knife4j.version>2.0.8</knife4j.version>
+        <knife4j.version>2.0.2</knife4j.version>
         <springfox.version>2.9.2</springfox.version>
         <swagger.version>1.5.21</swagger.version>
         <jjwt.version>0.9.1</jjwt.version>

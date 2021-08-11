@@ -13,8 +13,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Getter
 @Setter
-@ConfigurationProperties(VihackerDocProperties.PREFIX)
-public class VihackerDocProperties {
+@ConfigurationProperties(ViHackerDocProperties.PREFIX)
+public class ViHackerDocProperties {
 
     /**
      * 前缀
