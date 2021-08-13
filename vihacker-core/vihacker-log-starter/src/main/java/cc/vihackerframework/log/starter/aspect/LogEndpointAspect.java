@@ -1,12 +1,12 @@
 package cc.vihackerframework.log.starter.aspect;
 
+import cc.vihackerframework.core.auth.util.SecurityUtil;
+import cc.vihackerframework.core.util.StringPool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import cc.vihackerframework.core.entity.system.SysLog;
 import cc.vihackerframework.core.util.AddressUtil;
 import cc.vihackerframework.core.util.RequestUtil;
-import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.util.ThrowableUtil;
 import cc.vihackerframework.log.starter.annotation.LogEndpoint;
 import cc.vihackerframework.log.starter.event.LogEvent;

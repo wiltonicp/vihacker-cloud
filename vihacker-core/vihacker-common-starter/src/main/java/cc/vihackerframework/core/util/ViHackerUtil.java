@@ -2,17 +2,9 @@ package cc.vihackerframework.core.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import cc.vihackerframework.core.entity.system.AdminAuthUser;
-import cc.vihackerframework.core.entity.system.CurrentUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.env.Environment;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -160,66 +152,4 @@ public class ViHackerUtil {
                 StringUtils.isNotBlank(contextPath) ? contextPath : "");
     }
 
-    /**
-     * 获取当前用户权限集
-     *
-     * @return Collection<GrantedAuthority>权限集
-     */
-    public static Collection<GrantedAuthority> getCurrentUserAuthority() {
-        return getOauth2Authentication().getAuthorities();
-    }
-
-    /**
-     * 获取当前令牌内容
-     *
-     * @return String 令牌内容
-     */
-    public static String getCurrentTokenValue() {
-        try {
-            OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) getOauth2Authentication().getDetails();
-            return details.getTokenValue();
-        } catch (Exception ignore) {
-            return null;
-        }
-    }
-
-    /**
-     * 获取在线用户信息
-     *
-     * @return CurrentUser 当前用户信息
-     */
-    public static CurrentUser getCurrentUser() {
-        try {
-            LinkedHashMap<String, Object> authenticationDetails = getAuthenticationDetails();
-            Object principal = authenticationDetails.get("principal");
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(mapper.writeValueAsString(principal), CurrentUser.class);
-        } catch (Exception e) {
-            log.error("获取当前用户信息失败", e);
-            return null;
-        }
-    }
-
-    /**
-     * 获取当前用户名称
-     *
-     * @return String 用户名
-     */
-    public static String getCurrentUsername() {
-        Object principal = getOauth2Authentication().getPrincipal();
-        if (principal instanceof AdminAuthUser) {
-            return ((AdminAuthUser) principal).getUsername();
-        }
-        return (String) getOauth2Authentication().getPrincipal();
-    }
-
-    private static OAuth2Authentication getOauth2Authentication() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (OAuth2Authentication) authentication;
-    }
-
-    @SuppressWarnings("all")
-    private static LinkedHashMap<String, Object> getAuthenticationDetails() {
-        return (LinkedHashMap<String, Object>) getOauth2Authentication().getUserAuthentication().getDetails();
-    }
 }

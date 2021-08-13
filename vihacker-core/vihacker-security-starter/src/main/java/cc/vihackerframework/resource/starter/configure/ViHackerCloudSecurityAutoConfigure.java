@@ -1,7 +1,7 @@
 package cc.vihackerframework.resource.starter.configure;
 
+import cc.vihackerframework.core.auth.util.SecurityUtil;
 import cc.vihackerframework.core.constant.ViHackerConstant;
-import cc.vihackerframework.core.util.ViHackerUtil;
 import cc.vihackerframework.resource.starter.handler.ViHackerAccessDeniedHandler;
 import cc.vihackerframework.resource.starter.handler.ViHackerAuthExceptionEntryPoint;
 import cc.vihackerframework.resource.starter.properties.ViHackerSecurityProperties;
@@ -61,7 +61,7 @@ public class ViHackerCloudSecurityAutoConfigure extends GlobalMethodSecurityConf
         return requestTemplate -> {
             String gatewayToken = new String(Base64Utils.encode(ViHackerConstant.GATEWAY_TOKEN_VALUE.getBytes()));
             requestTemplate.header(ViHackerConstant.GATEWAY_TOKEN_HEADER, gatewayToken);
-            String authorizationToken = ViHackerUtil.getCurrentTokenValue();
+            String authorizationToken = SecurityUtil.getCurrentTokenValue();
             if (StringUtils.isNotBlank(authorizationToken)) {
                 requestTemplate.header(HttpHeaders.AUTHORIZATION, ViHackerConstant.OAUTH2_TOKEN_TYPE + authorizationToken);
             }

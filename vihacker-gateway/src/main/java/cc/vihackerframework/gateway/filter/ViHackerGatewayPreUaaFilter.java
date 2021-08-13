@@ -1,10 +1,10 @@
 package cc.vihackerframework.gateway.filter;
 
+import cc.vihackerframework.core.auth.util.SecurityUtil;
 import cc.vihackerframework.core.cloud.properties.ViHackerSecurityProperties;
 import cc.vihackerframework.core.constant.Oauth2Constant;
 import cc.vihackerframework.core.constant.ViHackerConstant;
 import cc.vihackerframework.core.util.ResponseUtil;
-import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.core.util.TokenUtil;
 import io.jsonwebtoken.Claims;

@@ -11,18 +11,17 @@
     </parent>
 
     <artifactId>vihacker-gateway</artifactId>
-    <name>vihacker-gateway</name>
     <description>ViHacker-Cloud 网关服务器</description>
 
     <dependencies>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-cloud-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-auth-starter</artifactId>
             <exclusions>
-                <exclusion>
-                    <groupId>com.baomidou</groupId>
-                    <artifactId>mybatis-plus-boot-starter</artifactId>
-                </exclusion>
                 <exclusion>
                     <groupId>org.springframework.security.oauth.boot</groupId>
                     <artifactId>spring-security-oauth2-autoconfigure</artifactId>
