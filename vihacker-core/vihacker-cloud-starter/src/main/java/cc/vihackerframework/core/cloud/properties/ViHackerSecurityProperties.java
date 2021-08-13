@@ -1,7 +1,8 @@
-package cc.vihackerframework.resource.starter.properties;
+package cc.vihackerframework.core.cloud.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -13,34 +14,42 @@ import java.util.List;
  *
  * @author Ranger
  * @email wilton.icp@gmail.com
- * @since 2021/6/15
+ * @since 2021/8/11
  */
 @Data
-@ConfigurationProperties(prefix = "vihacker.security")
+@RefreshScope
+@ConfigurationProperties(ViHackerSecurityProperties.PREFIX)
 public class ViHackerSecurityProperties {
 
     /**
-     * 是否开启安全配置
+     * 前缀
      */
-    private Boolean enable;
+    public static final String PREFIX = "vihacker.security";
+
+    /**
+     * 是否启用网关鉴权模式
+     */
+    private Boolean enable = false;
+
     /**
      * 配置需要认证的uri，默认为所有/**
      */
     private String authUri = "/**";
+
     /**
-     * 免认证资源路径，支持通配符
-     * 多个值时使用逗号分隔
+     * 免认证资源路径，忽略URL，List列表形式
      */
     private List<String> ignoreUrls = new ArrayList<>();
+
     /**
      * 是否只能通过网关获取资源
      */
     private Boolean onlyFetchByGateway = Boolean.TRUE;
 
     /**
-     * 认证中心默认忽略验证地址
+     * 监控中心和swagger需要访问的url
      */
-    private static final String[] SECURITY_ENDPOINTS = {
+    private static final String[] ENDPOINTS = {
             "/auth/**",
             "/oauth/**",
             "/actuator/**",
@@ -49,6 +58,9 @@ public class ViHackerSecurityProperties {
             "/swagger-ui.html",
             "/doc.html",
             "/swagger-resources/**",
+            "/robots.txt",
+            "/manifest.json",
+            "/index.html",
             "/webjars/**",
             "**/favicon.ico",
             "/druid/**",
@@ -63,7 +75,8 @@ public class ViHackerSecurityProperties {
      * 首次加载合并ENDPOINTS
      */
     @PostConstruct
-    public void initIgnoreSecurity() {
-        Collections.addAll(ignoreUrls, SECURITY_ENDPOINTS);
+    public void initIgnoreUrl() {
+        Collections.addAll(ignoreUrls, ENDPOINTS);
     }
+
 }

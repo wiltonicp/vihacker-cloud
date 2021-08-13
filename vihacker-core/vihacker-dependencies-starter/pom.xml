@@ -91,13 +91,13 @@
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <ip2region.version>1.7.2</ip2region.version>
         <xml-api.version>1.4.01</xml-api.version>
-        <guava.version>27.0-jre</guava.version>
+        <guava.version>30.1.1-jre</guava.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <spring-boot-admin.version>2.4.1</spring-boot-admin.version>
 
         <knife4j.version>2.0.8</knife4j.version>
-        <springfox.version>2.9.2</springfox.version>
-        <swagger.version>1.5.21</swagger.version>
+        <springfox.version>2.10.5</springfox.version>
+        <swagger.version>1.6.2</swagger.version>
         <jjwt.version>0.9.1</jjwt.version>
         <logstash-logback.version>6.1</logstash-logback.version>
         <jakarta.validation-api.version>2.0.2</jakarta.validation-api.version>
@@ -206,18 +206,6 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.connector.version}</version>
             </dependency>
-            <!-- Oracle -->
-<!--            <dependency>-->
-<!--                <groupId>com.oracle</groupId>-->
-<!--                <artifactId>ojdbc7</artifactId>-->
-<!--                <version>${oracle.connector.version}</version>-->
-<!--            </dependency>-->
-<!--            &lt;!&ndash; PostgreSql &ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>org.postgresql</groupId>-->
-<!--                <artifactId>postgresql</artifactId>-->
-<!--                <version>${postgresql.connector.version}</version>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -251,11 +239,6 @@
             </dependency>
 
             <!--Swagger-->
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
-            </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
@@ -361,22 +344,12 @@
                 <artifactId>spring-boot-admin-starter-client</artifactId>
                 <version>${spring-boot-admin.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>org.apache.poi</groupId>-->
-<!--                <artifactId>poi</artifactId>-->
-<!--                <version>${poi.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>com.alibaba.nacos</groupId>-->
-<!--                <artifactId>nacos-client</artifactId>-->
-<!--                <version>${nacos.client.version}</version>-->
-<!--            </dependency>-->
-            <!-- easypoi -->
             <dependency>
                 <groupId>xml-apis</groupId>
                 <artifactId>xml-apis</artifactId>
                 <version>${xml-api.version}</version>
             </dependency>
+            <!-- easypoi -->
             <dependency>
                 <groupId>cn.afterturn</groupId>
                 <artifactId>easypoi-base</artifactId>
@@ -423,7 +396,6 @@
                 <artifactId>okhttp</artifactId>
                 <version>${okhttp.version}</version>
             </dependency>
-
             <!-- ElasticSearch依赖包-->
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
@@ -435,13 +407,6 @@
                 <artifactId>elasticsearch</artifactId>
                 <version>${elastic.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>commons-collections</groupId>-->
-<!--                <artifactId>commons-collections</artifactId>-->
-<!--                <version>${commons-collections.version}</version>-->
-<!--            </dependency>-->
-
-
             <!-- redisson -->
             <dependency>
                 <groupId>org.redisson</groupId>
@@ -484,11 +449,6 @@
                 <artifactId>retrofit-spring-boot-starter</artifactId>
                 <version>${retrofit.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>net.oschina.j2cache</groupId>-->
-<!--                <artifactId>j2cache-core</artifactId>-->
-<!--                <version>${j2cache.version}</version>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-spring-boot-starter</artifactId>
@@ -499,7 +459,6 @@
                 <artifactId>seata-all</artifactId>
                 <version>${seata.version}</version>
             </dependency>
-
             <!-- 解决 java.lang.NoClassDefFoundError: javax/xml/bind/DatatypeConverter -->
             <dependency>
                 <groupId>javax.xml.bind</groupId>

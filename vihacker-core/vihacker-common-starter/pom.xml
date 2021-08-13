@@ -116,6 +116,11 @@
             <artifactId>reactor-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
         <!-- 解决 java.lang.NoClassDefFoundError: javax/xml/bind/DatatypeConverter -->
         <dependency>
             <groupId>javax.xml.bind</groupId>

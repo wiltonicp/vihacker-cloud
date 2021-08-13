@@ -1,11 +1,12 @@
 package cc.vihackerframework.gateway.filter;
 
+import cc.vihackerframework.core.cloud.properties.ViHackerSecurityProperties;
 import cc.vihackerframework.core.constant.Oauth2Constant;
 import cc.vihackerframework.core.constant.ViHackerConstant;
 import cc.vihackerframework.core.util.ResponseUtil;
 import cc.vihackerframework.core.util.SecurityUtil;
+import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.core.util.TokenUtil;
-import cc.vihackerframework.gateway.properties.ViHackerGatewayProperties;
 import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.regex.Pattern;
 
 /**
  * 全局拦截
@@ -33,17 +33,25 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 public class ViHackerGatewayPreUaaFilter implements GlobalFilter, Ordered {
 
-    private final ViHackerGatewayProperties properties;
+    private final ViHackerSecurityProperties properties;
 
-    private static final String PATTERN_OAUTH = "^.*/oauth/.*";
+    /**
+     * 路径前缀以/vihacker开头，如vihacker-uaa
+     */
+    public static final String PATH_PREFIX = "/vihacker";
+
+    /**
+     * 索引自1开头检索，跳过第一个字符就是检索的字符的问题
+     */
+    public static final int FROM_INDEX = 1;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
         //　如果在忽略的url里，则跳过
-        String path = exchange.getRequest().getURI().getPath();
+        String path = replacePrefix(exchange.getRequest().getURI().getPath());
         String requestUrl = exchange.getRequest().getURI().getRawPath();
-        if (ignore(path) || ignore(requestUrl) || ignoreAuth(path)) {
+        if (ignore(path) || ignore(requestUrl)) {
             return chain.filter(exchange);
         }
 
@@ -68,18 +76,22 @@ public class ViHackerGatewayPreUaaFilter implements GlobalFilter, Ordered {
      * @return boolean
      */
     private boolean ignore(String path) {
-        return properties.getForbidRequestUri().stream()
+        return properties.getIgnoreUrls().stream()
                 .map(url -> url.replace("/**", ""))
                 .anyMatch(path::startsWith);
     }
 
-    private boolean ignoreAuth(String path) {
-        if(Pattern.matches(PATTERN_OAUTH, path)){
-            return true;
+    /**
+     * 移除模块前缀
+     * @param path 路径
+     * @return String
+     */
+    private String replacePrefix(String path) {
+        if (path.startsWith(PATH_PREFIX)) {
+            return path.substring(path.indexOf(StringPool.SLASH, FROM_INDEX));
         }
-        return false;
+        return path;
     }
-
 
     private Mono<Void> unauthorized(ServerHttpResponse resp, String msg) {
         return ResponseUtil.webFluxResponseWriter(resp, ViHackerConstant.JSON_UTF8, HttpStatus.UNAUTHORIZED, msg);

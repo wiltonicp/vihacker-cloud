@@ -10,7 +10,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <name>vihacker-security-starter</name>
     <artifactId>vihacker-security-starter</artifactId>
     <packaging>jar</packaging>
     <description>资源服务器模块</description>
@@ -19,6 +18,7 @@
         <dependency>
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-common-starter</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>

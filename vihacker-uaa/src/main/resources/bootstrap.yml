@@ -2,18 +2,18 @@ spring:
   application:
     name: @artifactId@
   profiles:
-    active: ${spring.active}
+    active: @spring.active@
   cloud:
     nacos:
-      server-addr: ${config.server-addr}
+      server-addr: @config.server-addr@
       config:
-        group: ${config.group}
+        group: @config.group@
         prefix: @artifactId@
         file-extension: yaml
-        namespace: ${config.namespace}
+        namespace: @config.namespace@
       discovery:
-        namespace: ${config.namespace}
-        group: ${config.group}
+        namespace: @config.namespace@
+        group: @config.group@
 
 logging:
   level:
