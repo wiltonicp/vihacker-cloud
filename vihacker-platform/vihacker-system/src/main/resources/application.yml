@@ -1,0 +1,12 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: @artifactId@
+  profiles:
+    active: @spring.active@
+vihacker:
+  doc:
+    enable: true
+knife4j:
+  enable: true

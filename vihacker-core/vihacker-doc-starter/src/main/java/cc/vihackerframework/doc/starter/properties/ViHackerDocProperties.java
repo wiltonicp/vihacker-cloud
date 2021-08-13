@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * <p>
+ * 文档配置
  *
  * @author Ranger
  * @email wilton.icp@gmail.com
@@ -25,7 +25,7 @@ public class ViHackerDocProperties {
     /**
      * 是否开启doc功能
      */
-    private Boolean enable = true;
+    private Boolean enable = Boolean.TRUE;
     /**
      * 接口扫描路径，如Controller路径
      */

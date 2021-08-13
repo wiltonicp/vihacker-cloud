@@ -1,9 +1,8 @@
 vihacker:
   doc:
-    enable: true
-    basic:
-      username: admin
-      password: vihacker
+#    basic:
+#      username: admin
+#      password: vihacker
     title: ViHackerCLoud文档管理中心
     description: ViHackerCLoud文档管理
     service-url: http://cloud.vihacker.top
@@ -18,7 +17,7 @@ vihacker:
 knife4j:
   enable: ${vihacker.doc.enable}
   # 开启生产环境屏蔽
-  production: false
+  #production: false
   basic:
     enable: true
     username: ${vihacker.doc.basic.username}
@@ -29,4 +28,4 @@ knife4j:
     # 是否自定义Footer，默认为false(非自定义)
     enableFooterCustom: true
     # 自定义Footer内容,支持Markdown语法
-    footerCustomContent: Apache License 2.0 | Copyright  2020-[ViHacker-Cloud](https://github.com/wiltonicp/vihacker-cloud)
+    footerCustomContent: Apache License 2.0 | Copyright  2021-[ViHacker-Cloud](https://github.com/wiltonicp/vihacker-cloud)

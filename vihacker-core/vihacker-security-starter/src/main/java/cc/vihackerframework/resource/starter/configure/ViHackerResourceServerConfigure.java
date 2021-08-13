@@ -32,7 +32,7 @@ public class ViHackerResourceServerConfigure extends ResourceServerConfigurerAda
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
-        String[] anonUrls = properties.getAnonUris().toArray(new String[properties.getAnonUris().size()]);
+        String[] anonUrls = properties.getIgnoreUrls().toArray(new String[properties.getIgnoreUrls().size()]);
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config
                 = http.requestMatchers().anyRequest()
                 .and()
