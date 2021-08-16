@@ -1,4 +1,4 @@
-package cc.vihackerframework.core.entity.system;
+package cc.vihackerframework.core.auth.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

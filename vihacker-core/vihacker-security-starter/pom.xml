@@ -22,12 +22,16 @@
         </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-auth-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-redis-starter</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -39,7 +39,7 @@ public class ViHackerResourceServerConfigure extends ResourceServerConfigurerAda
                 .authorizeRequests();
         config
             .antMatchers(anonUrls).permitAll()
-            .antMatchers(properties.getAuthUri()).permitAll()
+            .antMatchers(properties.getAuthUri()).authenticated()
             //任何请求
             .anyRequest()
             //都需要身份认证

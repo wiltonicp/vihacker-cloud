@@ -1,8 +1,8 @@
 package cc.vihackerframework.uaa.service.impl;
 
+import cc.vihackerframework.core.auth.entity.AdminAuthUser;
 import cc.vihackerframework.uaa.manager.AdminUserManager;
 import cc.vihackerframework.core.entity.enums.StatusEnum;
-import cc.vihackerframework.core.entity.system.AdminAuthUser;
 import cc.vihackerframework.core.entity.system.SysUser;
 import cc.vihackerframework.uaa.service.ViHackerUserDetailsService;
 import lombok.RequiredArgsConstructor;

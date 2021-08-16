@@ -1,7 +1,7 @@
 package cc.vihackerframework.uaa.configure;
 
+import cc.vihackerframework.core.auth.entity.AdminAuthUser;
 import cc.vihackerframework.core.constant.Oauth2Constant;
-import cc.vihackerframework.core.entity.system.AdminAuthUser;
 import cc.vihackerframework.redis.starter.service.RedisService;
 import cc.vihackerframework.uaa.exception.ViHackerAuthWebResponseExceptionTranslator;
 import cc.vihackerframework.uaa.granter.CaptchaTokenGranter;

@@ -50,6 +50,8 @@
         <module>vihacker-log-starter</module>
         <module>vihacker-mail-starter</module>
         <module>vihacker-feign-starter</module>
+        <module>vihacker-mybatis-starter</module>
+        <module>vihacker-auth-starter</module>
     </modules>
 
     <properties>
