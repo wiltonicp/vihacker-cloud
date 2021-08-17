@@ -5,10 +5,10 @@ vihacker:
 #      password: vihacker
     title: ViHackerCLoud文档管理中心
     description: ViHackerCLoud文档管理
-    service-url: http://cloud.vihacker.top
+    service-url: http://api.vihacker.top
     name: Ranger
-    url: https://blog.wiltonic.cn
     email: wilton.icp@gmail.com
+    url: https://blog.vihackerframework.cc
     license: Powered by ViHackerCLoud
     license-url: https://github.com/wiltonicp/vihacker-cloud/blob/master/LICENSE
 

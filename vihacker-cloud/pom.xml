@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <name>vihacker-cloud</name>
-    <url>https://blog.wiltonic.cn</url>
+    <url>https://github.com/wiltonicp/vihacker-cloud</url>
     <description>ViHacker-Cloud：Spring Cloud，Spring Security OAuth2 微服务统一认证中心</description>
 
     <modules>
@@ -32,15 +32,15 @@
         <developer>
             <name>Ranger</name>
             <email>wilton.icp@gmail.com</email>
-            <url>https://github.com/wiltonicp/vihacker-cloud</url>
+            <url>https://blog.vihackerframework.cc</url>
         </developer>
     </developers>
 
     <scm>
         <tag>master</tag>
-        <connection>https://blog.vihacker.top</connection>
-        <developerConnection>https://blog.vihacker.top</developerConnection>
-        <url>https://blog.vihacker.top</url>
+        <connection>scm:git:git@github.com:wiltonicp/vihacker-cloud.git</connection>
+        <developerConnection>scm:git:git@github.com:wiltonicp/vihacker-cloud.git</developerConnection>
+        <url>https://github.com/wiltonicp/vihacker-cloud</url>
     </scm>
 
     <properties>
