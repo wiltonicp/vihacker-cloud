@@ -148,6 +148,11 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>vihacker-elasticsearch-starter</artifactId>
+                <version>${vihacker.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>vihacker-log-starter</artifactId>
                 <version>${vihacker.core.version}</version>
             </dependency>

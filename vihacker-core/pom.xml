@@ -52,6 +52,7 @@
         <module>vihacker-mail-starter</module>
         <module>vihacker-feign-starter</module>
         <module>vihacker-mybatis-starter</module>
+        <module>vihacker-elasticsearch-starter</module>
     </modules>
 
     <properties>
