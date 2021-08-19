@@ -5,7 +5,7 @@
     <parent>
         <artifactId>vihacker-core</artifactId>
         <groupId>cc.vihackerframework</groupId>
-        <version>1.0.3</version>
+        <version>1.0.4.R</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

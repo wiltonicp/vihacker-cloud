@@ -12,7 +12,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -23,7 +22,6 @@ import javax.annotation.Resource;
  * @email wilton.icp@gmail.com
  */
 @Slf4j
-//@Component
 public class ElasticsearchApplicationListener implements ApplicationListener<ContextRefreshedEvent>, ApplicationContextAware {
 
     @Resource
