@@ -12,7 +12,7 @@
 
     <groupId>cc.vihackerframework</groupId>
     <artifactId>vihacker-dependencies-starter</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4.R</version>
     <packaging>pom</packaging>
     <name>vihacker-dependencies-starter</name>
     <description>based on Spring Cloud Alibaba dependencies</description>
@@ -39,7 +39,7 @@
     </scm>
 
     <properties>
-        <vihacker.core.version>1.0.3</vihacker.core.version>
+        <vihacker.core.version>1.0.4.R</vihacker.core.version>
 
         <spring.boot.version>2.5.1</spring.boot.version>
         <spring.cloud.version>2020.0.3</spring.cloud.version>
@@ -144,6 +144,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>vihacker-kafka-starter</artifactId>
+                <version>${vihacker.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>vihacker-elasticsearch-starter</artifactId>
                 <version>${vihacker.core.version}</version>
             </dependency>
             <dependency>

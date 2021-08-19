@@ -6,12 +6,12 @@
 
     <artifactId>vihacker-core</artifactId>
     <groupId>cc.vihackerframework</groupId>
-    <version>1.0.3</version>
+    <version>1.0.4.R</version>
     <packaging>pom</packaging>
 
     <name>vihacker-core</name>
-    <description>ViHacker-Core microservice components</description>
     <url>https://github.com/wiltonicp/vihacker-cloud</url>
+    <description>ViHacker-Core microservice components</description>
 
     <licenses>
         <license>
@@ -25,7 +25,7 @@
         <developer>
             <name>Ranger</name>
             <email>wilton.icp@gmail.com</email>
-            <url>https://github.com/wiltonicp/vihacker-cloud</url>
+            <url>https://blog.vihackerframework.cc</url>
         </developer>
     </developers>
 
@@ -45,17 +45,18 @@
         <module>vihacker-redis-starter</module>
         <module>vihacker-web-starter</module>
         <module>vihacker-security-starter</module>
+        <module>vihacker-auth-starter</module>
         <module>vihacker-sentinel-starter</module>
         <module>vihacker-kafka-starter</module>
         <module>vihacker-log-starter</module>
         <module>vihacker-mail-starter</module>
         <module>vihacker-feign-starter</module>
         <module>vihacker-mybatis-starter</module>
-        <module>vihacker-auth-starter</module>
+        <module>vihacker-elasticsearch-starter</module>
     </modules>
 
     <properties>
-        <vihacker.core.version>1.0.3</vihacker.core.version>
+        <vihacker.core.version>1.0.4.R</vihacker.core.version>
 
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>

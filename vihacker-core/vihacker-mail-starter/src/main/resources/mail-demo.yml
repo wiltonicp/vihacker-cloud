@@ -2,7 +2,7 @@
 vihacker:
   mail:
     host: smtp.exmail.qq.com #发送邮件服务器
-    username: xxx@vihacker.top #邮箱
+    username: xxx@vihackerframework.cc #邮箱
     password: DY***********xDm #客户端授权码
     protocol: smtp #发送邮件协议
     properties.mail.smtp.auth: true
@@ -13,5 +13,5 @@ vihacker:
     properties.mail.smtp.starttls.required: true
     properties.mail.smtp.ssl.enable: true
     default-encoding: utf-8
-    from: xxx@vihacker.top #与上面的username保持一致
+    from: xxx@vihackerframework.cc #与上面的username保持一致
     from-name: ViHacker
