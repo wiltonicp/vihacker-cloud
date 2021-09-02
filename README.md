@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="http://oss.vihacker.top/image/ViHackerlogo-1.png" width="260">
+  <img src="https://oss.vihacker.top/image/ViHackerlogo-1.png" width="260">
 </p>
 <p align="center">
   <img src='https://img.shields.io/github/license/wiltonicp/vihacker-cloud' alt='License'/>
@@ -41,13 +41,13 @@ VihackerCloud是一款基于Spring Cloud Alibaba的微服务架构。引入组�
 
 ## 使用说明
 
-最新版本 `v1.0.4.R`版本已发布到 maven 中央仓库，可直接引入
+最新版本 `v1.0.5.R`版本已发布到 maven 中央仓库，可直接引入使用
 
 ```pom
 <dependency>
     <groupId>cc.vihackerframework</groupId>
     <artifactId>模块名称</artifactId>
-    <version>1.0.4.R</version>
+    <version>1.0.5.R</version>
 </dependency>
 ```
 
@@ -56,4 +56,4 @@ VihackerCloud是一款基于Spring Cloud Alibaba的微服务架构。引入组�
 
 **公众号:**【编程手记】
 
-<img src="http://oss.vihacker.top/image/%E5%85%B3%E6%B3%A8%E6%88%91.png" alt="关注我" style="zoom: 50%;" />
+<img src="http://oss.vihacker.top/image/%E5%85%B3%E6%B3%A8%E6%88%91.png" alt="关注我" width="1000" style="zoom: 50%;" />
