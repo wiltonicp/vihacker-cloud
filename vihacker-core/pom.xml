@@ -6,7 +6,7 @@
 
     <artifactId>vihacker-core</artifactId>
     <groupId>cc.vihackerframework</groupId>
-    <version>1.0.4.R</version>
+    <version>1.0.5.R</version>
     <packaging>pom</packaging>
 
     <name>vihacker-core</name>
@@ -56,11 +56,11 @@
     </modules>
 
     <properties>
-        <vihacker.core.version>1.0.4.R</vihacker.core.version>
+        <vihacker.core.version>1.0.5.R</vihacker.core.version>
 
-        <java.version>11</java.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <maven.plugin.version>3.8.1</maven.plugin.version>
         <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

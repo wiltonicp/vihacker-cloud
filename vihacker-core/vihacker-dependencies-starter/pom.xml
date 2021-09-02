@@ -12,7 +12,7 @@
 
     <groupId>cc.vihackerframework</groupId>
     <artifactId>vihacker-dependencies-starter</artifactId>
-    <version>1.0.4.R</version>
+    <version>1.0.5.R</version>
     <packaging>pom</packaging>
     <name>vihacker-dependencies-starter</name>
     <description>based on Spring Cloud Alibaba dependencies</description>
@@ -39,7 +39,7 @@
     </scm>
 
     <properties>
-        <vihacker.core.version>1.0.4.R</vihacker.core.version>
+        <vihacker.core.version>1.0.5.R</vihacker.core.version>
 
         <spring.boot.version>2.5.1</spring.boot.version>
         <spring.cloud.version>2020.0.3</spring.cloud.version>
@@ -54,7 +54,7 @@
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         <maven-dockerfile-plugin.version>1.4.10</maven-dockerfile-plugin.version>
 
-        <java.version>11</java.version>
+        <java.version>1.8</java.version>
         <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
         <docker.serverId>docker-aliyun</docker.serverId>
         <docker.registry>registry.cn-shanghai.aliyuncs.com/vihacker</docker.registry>

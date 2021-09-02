@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @EnableViHackerResourceServer
-@MapperScan("cc.vihackerframework.uaa.mapper")
 public class ViHackerUaaApplication {
 
     public static void main(String[] args) {
