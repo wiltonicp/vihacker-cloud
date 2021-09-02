@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://oss.vihacker.top/image/ViHackerlogo-1.png" width="260">
+  <img src="http://oss.vihacker.top/image/ViHackerlogo-1.png" width="260">
 </p>
 <p align="center">
   <img src='https://img.shields.io/github/license/wiltonicp/vihacker-cloud' alt='License'/>
