@@ -38,7 +38,7 @@ public class BaseExceptionHandler {
 
 
     @ExceptionHandler(value = ViHackerException.class)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ViHackerResult handleBaseException(ViHackerException e) {
         log.error("系统异常", e);
         return ViHackerResult.failed(e.getMessage());
@@ -51,7 +51,7 @@ public class BaseExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = ViHackerRuntimeException.class)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ViHackerResult bizExceptionHandler(ViHackerRuntimeException e) {
         log.error("发生业务异常！原因是：{}", e.getErrorMsg());
         return ViHackerResult.failed(e.getMessage());
@@ -64,7 +64,7 @@ public class BaseExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = NullPointerException.class)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ViHackerResult exceptionHandler(NullPointerException e) {
         log.error("发生空指针异常！原因是:", e);
         return ViHackerResult.failed(ResultCode.BODY_NOT_MATCH);
@@ -77,7 +77,7 @@ public class BaseExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ViHackerResult exceptionHandler(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
         String errorMesssage = "";
@@ -95,7 +95,7 @@ public class BaseExceptionHandler {
      * @return ViHackerResult
      */
     @ExceptionHandler(BindException.class)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ViHackerResult handleBindException(BindException e) {
         StringBuilder message = new StringBuilder();
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
@@ -113,7 +113,7 @@ public class BaseExceptionHandler {
      * @return ViHackerResult
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ViHackerResult handleConstraintViolationException(ConstraintViolationException e) {
         StringBuilder message = new StringBuilder();
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
@@ -127,7 +127,7 @@ public class BaseExceptionHandler {
     }
 
     @ExceptionHandler(value = ViHackerAuthException.class)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ViHackerResult handleWiltonException(ViHackerException e) {
         log.error("系统错误", e);
         return ViHackerResult.failed(e.getMessage());
@@ -141,7 +141,7 @@ public class BaseExceptionHandler {
 //    }
 
     @ExceptionHandler(value = ValidateCodeException.class)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ViHackerResult handleValidateCodeException(ValidateCodeException e) {
         log.error("系统错误", e);
         return ViHackerResult.failed(e.getMessage());
@@ -149,7 +149,7 @@ public class BaseExceptionHandler {
 
 
     @ExceptionHandler(value = AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ViHackerResult handleAccessDeniedException() {
         return ViHackerResult.failed(ResultCode.FORBIDDEN);
     }

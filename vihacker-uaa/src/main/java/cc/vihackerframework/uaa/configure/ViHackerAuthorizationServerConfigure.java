@@ -32,12 +32,21 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.TokenGranter;
+import org.springframework.security.oauth2.provider.approval.ApprovalStore;
+import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
+import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter;
+import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.implicit.ImplicitTokenGranter;
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
+import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
+import javax.sql.DataSource;
 import java.util.*;
 
 /**
@@ -47,12 +56,12 @@ import java.util.*;
  * @email wilton.icp@gmail.com
  * @since 2021/6/5
  */
-@Order(2)
 @Configuration
 @RequiredArgsConstructor
 @EnableAuthorizationServer
 public class ViHackerAuthorizationServerConfigure extends AuthorizationServerConfigurerAdapter {
 
+    private final DataSource dataSource;
     private final RedisService redisService;
     private final AuthRequestFactory factory;
     private final ViHackerAuthProperties properties;
@@ -70,6 +79,24 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
     @Bean
     public RedisTokenStore redisTokenStore() {
         return new RedisTokenStore(redisConnectionFactory);
+    }
+
+
+    /**
+     * 已授权客户端存储记录
+     */
+    @Bean
+    public ApprovalStore approvalStore() {
+        return new JdbcApprovalStore(dataSource);
+    }
+
+    /**
+     * 授权码code的存储-mysql
+     */
+    @Bean
+    public AuthorizationCodeServices authorizationCodeServices() {
+        JdbcAuthorizationCodeServices service = new JdbcAuthorizationCodeServices(dataSource);
+        return service;
     }
 
     @Override
@@ -93,8 +120,9 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
         endpoints
                 .tokenGranter(tokenGranter(endpoints, tokenServices))
                 .tokenServices(tokenServices)
-//                .authorizationCodeServices(redisAuthenticationCodeService)
-//                .authenticationManager(authenticationManager)
+                .approvalStore(approvalStore())
+                .authorizationCodeServices(authorizationCodeServices())
+                .authenticationManager(authenticationManager)
                 .exceptionTranslator(exceptionTranslator)
                 .accessTokenConverter(jwtAccessTokenConverter());
     }
@@ -154,6 +182,7 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
      */
     private TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints, DefaultTokenServices tokenServices) {
         List<TokenGranter> granters = new ArrayList<>(Collections.singletonList(endpoints.getTokenGranter()));
+
         // 短信验证码模式
         granters.add(new SmsCodeTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory(), redisService));
@@ -164,7 +193,31 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
         granters.add(new SocialTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory(), redisService, factory));
         // 增加密码模式
-        granters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
+        granters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory()));
+        //授权码模式
+        granters.add(new AuthorizationCodeTokenGranter(
+                        tokenServices,
+                        endpoints.getAuthorizationCodeServices(),
+                        endpoints.getClientDetailsService(),
+                        endpoints.getOAuth2RequestFactory()));
+        //刷新token模式
+        granters.add(new RefreshTokenGranter(
+                        tokenServices,
+                        endpoints.getClientDetailsService(),
+                        endpoints.getOAuth2RequestFactory()));
+        //、简化模式
+        granters.add(new ImplicitTokenGranter(
+                tokenServices,
+                endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory()));
+
+        //客户端模式
+        granters.add(new ClientCredentialsTokenGranter(
+                tokenServices,
+                endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory()));
+
         return new CompositeTokenGranter(granters);
     }
 

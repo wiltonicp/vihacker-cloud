@@ -1,13 +1,15 @@
 vihacker:
+  encrypt:
+    key: Av0qiVlXXtlpu19W
   es:
     # es集群名称
-    cluster-name: elasticsearch
+    cluster-name: yqt_es_test
     # es集群节点，多个逗号分隔 localhost:9200,localhost:9400
-    cluster-nodes: localhost:9200
+    cluster-nodes: 192.168.0.15:9200
     # 设置创建index时，默认的分片规则
     index:
       number-of-shards: 3
-      number-of-replicas: 2
+      number-of-replicas: 0
     # 设置连接es的用户名和密码
     account:
       username: elastic

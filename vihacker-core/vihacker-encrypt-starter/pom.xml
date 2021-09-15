@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>vihacker-core</artifactId>
+        <groupId>cc.vihackerframework</groupId>
+        <version>1.0.6.R</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>vihacker-encrypt-starter</artifactId>
+    <description>加解密模块</description>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-common-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-web-starter</artifactId>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+</project>

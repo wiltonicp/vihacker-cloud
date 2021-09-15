@@ -8,17 +8,16 @@ server:
 vihacker:
   security:
     enable: true
-  auth-server: http://127.0.0.1:8301
-
+  auth-server: http://127.0.0.1:8301/vihacker-uaa
 
 security:
   oauth2:
     client:
-      client-id: vihacker-sso
-      client-secret: vihacker-sso-secret
-      access-token-uri: ${vihacker.auth-server}/uaa/oauth/token
-      user-authorization-uri: ${vihacker.auth-server}/uaa/oauth/authorize
+      client-id: vihackercloud
+      client-secret: 123456
+      access-token-uri: ${vihacker.auth-server}/oauth/token
+      user-authorization-uri: ${vihacker.auth-server}/oauth/authorize
     resource:
-      token-info-uri: ${vihacker.auth-server}/uaa/oauth/check_token
-    sso:
-      login-path: /login
+      token-info-uri: ${vihacker.auth-server}/oauth/check_token
+    authorization:
+      check-token-access: ${vihacker.auth-server}/oauth/check_token

@@ -14,4 +14,6 @@ public class SecurityConstant {
     public static final String ALL_PATH = "/**";
 
     public static final String SOCIAL_PATH = "/social/**";
+
+    public static final String LOGIN = "/login";
 }

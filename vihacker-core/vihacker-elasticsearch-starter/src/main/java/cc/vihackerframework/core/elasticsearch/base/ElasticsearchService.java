@@ -112,6 +112,34 @@ public class ElasticsearchService {
     }
 
     /**
+     * 创建索引
+     * @param indexName
+     * @param shards 分片
+     * @param replicas 副本
+     */
+    public void createIndexRequest(String indexName, int shards, int replicas, String analyzer) {
+        if (existIndex(indexName)) {
+            return;
+        }
+
+        try {
+            CreateIndexRequest request = new CreateIndexRequest(indexName);
+            // Settings for this index
+            request.settings(Settings.builder()
+                    .put("index.number_of_shards", shards)
+                    .put("index.number_of_replicas", replicas)
+                    .put("analysis.analyzer.default.type", analyzer)
+            );
+
+            CreateIndexResponse createIndexResponse = client.indices().create(request, RequestOptions.DEFAULT);
+            log.info(" acknowledged : {}", createIndexResponse.isAcknowledged());
+            log.info(" shardsAcknowledged :{}", createIndexResponse.isShardsAcknowledged());
+        } catch (IOException e) {
+            Asserts.fail("创建索引 {" + indexName + "} 失败");
+        }
+    }
+
+    /**
      * 保存文档
      * @param indexName
      * @param clazz

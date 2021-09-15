@@ -3,6 +3,8 @@ spring:
     name: @artifactId@
   profiles:
     active: @spring.active@
+  thymeleaf:
+    cache: false
   cloud:
     nacos:
       server-addr: @config.server-addr@

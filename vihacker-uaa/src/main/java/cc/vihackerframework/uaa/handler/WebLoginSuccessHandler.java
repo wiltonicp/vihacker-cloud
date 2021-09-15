@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 @Slf4j
 @Configuration
-public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+public class WebLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private final RequestCache requestCache = new HttpSessionRequestCache();
 
@@ -52,11 +52,5 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             clearAuthenticationAttributes(request);
             getRedirectStrategy().sendRedirect(request, response, savedRequest.getRedirectUrl());
         }
-        if (savedRequest == null) {
-            super.onAuthenticationSuccess(request, response, authentication);
-            return;
-        }
-        clearAuthenticationAttributes(request);
-        getRedirectStrategy().sendRedirect(request, response, savedRequest.getRedirectUrl());
     }
 }

@@ -5,7 +5,7 @@
     <parent>
         <artifactId>vihacker-thirdparty</artifactId>
         <groupId>cc.vihackerframework</groupId>
-        <version>1.0.4.R</version>
+        <version>1.0.6.R</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -16,26 +16,14 @@
         <dependency>
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-web-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.alibaba.cloud</groupId>
-                    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.alibaba.cloud</groupId>
-                    <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-common-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-security-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.baomidou</groupId>
-                    <artifactId>mybatis-plus-boot-starter</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 

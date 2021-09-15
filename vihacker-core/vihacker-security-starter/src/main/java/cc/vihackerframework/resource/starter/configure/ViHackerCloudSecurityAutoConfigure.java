@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -27,7 +26,6 @@ import org.springframework.util.Base64Utils;
  * @email wilton.icp@gmail.com
  * @since 2021/6/15
  */
-@Order(6)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties(ViHackerSecurityProperties.class)
 @ConditionalOnProperty(value = "vihacker.security.enable", havingValue = "true", matchIfMissing = true)

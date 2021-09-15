@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  * @email wilton.icp@gmail.com
  * @since 2021/6/15
  */
-@Order(5)
+//@Order(5)
 @EnableResourceServer
 @RequiredArgsConstructor
 @EnableAutoConfiguration(exclude = UserDetailsServiceAutoConfiguration.class)
@@ -34,7 +34,7 @@ public class ViHackerResourceServerConfigure extends ResourceServerConfigurerAda
 
         String[] anonUrls = properties.getIgnoreUrls().toArray(new String[properties.getIgnoreUrls().size()]);
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config
-                = http.requestMatchers().anyRequest()
+                = http.csrf().disable().requestMatchers().anyRequest()
                 .and()
                 .authorizeRequests();
         config
@@ -44,9 +44,8 @@ public class ViHackerResourceServerConfigure extends ResourceServerConfigurerAda
             .anyRequest()
             //都需要身份认证
             .authenticated()
-            //csrf跨站请求
             .and()
-            .csrf().disable();
+            .httpBasic();
     }
 
     @Override
