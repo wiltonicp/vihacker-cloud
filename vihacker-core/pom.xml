@@ -54,6 +54,7 @@
         <module>vihacker-mybatis-starter</module>
         <module>vihacker-elasticsearch-starter</module>
         <module>vihacker-encrypt-starter</module>
+        <module>vihacker-sharding-starter</module>
     </modules>
 
     <properties>

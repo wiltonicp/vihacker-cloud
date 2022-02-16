@@ -57,6 +57,7 @@ public class ViHackerSecurityProperties {
             "/swagger/api-docs",
             "/swagger-ui.html",
             "/doc.html",
+            "/captcha",
             "/swagger-resources/**",
             "/robots.txt",
             "/manifest.json",

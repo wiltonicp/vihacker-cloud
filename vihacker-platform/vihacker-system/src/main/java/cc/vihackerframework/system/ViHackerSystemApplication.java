@@ -1,5 +1,6 @@
 package cc.vihackerframework.system;
 
+import cc.vihackerframework.resource.starter.annotation.EnableViHackerResourceServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @email wilton.icp@gmail.com
  * @since 2021/6/17
  */
+@EnableViHackerResourceServer
 @SpringBootApplication
 public class ViHackerSystemApplication {
 

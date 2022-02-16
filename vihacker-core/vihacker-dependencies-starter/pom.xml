@@ -102,6 +102,8 @@
         <logstash-logback.version>6.1</logstash-logback.version>
         <jakarta.validation-api.version>2.0.2</jakarta.validation-api.version>
 
+        <sharding-jdbc.version>4.1.1</sharding-jdbc.version>
+
         <okhttp.version>4.9.0</okhttp.version>
         <vjackson.version>2.12.3</vjackson.version>
         <justauth.version>1.15.8</justauth.version>
@@ -426,6 +428,12 @@
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
                 <version>${elastic.version}</version>
+            </dependency>
+            <!--sharding sphere-->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>${sharding-jdbc.version}</version>
             </dependency>
             <!-- redisson -->
             <dependency>
