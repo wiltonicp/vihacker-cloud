@@ -19,7 +19,7 @@ public class LogProperties {
     /**
      * 前缀
      */
-    public static final String PREFIX = "vihacker.log.kafka";
+    public static final String PREFIX = "vihacker.log";
 
     /**
      * 是否启用
