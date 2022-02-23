@@ -107,11 +107,11 @@ public class LogEndpointAspect {
         sysLog.setIp(ip)
         .setUsername(userName)
         .setMethod(method)
+        .setTitle(logAnn.value())
         .setUrl(url)
         .setOperation(String.valueOf(result))
         .setLocation(StringUtils.isEmpty(region) ? "本地" : region)
         .setTime(tookTime)
-        //.setTitle(logAnn.value())
         .setParams(JSON.toJSONString(requestParam));
         log.info("Http Request: {}", JSONObject.toJSONString(sysLog));
         // 发布事件

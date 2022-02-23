@@ -2,6 +2,7 @@ package cc.vihackerframework.log.starter.configure;
 
 import cc.vihackerframework.log.starter.aspect.LogEndpointAspect;
 import cc.vihackerframework.log.starter.event.LogListener;
+import cc.vihackerframework.log.starter.feign.ISysLogProvider;
 import cc.vihackerframework.log.starter.properties.LogProperties;
 import cc.vihackerframework.log.starter.properties.LogType;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +28,14 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class ViHackerLogAutoConfigure {
 
     private final LogProperties properties;
+    private final ISysLogProvider sysLogProvider;
 
     @Bean
     public LogListener sysLogListener() {
         if (properties.getLogType().equals(LogType.KAFKA)) {
-            return new LogListener();
+            return new LogListener(sysLogProvider,properties);
         }
-        return new LogListener();
+        return new LogListener(sysLogProvider,properties);
     }
 
     @Bean

@@ -1,4 +1,4 @@
-package cc.vihackerframework.system;
+package cc.vihackerframework.system.demo;
 
 import cc.vihackerframework.feign.starter.annotation.EnableViHackerFeign;
 import cc.vihackerframework.resource.starter.annotation.EnableViHackerResourceServer;
@@ -7,19 +7,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
- * 系统服务启动器
+ * 启动器
  *
- * @author Ranger
- * @email wilton.icp@gmail.com
- * @since 2021/6/17
+ * Created by Ranger on 2022/2/22
  */
 @EnableViHackerFeign
-@EnableFeignClients
+@EnableFeignClients(basePackages ={"cc.vihackerframework.*"})
 @SpringBootApplication
 @EnableViHackerResourceServer
-public class ViHackerSystemApplication {
+public class ViHackerSystemDemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ViHackerSystemApplication.class,args);
+        SpringApplication.run(ViHackerSystemDemoApplication.class);
     }
 }

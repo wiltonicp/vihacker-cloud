@@ -1,12 +1,12 @@
-package cc.vihackerframework.log.starter.mapper;
+package cc.vihackerframework.system.mapper;
 
 import cc.vihackerframework.core.entity.system.SysLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by Ranger on 2022/2/20
  */
-@Mapper
+@Repository
 public interface ISysLogMapper extends BaseMapper<SysLog> {
 }

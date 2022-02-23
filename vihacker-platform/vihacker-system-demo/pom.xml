@@ -2,17 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <artifactId>vihacker-platform</artifactId>
         <groupId>cc.vihackerframework</groupId>
         <version>1.0.6.R</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>vihacker-system</artifactId>
-    <description>系统服务</description>
+    <artifactId>vihacker-system-demo</artifactId>
+    <description>微服务子系统测试 demo</description>
 
     <dependencies>
         <dependency>
@@ -39,13 +38,14 @@
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-datasource-starter</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>cc.vihackerframework</groupId>-->
-<!--            <artifactId>vihacker-redis-starter</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>cc.vihackerframework</groupId>-->
+        <!--            <artifactId>vihacker-redis-starter</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-security-starter</artifactId>
         </dependency>
     </dependencies>
+
 </project>
