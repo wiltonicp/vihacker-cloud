@@ -12,7 +12,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * Created by Ranger on 2022/2/22
  */
 @EnableViHackerFeign
-@EnableFeignClients(basePackages ={"cc.vihackerframework.*"})
+//@EnableFeignClients(basePackages ={"cc.vihackerframework.*"})
 @SpringBootApplication
 @EnableViHackerResourceServer
 public class ViHackerSystemDemoApplication {

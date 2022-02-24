@@ -33,6 +33,11 @@ public class ViHackerAuthProperties {
     private String jwtAccessKey = Oauth2Constant.SIGN_KEY;
 
     /**
+     * JWT加签密钥 过期时间
+     */
+    private String jwtExpiration = "36000";
+
+    /**
      * 社交登录所使用的 Client
      */
     private String socialLoginClientId;

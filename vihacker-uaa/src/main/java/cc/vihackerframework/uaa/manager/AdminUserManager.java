@@ -1,5 +1,6 @@
 package cc.vihackerframework.uaa.manager;
 
+import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.uaa.mapper.IAdminMenuMapper;
 import cc.vihackerframework.uaa.mapper.IAdminUserMapper;
 import cc.vihackerframework.core.entity.system.Menu;
@@ -48,6 +49,6 @@ public class AdminUserManager {
      */
     public String findUserPermission(String username) {
         List<Menu> userPermissions = adminMenuMapper.findUserPermission(username);
-        return userPermissions.stream().map(Menu::getPerms).collect(Collectors.joining(","));
+        return userPermissions.stream().map(Menu::getPerms).collect(Collectors.joining(StringPool.COMMA));
     }
 }

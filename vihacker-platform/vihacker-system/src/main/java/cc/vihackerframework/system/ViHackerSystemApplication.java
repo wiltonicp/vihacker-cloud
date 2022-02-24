@@ -14,7 +14,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @since 2021/6/17
  */
 @EnableViHackerFeign
-@EnableFeignClients
 @SpringBootApplication
 @EnableViHackerResourceServer
 public class ViHackerSystemApplication {

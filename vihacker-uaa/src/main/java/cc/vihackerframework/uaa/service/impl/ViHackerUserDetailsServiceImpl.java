@@ -7,7 +7,10 @@ import cc.vihackerframework.core.entity.system.SysUser;
 import cc.vihackerframework.uaa.service.ViHackerUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,8 @@ public class ViHackerUserDetailsServiceImpl implements ViHackerUserDetailsServic
                     AuthorityUtils.commaSeparatedStringToAuthorityList(permissions));
 
             BeanUtils.copyProperties(sysUser, authUser);
+            Authentication authentication= new UsernamePasswordAuthenticationToken(authUser, null, authUser.getAuthorities()) ;
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             return authUser;
         }
         throw new UsernameNotFoundException("用户名或密码错误");
