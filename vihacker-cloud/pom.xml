@@ -18,7 +18,9 @@
         <module>../vihacker-uaa</module>
         <module>../vihacker-platform</module>
         <module>../vihacker-thirdparty</module>
-        <module>../vihacker-pay</module>
+        <module>Vihacker-filesystem</module>
+        <module>Vihacker-system</module>
+
     </modules>
 
     <licenses>

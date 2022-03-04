@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.vihackerframework.znjx.mapper.FileMapper">
+
+    <select id="deletedList" resultType="cc.vihackerframework.znjx.entity.FileEntity">
+        SELECT
+            f.*,
+            u.username AS createdByName,
+            p.folder_name AS folderName
+        FROM
+            f_file f
+            JOIN t_user u ON f.created_by = u.id
+            JOIN f_folder p ON f.folder_id = p.id
+        WHERE
+            f.deleted = 1
+        AND f.created_by = #{userId}
+        ORDER BY
+            f.modify_time
+    </select>
+
+    <update id="restoreById">
+        UPDATE f_file
+        SET deleted = 0
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deletePermanentlyById">
+        DELETE FROM f_file WHERE id = #{id}
+    </delete>
+</mapper>

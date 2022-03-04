@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.vihackerframework.znjx.mapper.FolderMapper">
+
+    <select id="findParentById" resultType="cc.vihackerframework.znjx.entity.FolderEntity">
+        SELECT T2.id, T2.folder_name
+        FROM (
+        SELECT
+        @r AS _id,
+        (SELECT @r := parent_id FROM f_folder WHERE id = _id) AS parent_id,
+        @l := @l + 1 AS lvl
+        FROM
+        (SELECT @r := #{id}, @l := 0) vars,
+        f_folder h
+        WHERE @r &lt;&gt; 0) T1
+        JOIN f_folder T2
+        ON T1._id = T2.id
+        ORDER BY T1.lvl DESC
+    </select>
+
+    <select id="deletedList" resultType="cc.vihackerframework.znjx.entity.FolderEntity">
+        SELECT
+            f.*,
+            u.nick_name AS createdByName,
+            p.folder_name AS parentName
+        FROM
+            f_folder f
+            JOIN t_user u ON f.created_by = u.id
+            JOIN f_folder p ON f.parent_id = p.id
+        WHERE
+            f.deleted = 1
+          AND f.created_by = #{userId}
+        ORDER BY
+            f.modify_time
+    </select>
+
+    <update id="restoreById">
+        UPDATE f_folder
+        SET deleted = 0
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deletePermanentlyById">
+        DELETE FROM f_folder WHERE id = #{id}
+    </delete>
+
+</mapper>
