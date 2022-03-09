@@ -9,8 +9,10 @@ import feign.RequestInterceptor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -18,7 +20,12 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.util.Base64Utils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -52,6 +59,13 @@ public class ViHackerCloudSecurityAutoConfigure extends GlobalMethodSecurityConf
     @Bean
     public ViHackerCloudSecurityInteceptorConfigure cloudSecurityInteceptorConfigure() {
         return new ViHackerCloudSecurityInteceptorConfigure();
+    }
+
+    @Bean
+    @Primary
+    @ConditionalOnMissingBean(DefaultTokenServices.class)
+    public ViHackerUserInfoTokenServices viHackerUserInfoTokenServices(ResourceServerProperties properties) {
+        return new ViHackerUserInfoTokenServices(properties.getUserInfoUri(), properties.getClientId());
     }
 
     @Bean

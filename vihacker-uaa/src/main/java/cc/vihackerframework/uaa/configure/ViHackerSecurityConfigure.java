@@ -40,16 +40,10 @@ public class ViHackerSecurityConfigure extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-//
-//    @Bean
-//    public AuthenticationFailureHandler vihackerAuthenticationFailureHandler() {
-//        return new ViHackerAuthenticationFailureHandler();
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
-        http.requestMatchers()
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+            .requestMatchers()
             .antMatchers(SecurityConstant.AUTH_PATH, SecurityConstant.SOCIAL_PATH,SecurityConstant.LOGIN)
             .and()
             .authorizeRequests()

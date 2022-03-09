@@ -21,10 +21,6 @@
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-feign-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-sentinel-starter</artifactId>
-        </dependency>
         <!-- Nacos -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

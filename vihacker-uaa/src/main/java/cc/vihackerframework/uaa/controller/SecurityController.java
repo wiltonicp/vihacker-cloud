@@ -42,7 +42,7 @@ public class SecurityController {
         validateCodeService.create(request, response);
     }
 
-    @GetMapping("user/info")
+    @GetMapping("user")
     public@ResponseBody Principal currentUser(Principal principal) {
         return principal;
     }

@@ -24,27 +24,27 @@ public class ViHackerMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         AdminAuthUser adminAuthUser = SecurityUtil.getLoginUser();
         if(ObjectUtils.isNotEmpty(adminAuthUser)){
-            this.strictInsertFill(metaObject, "createdBy", Long.class, adminAuthUser.getUserId());
-            this.strictInsertFill(metaObject, "modifyBy", Long.class, adminAuthUser.getUserId());
+            this.setFieldValByName("createdBy", adminAuthUser.getUserId(), metaObject);
+            this.setFieldValByName("modifyBy", adminAuthUser.getUserId(), metaObject);
         }else{
-            this.strictInsertFill(metaObject, "createdBy", Long.class, 0L);
-            this.strictInsertFill(metaObject, "modifyBy", Long.class, 0L);
+            this.setFieldValByName("createdBy", 0L, metaObject);
+            this.setFieldValByName("modifyBy", 0L, metaObject);
         }
-        this.strictInsertFill(metaObject, "version", Long.class, 0L);
-        this.strictInsertFill(metaObject, "deleted", Integer.class, 0);
-        this.strictInsertFill(metaObject, "createdTime", LocalDateTime.class, LocalDateTime.now());
-        this.strictInsertFill(metaObject, "modifyTime", LocalDateTime.class, LocalDateTime.now());
+        this.setFieldValByName("version", 0L, metaObject);
+        this.setFieldValByName("deleted", 0, metaObject);
+        this.setFieldValByName("createdTime", LocalDateTime.now(), metaObject);
+        this.setFieldValByName("modifyTime", LocalDateTime.now(), metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         AdminAuthUser adminAuthUser = SecurityUtil.getLoginUser();
         if(ObjectUtils.isNotEmpty(adminAuthUser)){
-            this.strictInsertFill(metaObject, "createdBy", Long.class, adminAuthUser.getUserId());
-            this.strictInsertFill(metaObject, "modifyBy", Long.class, adminAuthUser.getUserId());
+            this.setFieldValByName("createdBy", adminAuthUser.getUserId(), metaObject);
+            this.setFieldValByName("modifyBy", adminAuthUser.getUserId(), metaObject);
         }else{
-            this.strictInsertFill(metaObject, "createdBy", Long.class, 0L);
-            this.strictInsertFill(metaObject, "modifyBy", Long.class, 0L);
+            this.setFieldValByName("createdBy", 0L, metaObject);
+            this.setFieldValByName("modifyBy", 0L, metaObject);
         }
     }
 }

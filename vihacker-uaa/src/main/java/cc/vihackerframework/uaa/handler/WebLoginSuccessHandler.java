@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -38,6 +39,7 @@ public class WebLoginSuccessHandler extends SavedRequestAwareAuthenticationSucce
             Object attribute = session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
             log.info("跳转到登录页的地址为: {}", attribute);
         }
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         if (ViHackerUtil.isAjaxRequest(request)) {
             if (savedRequest == null) {
                 ViHackerUtil.response(response, MediaType.APPLICATION_JSON_VALUE, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ViHackerResult.failed("请通过授权码模式跳转到该页面"));

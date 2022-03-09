@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     //@SentinelResource("resource")
-    @GetMapping("user")
+    @GetMapping("user1")
     @LogEndpoint(value = "获取用户信息",exception = "获取用户信息异常")
     public ViHackerResult user() {
         AdminAuthUser loginUser = SecurityUtil.getLoginUser();
