@@ -1,6 +1,5 @@
 package cc.vihackerframework.system.service;
 
-
 import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.entity.system.Dept;
 import com.baomidou.mybatisplus.extension.service.IService;

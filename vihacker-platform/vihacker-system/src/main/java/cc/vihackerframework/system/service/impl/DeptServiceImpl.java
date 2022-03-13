@@ -7,7 +7,6 @@ import cc.vihackerframework.core.entity.DeptTree;
 import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.entity.Tree;
 import cc.vihackerframework.core.entity.system.Dept;
-import cc.vihackerframework.core.util.DateUtil;
 import cc.vihackerframework.core.util.TreeUtil;
 import cc.vihackerframework.system.mapper.DeptMapper;
 import cc.vihackerframework.system.service.IUserDataPermissionService;
