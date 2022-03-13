@@ -42,11 +42,11 @@
         <if test="user.deptName != null and user.deptName != ''">
             AND d.dept_name like CONCAT('%',#{user.deptName},'%')
         </if>
-        <if test="user.createTimeFrom != null and user.createTimeFrom !=''">
-            And u.created_time &gt; #{user.createTimeFrom}
+        <if test="user.createdTimeFrom != null and user.createdTimeFrom !=''">
+            And u.created_time &gt; #{user.createdTimeFrom}
         </if>
-        <if test="user.createTimeTo!= null and user.createTimeTo !=''">
-            And u.created_time &lt; #{user.createTimeTo}
+        <if test="user.createdTimeTo!= null and user.createdTimeTo !=''">
+            And u.created_time &lt; #{user.createdTimeTo}
         </if>
         group by u.username,u.user_id,u.email,u.mobile,u.status,u.created_time,u.ssex,
         u.dept_id,u.last_login_time,u.modify_time,u.description,u.avatar
@@ -91,11 +91,11 @@
         <if test="user.mobile != null and user.mobile != ''">
             AND u.mobile = #{user.mobile}
         </if>
-        <if test="user.createTimeFrom != null and user.createTimeFrom !=''">
-            And u.created_time &gt; #{user.createTimeFrom}
+        <if test="user.createdTimeFrom != null and user.createdTimeFrom !=''">
+            And u.created_time &gt; #{user.createdTimeFrom}
         </if>
-        <if test="user.createTimeTo!= null and user.createTimeTo !=''">
-            And u.created_time &lt; #{user.createTimeTo}
+        <if test="user.createdTimeTo!= null and user.createdTimeTo !=''">
+            And u.created_time &lt; #{user.createdTimeTo}
         </if>
         group by u.username,u.user_id,u.email,u.mobile,u.status,u.created_time,u.ssex,
         u.dept_id,u.last_login_time,u.modify_time,u.description,u.avatar

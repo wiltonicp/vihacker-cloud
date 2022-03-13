@@ -50,7 +50,7 @@ public class SysUser extends ViHackerEntity implements Serializable {
      * 部门 ID
      */
     @TableField("DEPT_ID")
-    private Long deptIds;
+    private Long deptId;
 
     /**
      * 邮箱

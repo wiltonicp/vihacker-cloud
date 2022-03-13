@@ -89,7 +89,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
         String[] roles = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getRoleId().toString(), StringPool.COMMA);
         setUserRoles(user, roles);
         // 保存用户数据权限关联关系
-        String[] deptIds = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getDeptIds().toString(), StringPool.COMMA);
+        String[] deptIds = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getDeptId().toString(), StringPool.COMMA);
         setUserDataPermissions(user, deptIds);
     }
 
@@ -109,7 +109,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
         setUserRoles(user, roles);
 
         userDataPermissionService.deleteByUserIds(userIds);
-        String[] deptIds = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getDeptIds().toString(), StringPool.COMMA);
+        String[] deptIds = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getDeptId().toString(), StringPool.COMMA);
         setUserDataPermissions(user, deptIds);
     }
 
