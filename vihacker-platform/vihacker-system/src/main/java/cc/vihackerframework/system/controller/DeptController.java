@@ -7,6 +7,7 @@ import cc.vihackerframework.core.util.ExcelUtil;
 import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.log.starter.annotation.LogEndpoint;
 import cc.vihackerframework.system.service.IDeptService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ import java.util.Map;
 @Slf4j
 @Validated
 @RestController
+@Api(tags = "部门管理")
 @RequestMapping("dept")
 @RequiredArgsConstructor
 public class DeptController {

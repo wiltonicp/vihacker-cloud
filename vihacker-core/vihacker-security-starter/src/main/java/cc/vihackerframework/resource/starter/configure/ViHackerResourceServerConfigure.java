@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  * @email wilton.icp@gmail.com
  * @since 2021/6/15
  */
+@Order(5)
 @EnableResourceServer
 @EnableAutoConfiguration(exclude = UserDetailsServiceAutoConfiguration.class)
 public class ViHackerResourceServerConfigure extends ResourceServerConfigurerAdapter {
@@ -46,27 +47,21 @@ public class ViHackerResourceServerConfigure extends ResourceServerConfigurerAda
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        if (properties == null) {
-            permitAll(http);
-            return;
-        }
-        String[] anonUrls = properties.getIgnoreUrls().toArray(new String[properties.getIgnoreUrls().size()]);
-        if (ArrayUtils.isEmpty(anonUrls)) {
-            anonUrls = new String[]{};
-        }
-
-        if (ArrayUtils.contains(anonUrls, properties.getAuthUri())) {
-            permitAll(http);
-            return;
-        }
-        http.csrf().disable()
-                .requestMatchers().antMatchers(properties.getAuthUri())
+        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config
+                = http.requestMatchers().anyRequest()
                 .and()
-                .authorizeRequests()
-                .antMatchers(anonUrls).permitAll()
-                .antMatchers(properties.getAuthUri()).authenticated()
-                .and()
-                .httpBasic();
+                .authorizeRequests();
+        properties.getIgnoreUrls().forEach(url -> {
+            config.antMatchers(url).permitAll();
+        });
+        config
+            //任何请求
+            .anyRequest()
+            //都需要身份认证
+            .authenticated()
+            //csrf跨站请求
+            .and()
+            .csrf().disable();
     }
 
     @Override

@@ -5,7 +5,6 @@ import cc.vihackerframework.uaa.manager.AdminUserManager;
 import cc.vihackerframework.core.entity.enums.StatusEnum;
 import cc.vihackerframework.core.entity.system.SysUser;
 import cc.vihackerframework.uaa.service.ViHackerUserDetailsService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * <p>
  *
@@ -23,10 +24,10 @@ import org.springframework.stereotype.Service;
  * @since 2021/6/5
  */
 @Service
-@RequiredArgsConstructor
 public class ViHackerUserDetailsServiceImpl implements ViHackerUserDetailsService {
 
-    private final AdminUserManager manager;
+    @Resource
+    private AdminUserManager manager;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

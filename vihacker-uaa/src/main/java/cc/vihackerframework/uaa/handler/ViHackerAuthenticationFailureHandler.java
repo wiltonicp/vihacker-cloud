@@ -4,7 +4,7 @@ import cc.vihackerframework.core.api.ResultCode;
 import cc.vihackerframework.core.api.ViHackerResult;
 import cc.vihackerframework.core.util.ViHackerUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
@@ -18,16 +18,18 @@ import java.io.IOException;
 /**
  * 登录失败处理
  *
- * @author Ranger
- * @email wilton.icp@gmail.com
- * @since 2021/8/2
+ * @Author: Ranger
+ * @Date: 2021/1/28 14:00
+ * @Email: wilton.icp@gmail.com
  */
 @Slf4j
-public class ViHackerAuthenticationFailureHandler  implements AuthenticationFailureHandler {
+@Configuration
+public class ViHackerAuthenticationFailureHandler implements AuthenticationFailureHandler {
+
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException exception) throws IOException, ServletException {
         ResultCode resultCode = null;
-        String username = request.getParameter("username");
+        String username = httpServletRequest.getParameter("username");
         if (exception instanceof AccountExpiredException) {
             // 账号过期
             log.info("[登录失败] - 用户[{}]账号过期", username);
@@ -62,6 +64,6 @@ public class ViHackerAuthenticationFailureHandler  implements AuthenticationFail
             log.error(String.format("[登录失败] - [%s]其他错误", username), exception);
             resultCode = ResultCode.USER_LOGIN_FAIL;
         }
-        ViHackerUtil.response(response, MediaType.APPLICATION_JSON_VALUE, HttpStatus.UNAUTHORIZED.value(), ViHackerResult.failed(resultCode));
+        ViHackerUtil.response(httpServletResponse, MediaType.APPLICATION_JSON_VALUE, HttpServletResponse.SC_OK, ViHackerResult.failed(resultCode));
     }
 }

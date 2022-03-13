@@ -18,7 +18,6 @@
         <module>../vihacker-uaa</module>
         <module>../vihacker-platform</module>
         <module>../vihacker-thirdparty</module>
-        <module>../vihacker-pay</module>
     </modules>
 
     <licenses>
@@ -206,10 +205,10 @@
             <id>dev</id>
             <properties>
                 <spring.active>dev</spring.active>
-                <config.server-addr>127.0.0.1:8848</config.server-addr>
+                <config.server-addr>cloud.vihacker.top:8101</config.server-addr>
                 <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
-                <config.group>DEFAULT_GROUP</config.group>
-                <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
+                <config.group>DEV_GROUP</config.group>
+                <discovery.server-addr>cloud.vihacker.top:8101</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
                 <sentinel.dashboard>127.0.0.1:8080</sentinel.dashboard>
             </properties>
