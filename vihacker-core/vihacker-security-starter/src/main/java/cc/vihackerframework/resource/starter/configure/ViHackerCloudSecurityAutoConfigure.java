@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -35,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2021/6/15
  */
 @Order(6)
+@ComponentScan("cc.vihackerframework.core.auth.*")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties(ViHackerSecurityProperties.class)
 @ConditionalOnProperty(value = "vihacker.security.enable", havingValue = "true", matchIfMissing = true)

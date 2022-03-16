@@ -1,5 +1,6 @@
 package cc.vihackerframework.resource.starter.handler;
 
+import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.api.ViHackerResult;
 import cc.vihackerframework.core.constant.ViHackerConstant;
 import cc.vihackerframework.core.util.ViHackerUtil;
@@ -39,7 +40,7 @@ public class ViHackerServerHandlerInterceptor implements HandlerInterceptor {
         if (StringUtils.equals(gatewayToken, token)) {
             return true;
         } else {
-            ViHackerUtil.response(response, MediaType.APPLICATION_JSON_VALUE,HttpServletResponse.SC_FORBIDDEN, ViHackerResult.failed("请通过网关获取资源"));
+            ViHackerUtil.response(response, MediaType.APPLICATION_JSON_VALUE,HttpServletResponse.SC_FORBIDDEN, ViHackerApiResult.failed("请通过网关获取资源"));
             return false;
         }
     }

@@ -1,5 +1,6 @@
 package cc.vihackerframework.core.auth.entity;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(callSuper = true)
 public class AdminAuthUser extends User {
 
