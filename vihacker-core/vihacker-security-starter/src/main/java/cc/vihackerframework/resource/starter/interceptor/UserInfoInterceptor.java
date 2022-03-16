@@ -25,7 +25,7 @@ public class UserInfoInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String authorization = request.getHeader("Authorization");
         authorization = StrUtil.removePrefix(authorization, "bearer ");
-        log.error("测试authorization获取：{}",authorization);
+        authorization = StrUtil.removePrefix(authorization, "Bearer ");
         if (StrUtil.isNotBlank(authorization)) {
             Jwt decode = JwtHelper.decode(authorization);
             //验签
@@ -33,10 +33,10 @@ public class UserInfoInterceptor implements HandlerInterceptor {
             String claims = decode.getClaims();
             HashMap<String, Object> hashMap = objectMapper.readValue(claims, HashMap.class);
             System.out.println(hashMap);
-            Object userName = hashMap.get("user_name");
-            Object nickName = hashMap.get("nick_name");
-            Object authorities = hashMap.get("authorities");
-            UserContext.setUserInfo(AdminAuthUser.builder().build());
+            //Object userName = hashMap.get("user_name");
+            //Object authorities = hashMap.get("authorities");
+
+            UserContext.setUserInfo(null);
         }
         return true;
     }

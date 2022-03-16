@@ -15,8 +15,4 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(factory = YamlPropertySourceFactory.class, value = "classpath:vihacker-error.yml")
 public class ViHackerExceptionAutoConfigure {
 
-    @Bean
-    public BaseExceptionHandler baseExceptionHandler(){
-        return new BaseExceptionHandler();
-    }
 }
