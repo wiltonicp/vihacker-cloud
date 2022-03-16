@@ -4,8 +4,6 @@ import cc.vihackerframework.uaa.exception.ViHackerAuthWebResponseExceptionTransl
 import cc.vihackerframework.uaa.properties.ViHackerAuthProperties;
 import cc.vihackerframework.uaa.service.RedisAuthenticationCodeService;
 import cc.vihackerframework.uaa.service.RedisClientDetailsService;
-import cc.vihackerframework.uaa.service.ViHackerUserDetailsService;
-import cc.vihackerframework.uaa.service.impl.ViHackerUserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -93,7 +91,7 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
     @Bean
     public ResourceOwnerPasswordTokenGranter resourceOwnerPasswordTokenGranter(AuthenticationManager authenticationManager, OAuth2RequestFactory oAuth2RequestFactory) {
         DefaultTokenServices defaultTokenServices = defaultTokenServices();
-            defaultTokenServices.setTokenEnhancer(jwtAccessTokenConverter());
+        defaultTokenServices.setTokenEnhancer(jwtAccessTokenConverter());
         return new ResourceOwnerPasswordTokenGranter(authenticationManager, defaultTokenServices, redisClientDetailsService, oAuth2RequestFactory);
     }
 

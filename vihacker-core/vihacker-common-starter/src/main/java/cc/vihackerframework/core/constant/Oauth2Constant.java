@@ -22,32 +22,38 @@ public class Oauth2Constant {
     public static final String CAPTCHA_HEADER_CODE = "code";
 
     /**
+     * 登录类型
+     */
+    public static final int LOGIN_USERNAME_TYPE = 1;
+    public static final int LOGIN_MOBILE_TYPE = 2;
+
+    /**
      * 字段描述开始：用户ID
      */
-    public static final String MATE_USER_ID = "userId";
+    public static final String VIHACKER_USER_ID = "userId";
 
     /**
      * 用户名
      */
-    public static final String MATE_USER_NAME = "userName";
+    public static final String VIHACKER_USER_NAME = "username";
 
     /**
      * 用户头像
      */
-    public static final String MATE_AVATAR = "avatar";
+    public static final String VIHACKER_AVATAR = "avatar";
 
     /**
      * 用户权限ID
      */
-    public static final String MATE_ROLE_ID = "roleId";
+    public static final String VIHACKER_ROLE_ID = "roleId";
 
     /**
      * 用户类型
      */
-    public static final String MATE_TYPE = "type";
+    public static final String VIHACKER_TYPE = "type";
 
     /**
      * 租户ID
      */
-    public static final String MATE_TENANT_ID = "tenantId";
+    public static final String VIHACKER_TENANT_ID = "tenantId";
 }
