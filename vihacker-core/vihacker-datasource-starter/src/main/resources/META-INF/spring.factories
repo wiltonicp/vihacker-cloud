@@ -1,4 +1,5 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   cc.vihackerframework.core.datasource.starter.configure.ViHackerDataSourceAutoConfigure,\
-  cc.vihackerframework.core.datasource.starter.configure.ViHackerJacksonConfigure
+  cc.vihackerframework.core.datasource.starter.configure.ViHackerJacksonConfigure,\
+  cc.vihackerframework.core.datasource.starter.configure.ViHackerP6spySqlFormatConfigure
