@@ -1,4 +1,4 @@
-package cc.vihackerframework.uaa.ranner;
+package cc.vihackerframework.core.web.configure;
 
 import cc.vihackerframework.core.util.ViHackerUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.net.UnknownHostException;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class StartedUpRunner implements ApplicationRunner {
+public class ViHackerStartedUpRunnerConfigure implements ApplicationRunner {
     private final ConfigurableApplicationContext context;
     private final Environment environment;
 

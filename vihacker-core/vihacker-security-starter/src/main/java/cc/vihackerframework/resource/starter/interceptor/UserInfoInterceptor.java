@@ -2,6 +2,7 @@ package cc.vihackerframework.resource.starter.interceptor;
 
 import cc.vihackerframework.core.auth.context.UserContext;
 import cc.vihackerframework.core.auth.entity.AdminAuthUser;
+import cc.vihackerframework.core.constant.Oauth2Constant;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ public class UserInfoInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(Oauth2Constant.HEADER_TOKEN);
         authorization = StrUtil.removePrefix(authorization, "Bearer ");
         authorization = StrUtil.removePrefix(authorization, "bearer ");
         if (StrUtil.isNotBlank(authorization)) {
@@ -34,13 +35,13 @@ public class UserInfoInterceptor implements HandlerInterceptor {
 
             String claims = decode.getClaims();
             HashMap<String, Object> hashMap = objectMapper.readValue(claims, HashMap.class);
-            System.out.println(hashMap);
-            String userName = hashMap.get("username").toString();
-            Long roleId = Long.parseLong(hashMap.get("roleId").toString());
-            String tenantId = String.valueOf(hashMap.get("tenantId"));
-            Long userId = Long.parseLong(hashMap.get("userId").toString());
-            String avatar = hashMap.get("avatar").toString();
-            Object permissions = hashMap.get("authorities");
+
+            String userName = String.valueOf(hashMap.get(Oauth2Constant.VIHACKER_USER_NAME));
+            Long roleId = Long.parseLong(String.valueOf(hashMap.get(Oauth2Constant.VIHACKER_ROLE_ID)));
+            String tenantId = String.valueOf(hashMap.get(Oauth2Constant.VIHACKER_TENANT_ID));
+            Long userId = Long.parseLong(String.valueOf(hashMap.get(Oauth2Constant.VIHACKER_USER_ID)));
+            String avatar = String.valueOf(hashMap.get(Oauth2Constant.VIHACKER_AVATAR));
+            Object permissions = hashMap.get(Oauth2Constant.VIHACKER_AUTHORITIES);
 
             Collection<? extends GrantedAuthority> authorities
                     = AuthorityUtils.commaSeparatedStringToAuthorityList(permissions.toString());

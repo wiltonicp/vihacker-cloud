@@ -56,4 +56,6 @@ public class Oauth2Constant {
      * 租户ID
      */
     public static final String VIHACKER_TENANT_ID = "tenantId";
+
+    public static final String VIHACKER_AUTHORITIES = "authorities";
 }
