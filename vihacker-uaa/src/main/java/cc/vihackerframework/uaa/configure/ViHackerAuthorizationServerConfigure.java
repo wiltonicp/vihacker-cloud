@@ -2,10 +2,13 @@ package cc.vihackerframework.uaa.configure;
 
 import cc.vihackerframework.core.auth.entity.AdminAuthUser;
 import cc.vihackerframework.core.constant.Oauth2Constant;
+import cc.vihackerframework.redis.starter.service.RedisService;
 import cc.vihackerframework.uaa.exception.ViHackerAuthWebResponseExceptionTranslator;
+import cc.vihackerframework.uaa.granter.SmsTokenGranter;
 import cc.vihackerframework.uaa.properties.ViHackerAuthProperties;
 import cc.vihackerframework.uaa.service.RedisAuthenticationCodeService;
 import cc.vihackerframework.uaa.service.RedisClientDetailsService;
+import cc.vihackerframework.uaa.service.ViHackerUserDetailsService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -13,20 +16,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
 import java.util.*;
 
@@ -43,8 +47,9 @@ import java.util.*;
 @EnableAuthorizationServer
 public class ViHackerAuthorizationServerConfigure extends AuthorizationServerConfigurerAdapter {
 
+    private final RedisService redisService;
     private final ViHackerAuthProperties properties;
-    private final UserDetailsService userDetailService;
+    private final ViHackerUserDetailsService userDetailService;
     private final AuthenticationManager authenticationManager;
     private final RedisClientDetailsService redisClientDetailsService;
     private final RedisAuthenticationCodeService redisAuthenticationCodeService;
@@ -65,8 +70,15 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
         // 把jwt增强，与额外信息增强加入到增强链
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), jwtAccessTokenConverter()));
         tokenServices.setTokenEnhancer(tokenEnhancerChain);
+        // 配置tokenServices参数
+        addUserDetailsService(tokenServices);
+
+        List<TokenGranter> tokenGranters = getTokenGranters(endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory());
+        // 增加原有的验证认证方式
+        tokenGranters.add(endpoints.getTokenGranter());
 
         endpoints.tokenStore(tokenStore())
+                .tokenGranter(new CompositeTokenGranter(tokenGranters))
                 .userDetailsService(userDetailService)
                 .authorizationCodeServices(redisAuthenticationCodeService)
                 .authenticationManager(authenticationManager)
@@ -115,6 +127,22 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
         return new DefaultOAuth2RequestFactory(redisClientDetailsService);
     }
 
+    private void addUserDetailsService(DefaultTokenServices tokenServices) {
+        if (userDetailService != null) {
+            PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+            provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailService));
+            tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
+        }
+    }
+
+    /**
+     * 自定义TokenGranter集合
+     */
+    private List<TokenGranter> getTokenGranters(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory) {
+        return new ArrayList<>(Collections.singletonList(
+                new SmsTokenGranter(tokenServices, clientDetailsService, requestFactory, redisService, userDetailService)
+        ));
+    }
     /**
      * jwt token增强，添加额外信息
      *

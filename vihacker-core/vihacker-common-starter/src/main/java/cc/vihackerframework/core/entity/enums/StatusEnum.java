@@ -17,24 +17,24 @@ import java.util.Objects;
 @Getter
 public enum StatusEnum implements EnumMessage {
 
-    STATUS_LOCK(0L, "锁定"),
-    STATUS_VALID(1L, "有效");
+    STATUS_LOCK(0, "锁定"),
+    STATUS_VALID(1, "有效");
 
     /**
      * 标记数据库存的值是code
      */
     @EnumValue
-    private final Long code;
+    private final Integer code;
     @JsonValue
     private final String title;
 
-    StatusEnum(Long code, String title) {
+    StatusEnum(Integer code, String title) {
         this.code = code;
         this.title = title;
     }
 
     @JsonCreator
-    public static StatusEnum getByCode(long code) {
+    public static StatusEnum getByCode(int code) {
         for (StatusEnum value : StatusEnum.values()) {
             if (Objects.equals(code, value.getCode())) {
                 return value;

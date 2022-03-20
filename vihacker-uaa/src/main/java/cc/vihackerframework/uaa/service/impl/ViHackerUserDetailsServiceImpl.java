@@ -1,22 +1,21 @@
 package cc.vihackerframework.uaa.service.impl;
 
 import cc.vihackerframework.core.auth.entity.AdminAuthUser;
+import cc.vihackerframework.core.auth.entity.UserInfo;
 import cc.vihackerframework.core.constant.Oauth2Constant;
+import cc.vihackerframework.core.exception.ViHackerAuthException;
 import cc.vihackerframework.uaa.manager.AdminUserManager;
 import cc.vihackerframework.core.entity.enums.StatusEnum;
 import cc.vihackerframework.core.entity.system.SysUser;
 import cc.vihackerframework.uaa.service.ViHackerUserDetailsService;
 import cn.hutool.core.convert.Convert;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -38,27 +37,45 @@ public class ViHackerUserDetailsServiceImpl implements ViHackerUserDetailsServic
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //获取用户信息
-        SysUser sysUser = manager.findByName(username);
-        if (sysUser != null) {
-            log.info("用户名：{}", sysUser.getUsername());
-            String permissions = manager.findUserPermission(username);
-            boolean notLocked = false;
-            if (StatusEnum.STATUS_VALID.getCode().equals(sysUser.getStatus())) {
-                notLocked = true;
-            }
-            Collection<? extends GrantedAuthority> authorities
-                    = AuthorityUtils.commaSeparatedStringToAuthorityList(permissions);
-            log.info("authorities: {}", authorities);
-            return new AdminAuthUser(sysUser.getUsername(),sysUser.getPassword(),true,true,true, notLocked,authorities,
-                    sysUser.getUserId(),sysUser.getAvatar(),sysUser.getEmail(),sysUser.getMobile(),sysUser.getSex(), Oauth2Constant.LOGIN_USERNAME_TYPE,sysUser.getTenantId(),
-                    sysUser.getDeptId(),sysUser.getDeptName(),sysUser.getRoleId(),sysUser.getRoleName(),sysUser.getLastLoginTime(),sysUser.getStatus());
+        UserInfo userInfo = manager.findByName(username);
+        if (userInfo == null) {
+            throw new ViHackerAuthException("该用户：" + username + "不存在");
         }
-        throw new UsernameNotFoundException("用户名或密码错误");
+        userInfo.setType(Oauth2Constant.LOGIN_USERNAME_TYPE);
+        userInfo.setUserName(username);
+        return getUserDetails(userInfo);
     }
 
     @Override
     public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
-        return null;
+        //获取用户信息
+        UserInfo userInfo = manager.findByMobile(mobile);
+        if (userInfo == null) {
+            throw new ViHackerAuthException("该用户：" + mobile + "不存在");
+        }
+        userInfo.setType(Oauth2Constant.LOGIN_MOBILE_TYPE);
+        userInfo.setUserName(mobile);
+        return getUserDetails(userInfo);
+    }
+
+    private UserDetails getUserDetails(UserInfo userInfo) {
+        boolean notLocked = true;
+        if (ObjectUtils.isEmpty(userInfo)) {
+            log.info("该用户：{} 不存在！", userInfo.getUserName());
+            throw new ViHackerAuthException("该用户：" + userInfo.getUserName() + "不存在");
+        } else if (StatusEnum.STATUS_LOCK.getCode().equals(userInfo.getSysUser().getStatus())) {
+            notLocked = false;
+            log.info("该用户：{} 已被停用!", userInfo.getUserName());
+            throw new ViHackerAuthException("对不起，您的账号：" + userInfo.getUserName() + " 已停用");
+        }
+        SysUser sysUser = userInfo.getSysUser();
+        log.info("用户名：{}", sysUser.getUsername());
+        Collection<? extends GrantedAuthority> authorities
+                = AuthorityUtils.createAuthorityList(Convert.toStrArray(userInfo.getPermissions()));
+        log.info("authorities: {}", authorities);
+        return new AdminAuthUser(sysUser.getUsername(),sysUser.getPassword(),true,true,true, notLocked,authorities,
+                sysUser.getUserId(),sysUser.getAvatar(),sysUser.getEmail(),sysUser.getMobile(),sysUser.getSex(), userInfo.getType(),sysUser.getTenantId(),
+                sysUser.getDeptId(),sysUser.getDeptName(),sysUser.getRoleId(),sysUser.getRoleName(),sysUser.getLastLoginTime(),sysUser.getStatus().longValue());
     }
 
     @Override

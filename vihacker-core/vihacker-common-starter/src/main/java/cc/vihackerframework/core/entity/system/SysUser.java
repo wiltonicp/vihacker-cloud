@@ -77,7 +77,7 @@ public class SysUser extends ViHackerEntity implements Serializable {
      */
     @TableField("STATUS")
     @NotBlank(message = "状态不能为空")
-    private Long status;
+    private Integer status;
 
     /**
      * 状态，用于展示
@@ -138,7 +138,7 @@ public class SysUser extends ViHackerEntity implements Serializable {
 
     public void created(SysUser user) {
         this.setSexVal(EnumUtil.getEnumByCode(SexEnum.class, user.getSex()));
-        this.setStatusVal(EnumUtil.getEnumByCode(StatusEnum.class, user.getStatus()));
+        this.setStatusVal(EnumUtil.getEnumByCode(StatusEnum.class, user.getStatus().longValue()));
     }
 
 }

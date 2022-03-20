@@ -19,8 +19,6 @@ public class Oauth2Constant {
 
     public static final String CAPTCHA_HEADER_KEY = "key";
 
-    public static final String CAPTCHA_HEADER_CODE = "code";
-
     /**
      * 登录类型
      */

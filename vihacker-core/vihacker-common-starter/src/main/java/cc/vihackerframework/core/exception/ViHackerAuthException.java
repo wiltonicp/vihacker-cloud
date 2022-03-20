@@ -1,7 +1,7 @@
 package cc.vihackerframework.core.exception;
 
 /**
- * <p>
+ * 认证处理异常
  *
  * @author Ranger
  * @email wilton.icp@gmail.com

@@ -1,7 +1,7 @@
 package cc.vihackerframework.core.exception;
 
 /**
- * @Description
+ * 验证码异常
  * @Author: Ranger
  * @Date: 2021/1/15 14:01
  * @Email: wilton.icp@gmail.com

@@ -27,11 +27,6 @@ public class ViHackerConstant {
     public static final String PNG = "png";
 
     /**
-     * 验证码 key前缀
-     */
-    public static final String CODE_PREFIX = "vihacker.captcha.";
-
-    /**
      * 排序规则：降序
      */
     public static final String ORDER_DESC = "DESC";

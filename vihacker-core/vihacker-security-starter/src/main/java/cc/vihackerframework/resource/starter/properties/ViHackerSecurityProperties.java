@@ -41,7 +41,6 @@ public class ViHackerSecurityProperties {
      * 认证中心默认忽略验证地址
      */
     private static final String[] SECURITY_ENDPOINTS = {
-            "/auth/**",
             "/oauth/**",
             "/actuator/**",
             "/v2/api-docs/**",
@@ -62,7 +61,6 @@ public class ViHackerSecurityProperties {
             "/error/**",
             "/assets/**",
             "/auth/logout",
-            "/auth/code",
             "/auth/sms-code"
     };
 

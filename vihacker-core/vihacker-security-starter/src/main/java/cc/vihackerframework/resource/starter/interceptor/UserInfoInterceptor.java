@@ -30,6 +30,7 @@ public class UserInfoInterceptor implements HandlerInterceptor {
         String authorization = request.getHeader(Oauth2Constant.HEADER_TOKEN);
         authorization = StrUtil.removePrefix(authorization, "Bearer ");
         authorization = StrUtil.removePrefix(authorization, "bearer ");
+
         if (StrUtil.isNotBlank(authorization)) {
             Jwt decode = JwtHelper.decode(authorization);
 
