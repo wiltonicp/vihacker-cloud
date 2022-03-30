@@ -17,6 +17,7 @@
         <module>sso-demo</module>
         <module>vihacker-demo</module>
         <module>es-demo</module>
+        <module>vihacker-flowable</module>
     </modules>
 
 </project>

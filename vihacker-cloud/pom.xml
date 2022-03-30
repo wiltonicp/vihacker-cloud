@@ -83,14 +83,14 @@
     </dependencyManagement>
 
     <distributionManagement>
-        <repository>
-            <id>nexus-releases</id> <!-- nexus认证id -->
-            <url>http://rep.wiltonic.cn:8331/repository/maven-releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id> <!-- nexus认证id -->
-            <url>http://rep.wiltonic.cn:8331/repository/maven-snapshots</url>
-        </snapshotRepository>
+<!--        <repository>-->
+<!--            <id>nexus-releases</id> &lt;!&ndash; nexus认证id &ndash;&gt;-->
+<!--            <url>http://rep.wiltonic.cn:8331/repository/maven-releases</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>nexus-snapshots</id> &lt;!&ndash; nexus认证id &ndash;&gt;-->
+<!--            <url>http://rep.wiltonic.cn:8331/repository/maven-snapshots</url>-->
+<!--        </snapshotRepository>-->
     </distributionManagement>
 
     <build>
