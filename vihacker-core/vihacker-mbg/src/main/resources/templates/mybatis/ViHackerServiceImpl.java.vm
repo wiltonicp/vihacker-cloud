@@ -30,6 +30,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
         // 查询开始日期和结束日期
         queryWrapper.between(StringUtil.isNotBlank(search.getStartDate()), ${className}::getCreatedTime, search.getStartDate(), search.getEndDate());
         // 关键词查询
+        // TODO: getName修改为需要检索的字段
         queryWrapper.like(isKeyword, ${className}::getName, search.getKeyword());
         //　字段排序
         queryWrapper.orderByDesc(${className}::getCreatedTime);
