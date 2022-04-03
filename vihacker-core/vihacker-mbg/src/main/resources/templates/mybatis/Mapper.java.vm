@@ -1,0 +1,24 @@
+package ${package}.${moduleName}.mapper;
+
+import ${package}.${moduleName}.entity.${className};
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * ${comments}
+ * Created by ${author} on ${datetime}.
+ */
+public interface ${className}Mapper extends BaseMapper<${className}> {
+    /**
+     *  列表查询
+     * @param params
+     * @return
+     */
+    List<${className}> queryList(Map<String,Object> params);
+    /**
+     * 统计数据
+     * @param params
+     */
+    int queryTotal(Map<String, Object> params);
+}

@@ -1,0 +1,30 @@
+package ${package}.${moduleName}.service;
+
+import ${package}.${moduleName}.entity.${className};
+import cc.vihackerframework.core.datasource.starter.entity.Search;
+import java.util.List;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+
+/**
+ * ${comments}
+ * Created by ${author} on ${datetime}.
+ */
+public interface I${className}Service  extends IService<${className}>  {
+
+    /**
+     * 分页查询
+     * @param search 搜索参数
+     * @param ${classname}  实体
+     * @return
+     */
+    IPage<${className}> find${className}ByPage(Search search,${className} ${classname});
+
+    /**
+    * 多条件查询
+	* @param ${classname}
+	* @return list
+	*/
+    List<${className}> queryList(${className} ${classname});
+
+}

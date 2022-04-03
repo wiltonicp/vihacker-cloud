@@ -1,0 +1,44 @@
+package ${package}.${moduleName}.entity;
+
+import cc.vihackerframework.core.entity.ViHackerEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Getter;
+import lombok.Setter;
+#if(${hasDate})
+import java.time.LocalDateTime;
+#end
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+
+/**
+ * ${comments}
+ * Created by ${author} on ${datetime}.
+ */
+@Getter
+@Setter
+@TableName(value = "${tableName}")
+public class ${className} extends ViHackerEntity {
+
+#foreach ($column in $columns)
+	#if(${pk.attrname}!=$column.attrname)
+	#if(${column.attrname} != 'version' && ${column.attrname} != 'createdBy' && ${column.attrname} != 'createdTime' && ${column.attrname} != 'modifyBy'  && ${column.attrname} != 'modifyTime' && ${column.attrname} != 'version' && ${column.attrname} != 'deleted')
+
+	/**
+	 * $column.comments
+	 */
+	private $column.attrType $column.attrname;
+	#end
+	#else
+	/**
+	 * $column.comments
+	 */
+	@TableId(type = IdType.AUTO)
+	private $column.attrType $column.attrname;
+
+	#end
+#end
+
+}

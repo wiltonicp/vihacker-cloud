@@ -55,6 +55,7 @@
         <module>vihacker-elasticsearch-starter</module>
         <module>vihacker-encrypt-starter</module>
         <module>vihacker-sharding-starter</module>
+        <module>vihacker-mbg</module>
     </modules>
 
     <properties>
