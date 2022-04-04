@@ -33,6 +33,11 @@ public class ViHackerApiResult<T> implements Serializable {
      */
     private T data;
 
+    /**
+     * 数据是否加密
+     */
+    private Boolean encrypt = Boolean.FALSE;
+
     protected ViHackerApiResult() {
     }
 

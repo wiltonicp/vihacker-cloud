@@ -1,6 +1,7 @@
 package cc.vihackerframework.uaa.exception;
 
-import cc.vihackerframework.core.api.ViHackerResult;
+import cc.vihackerframework.core.api.ViHackerApiResult;
+import cc.vihackerframework.core.exception.ViHackerAuthException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,7 @@ import org.springframework.security.oauth2.provider.error.WebResponseExceptionTr
 import org.springframework.stereotype.Component;
 
 /**
- * <p>
+ * 认证异常翻译
  *
  * @author Ranger
  * @email wilton.icp@gmail.com
@@ -24,50 +25,60 @@ public class ViHackerAuthWebResponseExceptionTranslator implements WebResponseEx
     public ResponseEntity<?> translate(Exception e) {
         ResponseEntity.BodyBuilder status = ResponseEntity.status(HttpStatus.OK);
         String message = "认证失败";
-        log.error(message, e);
         if (e instanceof UnsupportedGrantTypeException) {
             message = "不支持该认证类型";
-            return status.body(ViHackerResult.failed(message));
+            return status.body(ViHackerApiResult.failed(message));
         }
         if (e instanceof InvalidTokenException
                 && StringUtils.containsIgnoreCase(e.getMessage(), "Invalid refresh token (expired)")) {
             message = "刷新令牌已过期，请重新登录";
-            return status.body(ViHackerResult.failed(message));
+            return status.body(ViHackerApiResult.failed(message));
         }
         if (e instanceof InvalidScopeException) {
             message = "不是有效的scope值";
-            return status.body(ViHackerResult.failed(message));
+            return status.body(ViHackerApiResult.failed(message));
         }
         if (e instanceof RedirectMismatchException) {
             message = "redirect_uri值不正确";
-            return status.body(ViHackerResult.failed(message));
+            return status.body(ViHackerApiResult.failed(message));
         }
         if (e instanceof BadClientCredentialsException) {
             message = "client值不合法";
-            return status.body(ViHackerResult.failed(message));
+            return status.body(ViHackerApiResult.failed(message));
         }
         if (e instanceof UnsupportedResponseTypeException) {
             String code = StringUtils.substringBetween(e.getMessage(), "[", "]");
             message = code + "不是合法的response_type值";
-            return status.body(ViHackerResult.failed(message));
+            return status.body(ViHackerApiResult.failed(message));
         }
         if (e instanceof InvalidGrantException) {
             if (StringUtils.containsIgnoreCase(e.getMessage(), "Invalid refresh token")) {
                 message = "refresh token无效";
-                return status.body(ViHackerResult.failed(message));
+                return status.body(ViHackerApiResult.failed(message));
             }
             if (StringUtils.containsIgnoreCase(e.getMessage(), "Invalid authorization code")) {
                 String code = StringUtils.substringAfterLast(e.getMessage(), ": ");
                 message = "授权码" + code + "不合法";
-                return status.body(ViHackerResult.failed(message));
+                return status.body(ViHackerApiResult.failed(message));
             }
             if (StringUtils.containsIgnoreCase(e.getMessage(), "locked")) {
                 message = "用户已被锁定，请联系管理员";
-                return status.body(ViHackerResult.failed(message));
+                return status.body(ViHackerApiResult.failed(message));
             }
             message = "用户名或密码错误";
-            return status.body(ViHackerResult.failed(message));
+            return status.body(ViHackerApiResult.failed(message));
         }
-        return status.body(ViHackerResult.failed(message));
+
+        if (e instanceof UserDeniedAuthorizationException){
+            message = e.getMessage();
+            return status.body(ViHackerApiResult.failed(message));
+        }
+
+        if (e instanceof ViHackerAuthException) {
+            message = e.getMessage();
+            return status.body(ViHackerApiResult.failed(message));
+        }
+        log.error(message, e);
+        return status.body(ViHackerApiResult.failed(message));
     }
 }

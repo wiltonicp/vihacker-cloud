@@ -2,8 +2,7 @@ package cc.vihackerframework.demo;
 
 import cc.vihackerframework.demo.kafka.sender.MessageProducerService;
 import lombok.SneakyThrows;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -16,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since 2021/6/21
  */
 @SpringBootTest
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 public class MessageProducerServiceTest {
     @Autowired
     private MessageProducerService messageProducerService;

@@ -1,5 +1,6 @@
 package cc.vihackerframework.uaa.service.impl;
 
+import cc.vihackerframework.core.util.StringPool;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -100,7 +101,7 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteOauthClientDetails(String clientIds) {
-        Object[] clientIdArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(clientIds, ",");
+        Object[] clientIdArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(clientIds, StringPool.COMMA);
         LambdaQueryWrapper<OauthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(OauthClientDetails::getClientId, clientIdArray);
         boolean removed = this.remove(queryWrapper);

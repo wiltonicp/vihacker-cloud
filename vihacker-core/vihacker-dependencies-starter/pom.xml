@@ -12,7 +12,7 @@
 
     <groupId>cc.vihackerframework</groupId>
     <artifactId>vihacker-dependencies-starter</artifactId>
-    <version>1.0.5.R</version>
+    <version>1.0.6.R</version>
     <packaging>pom</packaging>
     <name>vihacker-dependencies-starter</name>
     <description>based on Spring Cloud Alibaba dependencies</description>
@@ -39,7 +39,7 @@
     </scm>
 
     <properties>
-        <vihacker.core.version>1.0.5.R</vihacker.core.version>
+        <vihacker.core.version>1.0.6.R</vihacker.core.version>
 
         <spring.boot.version>2.5.1</spring.boot.version>
         <spring.cloud.version>2020.0.3</spring.cloud.version>
@@ -63,8 +63,8 @@
         <mysql.connector.version>8.0.11</mysql.connector.version>
         <oracle.connector.version>12.2.0.1</oracle.connector.version>
         <postgresql.connector.version>42.2.6</postgresql.connector.version>
-        <mybatis.plus.version>3.4.3</mybatis.plus.version>
-        <mybaits.generator.version>3.4.1</mybaits.generator.version>
+        <mybatis.plus.version>3.2.0</mybatis.plus.version>
+        <mybaits.generator.version>3.5.2</mybaits.generator.version>
         <dynamic-datasource.version>2.5.4</dynamic-datasource.version>
         <p6spy.version>3.8.5</p6spy.version>
         <fastjson.version>1.2.62</fastjson.version>
@@ -101,6 +101,8 @@
         <jjwt.version>0.9.1</jjwt.version>
         <logstash-logback.version>6.1</logstash-logback.version>
         <jakarta.validation-api.version>2.0.2</jakarta.validation-api.version>
+
+        <sharding-jdbc.version>4.1.1</sharding-jdbc.version>
 
         <okhttp.version>4.9.0</okhttp.version>
         <vjackson.version>2.12.3</vjackson.version>
@@ -189,6 +191,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>vihacker-mybatis-starter</artifactId>
+                <version>${vihacker.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cc.vihackerframework</groupId>
+                <artifactId>vihacker-encrypt-starter</artifactId>
                 <version>${vihacker.core.version}</version>
             </dependency>
 
@@ -421,6 +428,12 @@
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
                 <version>${elastic.version}</version>
+            </dependency>
+            <!--sharding sphere-->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>${sharding-jdbc.version}</version>
             </dependency>
             <!-- redisson -->
             <dependency>

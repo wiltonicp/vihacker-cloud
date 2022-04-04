@@ -8,6 +8,7 @@ import cc.vihackerframework.core.util.StringUtil;
 import cc.vihackerframework.core.util.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +32,7 @@ import java.util.List;
  * @since 2021/6/7
  */
 @Slf4j
+@UtilityClass
 public class SecurityUtil {
 
     public static String BEARER = "bearer";

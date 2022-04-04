@@ -6,7 +6,7 @@
 
     <groupId>cc.vihackerframework</groupId>
     <artifactId>vihacker-cloud</artifactId>
-    <version>1.0.5.R</version>
+    <version>1.0.6.R</version>
     <packaging>pom</packaging>
 
     <name>vihacker-cloud</name>
@@ -18,7 +18,6 @@
         <module>../vihacker-uaa</module>
         <module>../vihacker-platform</module>
         <module>../vihacker-thirdparty</module>
-        <module>../vihacker-pay</module>
     </modules>
 
     <licenses>
@@ -44,7 +43,7 @@
     </scm>
 
     <properties>
-        <vihacker.core.version>1.0.5.R</vihacker.core.version>
+        <vihacker.core.version>1.0.6.R</vihacker.core.version>
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -84,14 +83,14 @@
     </dependencyManagement>
 
     <distributionManagement>
-        <repository>
-            <id>nexus-releases</id> <!-- nexus认证id -->
-            <url>http://rep.wiltonic.cn:8331/repository/maven-releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id> <!-- nexus认证id -->
-            <url>http://rep.wiltonic.cn:8331/repository/maven-snapshots</url>
-        </snapshotRepository>
+<!--        <repository>-->
+<!--            <id>nexus-releases</id> &lt;!&ndash; nexus认证id &ndash;&gt;-->
+<!--            <url>http://rep.wiltonic.cn:8331/repository/maven-releases</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>nexus-snapshots</id> &lt;!&ndash; nexus认证id &ndash;&gt;-->
+<!--            <url>http://rep.wiltonic.cn:8331/repository/maven-snapshots</url>-->
+<!--        </snapshotRepository>-->
     </distributionManagement>
 
     <build>
@@ -206,10 +205,10 @@
             <id>dev</id>
             <properties>
                 <spring.active>dev</spring.active>
-                <config.server-addr>127.0.0.1:8848</config.server-addr>
+                <config.server-addr>cloud.vihacker.top:8101</config.server-addr>
                 <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
-                <config.group>DEFAULT_GROUP</config.group>
-                <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
+                <config.group>DEV_GROUP</config.group>
+                <discovery.server-addr>cloud.vihacker.top:8101</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
                 <sentinel.dashboard>127.0.0.1:8080</sentinel.dashboard>
             </properties>

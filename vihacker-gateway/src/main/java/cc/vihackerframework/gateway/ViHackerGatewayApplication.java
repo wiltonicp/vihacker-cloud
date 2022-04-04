@@ -1,6 +1,6 @@
 package cc.vihackerframework.gateway;
 
-import org.springframework.boot.SpringApplication;
+import cc.vihackerframework.feign.starter.annotation.EnableViHackerFeign;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -12,6 +12,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @email wilton.icp@gmail.com
  * @since 2021/6/8
  */
+@EnableViHackerFeign
 @EnableDiscoveryClient
 @SpringBootApplication
 public class ViHackerGatewayApplication {

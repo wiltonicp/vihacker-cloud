@@ -41,13 +41,13 @@ VihackerCloud是一款基于Spring Cloud Alibaba的微服务架构。引入组�
 
 ## 使用说明
 
-最新版本 `v1.0.5.R`版本已发布到 maven 中央仓库，可直接引入使用
+最新版本 `v1.0.6.R`版本已发布到 maven 中央仓库，可直接引入使用
 
 ```pom
 <dependency>
     <groupId>cc.vihackerframework</groupId>
     <artifactId>模块名称</artifactId>
-    <version>1.0.5.R</version>
+    <version>1.0.6.R</version>
 </dependency>
 ```
 

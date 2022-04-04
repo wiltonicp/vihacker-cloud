@@ -1,6 +1,7 @@
 package cc.vihackerframework.resource.starter.configure;
 
 import cc.vihackerframework.resource.starter.handler.ViHackerServerHandlerInterceptor;
+import cc.vihackerframework.resource.starter.interceptor.UserInfoInterceptor;
 import cc.vihackerframework.resource.starter.properties.ViHackerSecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -30,9 +31,15 @@ public class ViHackerCloudSecurityInteceptorConfigure implements WebMvcConfigure
         return serverHandlerInterceptor;
     }
 
+
+
     @Override
     @SuppressWarnings("all")
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(serverProtectInterceptor());
+        /**
+         * 注册用户信息拦截器
+         */
+        registry.addInterceptor(new UserInfoInterceptor()).addPathPatterns("/**");
     }
 }

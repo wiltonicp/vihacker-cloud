@@ -1,8 +1,8 @@
 package cc.vihackerframework.uaa.filter;
 
+import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.uaa.properties.ValidateCodeProperties;
 import cc.vihackerframework.uaa.service.ValidateCodeService;
-import cc.vihackerframework.core.api.ViHackerResult;
 import cc.vihackerframework.core.exception.ValidateCodeException;
 import cc.vihackerframework.core.util.ViHackerUtil;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +23,6 @@ import java.io.IOException;
 
 /**
  * 验证码过滤器
- * 用于拦截请求并校验验证码的正确性
- *
  * @Author: Ranger
  * @Date: 2021/1/25 14:44
  * @Email: wilton.icp@gmail.com
@@ -50,7 +48,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
                 filterChain.doFilter(httpServletRequest, httpServletResponse);
             } catch (ValidateCodeException e) {
                 ViHackerUtil.response(httpServletResponse, MediaType.APPLICATION_JSON_VALUE,
-                        HttpServletResponse.SC_OK, ViHackerResult.failed(e.getMessage()));
+                        HttpServletResponse.SC_OK, ViHackerApiResult.failed(e.getMessage()));
                 log.error(e.getMessage(), e);
             }
         } else {

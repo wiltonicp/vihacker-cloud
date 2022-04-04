@@ -7,7 +7,7 @@
     <parent>
         <artifactId>vihacker-platform</artifactId>
         <groupId>cc.vihackerframework</groupId>
-        <version>1.0.5.R</version>
+        <version>1.0.6.R</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -15,6 +15,10 @@
     <description>系统服务</description>
 
     <dependencies>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-cloud-starter</artifactId>
+        </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-doc-starter</artifactId>
@@ -27,13 +31,21 @@
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-web-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-log-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-datasource-starter</artifactId>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>cc.vihackerframework</groupId>-->
 <!--            <artifactId>vihacker-redis-starter</artifactId>-->
 <!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>cc.vihackerframework</groupId>-->
-<!--            <artifactId>vihacker-security-starter</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-security-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>

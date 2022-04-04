@@ -3,6 +3,8 @@ spring:
     name: @artifactId@
   profiles:
     active: @spring.active@
+  thymeleaf:
+    cache: false
   cloud:
     nacos:
       server-addr: @config.server-addr@
@@ -11,21 +13,10 @@ spring:
         prefix: @artifactId@
         file-extension: yaml
         namespace: @config.namespace@
+        shared-configs[0]:
+          data-id: vihacker-common.yaml # 配置文件名-Data Id
+          group: COMMON_GROUP   # 默认为DEFAULT_GROUP
+          refresh: false   # 是否动态刷新，默认为false
       discovery:
         namespace: @config.namespace@
         group: @config.group@
-
-logging:
-  level:
-    org:
-      springframework:
-        boot:
-          actuate:
-            endpoint:
-              EndpointId: error
-    com:
-      alibaba:
-        cloud:
-          nacos:
-            client:
-              NacosPropertySourceBuilder: error

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="${package}.${moduleName}.mapper.I${className}Mapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="${package}.${moduleName}.entity.${className}" id="${classname}Map">
+#foreach($column in $columns)
+        <result property="${column.attrname}" column="${column.columnName}"/>
+#end
+    </resultMap>
+
+
+	<select id="queryList" resultType="${package}.${moduleName}.entity.${className}">
+		select * from ${tableName}
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                orders by ${sidx} ${orders}
+            </when>
+			<otherwise>
+                orders by ${pk.columnName} desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+</mapper>

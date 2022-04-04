@@ -1,0 +1,41 @@
+server:
+  port: 9985
+flowable:
+  app:
+    enabled: true
+  idm:
+    enabled: true
+  cmmn:
+    enabled: true
+  common:
+    app:
+      idm-admin:
+        user: root
+        password: root
+      idm-url:  http://localhost:8080/expense/
+  database-schema-update: false
+  ##关闭定时任务JOB
+  async-executor-activate: false
+  content:
+    enabled: false
+
+spring:
+  application:
+    name: ViHacker-Flowable
+  datasource:
+    dynamic:
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 15
+        min-idle: 5
+        connection-test-query: select 1
+        pool-name: ViHackerHikariCP
+      p6spy: true
+      primary: base
+      datasource:
+        base:
+          username: postgres
+          password: wilton2019
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://180.76.186.48:5432/vihacker_flowbale

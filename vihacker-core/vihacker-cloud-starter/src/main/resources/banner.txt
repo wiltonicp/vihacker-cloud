@@ -1,13 +1,7 @@
-${AnsiColor.BRIGHT_GREEN}    ██▒   █▓    ██▓    ██░ ██     ▄▄▄          ▄████▄      ██ ▄█▀   ▓█████     ██▀███
-${AnsiColor.BRIGHT_GREEN}   ▓██░   █▒   ▓██▒   ▓██░ ██▒   ▒████▄       ▒██▀ ▀█      ██▄█▒    ▓█   ▀    ▓██ ▒ ██▒
-${AnsiColor.BRIGHT_GREEN}    ▓██  █▒░   ▒██▒   ▒██▀▀██░   ▒██  ▀█▄     ▒▓█    ▄    ▓███▄░    ▒███      ▓██ ░▄█ ▒
-${AnsiColor.BRIGHT_GREEN}     ▒██ █░░   ░██░   ░▓█ ░██    ░██▄▄▄▄██    ▒▓▓▄ ▄██▒   ▓██ █▄    ▒▓█  ▄    ▒██▀▀█▄
-${AnsiColor.BRIGHT_GREEN}      ▒▀█░     ░██░   ░▓█▒░██▓    ▓█   ▓██▒   ▒ ▓███▀ ░   ▒██▒ █▄   ░▒████▒   ░██▓ ▒██▒
-${AnsiColor.BRIGHT_GREEN}      ░ ▐░     ░▓      ▒ ░░▒░▒    ▒▒   ▓▒█░   ░ ░▒ ▒  ░   ▒ ▒▒ ▓▒   ░░ ▒░ ░   ░ ▒▓ ░▒▓░
-${AnsiColor.BRIGHT_GREEN}      ░ ░░      ▒ ░    ▒ ░▒░ ░     ▒   ▒▒ ░     ░  ▒      ░ ░▒ ▒░    ░ ░  ░     ░▒ ░ ▒░
-${AnsiColor.BRIGHT_GREEN}        ░░      ▒ ░    ░  ░░ ░     ░   ▒      ░           ░ ░░ ░       ░        ░░   ░
-${AnsiColor.BRIGHT_GREEN}         ░      ░      ░  ░  ░         ░  ░   ░ ░         ░  ░         ░  ░      ░
-${AnsiColor.BRIGHT_GREEN}        ░                                     ░
+
+${AnsiColor.BRIGHT_GREEN}    ^    ^    ^    ^    ^    ^    ^    ^
+${AnsiColor.BRIGHT_GREEN}   /V\  /I\  /H\  /A\  /C\  /K\  /E\  /R\
+${AnsiColor.BRIGHT_GREEN}  <___><___><___><___><___><___><___><___>
 
 ${AnsiColor.BLUE}:: ViHackerCloud :: ${spring.application.name}: ${AnsiColor.BRIGHT_GREEN}${spring.profiles.active}${AnsiColor.BLUE}: ${AnsiColor.BRIGHT_GREEN}v@project.version@${AnsiColor.BLUE} ::
 ${AnsiColor.BLUE}:: Spring-Boot: ${AnsiColor.BRIGHT_GREEN}${spring-boot.version}${AnsiColor.BLUE} :: ${AnsiColor.DEFAULT}

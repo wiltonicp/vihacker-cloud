@@ -2,12 +2,11 @@ package cc.vihackerframework.core.auth.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 
 /**
  * @Description
@@ -16,7 +15,6 @@ import java.util.Date;
  * @Email: wilton.icp@gmail.com
  */
 @Getter
-@Setter
 @EqualsAndHashCode(callSuper = true)
 public class AdminAuthUser extends User {
 
@@ -30,12 +28,12 @@ public class AdminAuthUser extends User {
 
     private String mobile;
 
-    private String sex;
+    private Long sex;
 
     /**
      * 登录类型
      */
-    private String type;
+    private int type;
 
     /**
      * 租户ID
@@ -46,21 +44,47 @@ public class AdminAuthUser extends User {
 
     private String deptName;
 
-    private String roleId;
+    private Long roleId;
 
     private String roleName;
 
-    private Date lastLoginTime;
+    private LocalDateTime lastLoginTime;
 
-    private String description;
+    private Long status;
 
-    private String status;
+//    public AdminAuthUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+//        super(username, password, authorities);
+//    }
+//
+//    public AdminAuthUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+//        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+//    }
 
-    public AdminAuthUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+
+    public AdminAuthUser(String username, String password, Collection<? extends GrantedAuthority> authorities, Long userId, String avatar, String tenantId, Long roleId) {
         super(username, password, authorities);
+        this.userId = userId;
+        this.avatar = avatar;
+        this.tenantId = tenantId;
+        this.roleId = roleId;
     }
 
-    public AdminAuthUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+    public AdminAuthUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
+                         Collection<? extends GrantedAuthority> authorities, Long userId, String avatar, String email, String mobile, Long sex, int type, String tenantId,
+                         Long deptId, String deptName, Long roleId, String roleName, LocalDateTime lastLoginTime, Long status) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        this.userId = userId;
+        this.avatar = avatar;
+        this.email = email;
+        this.mobile = mobile;
+        this.sex = sex;
+        this.type = type;
+        this.tenantId = tenantId;
+        this.deptId = deptId;
+        this.deptName = deptName;
+        this.roleId = roleId;
+        this.roleName = roleName;
+        this.lastLoginTime = lastLoginTime;
+        this.status = status;
     }
 }

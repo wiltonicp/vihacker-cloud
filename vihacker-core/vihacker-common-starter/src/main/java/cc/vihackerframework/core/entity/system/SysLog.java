@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -35,6 +36,20 @@ public class SysLog implements Serializable {
     @TableField("USERNAME")
     @Excel(name = "操作用户", orderNum = "1", height = 20, width = 30, isImportField = "true_st")
     private String username;
+
+    /**
+     * 日志标题
+     */
+    @ApiModelProperty(value = "日志标题")
+    @TableField(exist=false)
+    private String title;
+
+    /**
+     * 跟踪ID
+     */
+    @ApiModelProperty(value = "跟踪ID")
+    @TableField(exist=false)
+    private String traceId;
 
     /**
      * 操作内容

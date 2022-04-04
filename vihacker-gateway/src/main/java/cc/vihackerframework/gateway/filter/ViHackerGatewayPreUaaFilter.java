@@ -56,16 +56,16 @@ public class ViHackerGatewayPreUaaFilter implements GlobalFilter, Ordered {
         }
 
         // 验证token是否有效
-        ServerHttpResponse resp = exchange.getResponse();
-        String headerToken = exchange.getRequest().getHeaders().getFirst(Oauth2Constant.HEADER_TOKEN);
-        if (headerToken == null) {
-            return unauthorized(resp, "没有携带Token信息！");
-        }
-        String token = TokenUtil.getToken(headerToken);
-        Claims claims = SecurityUtil.getClaims(token);
-        if (claims == null) {
-            return unauthorized(resp, "token已过期或验证不正确！");
-        }
+//        ServerHttpResponse resp = exchange.getResponse();
+//        String headerToken = exchange.getRequest().getHeaders().getFirst(Oauth2Constant.HEADER_TOKEN);
+//        if (headerToken == null) {
+//            return unauthorized(resp, "没有携带Token信息！");
+//        }
+//        String token = TokenUtil.getToken(headerToken);
+//        Claims claims = SecurityUtil.getClaims(token);
+//        if (claims == null) {
+//            return unauthorized(resp, "token已过期或验证不正确！");
+//        }
         return chain.filter(exchange);
     }
 

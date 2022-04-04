@@ -50,7 +50,6 @@ public class ViHackerSecurityProperties {
      * 监控中心和swagger需要访问的url
      */
     private static final String[] ENDPOINTS = {
-            "/auth/**",
             "/oauth/**",
             "/actuator/**",
             "/v2/api-docs/**",
@@ -67,7 +66,6 @@ public class ViHackerSecurityProperties {
             "/error/**",
             "/assets/**",
             "/auth/logout",
-            "/auth/code",
             "/auth/sms-code"
     };
 

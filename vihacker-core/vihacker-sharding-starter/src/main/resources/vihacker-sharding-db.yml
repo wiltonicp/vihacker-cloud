@@ -1,0 +1,44 @@
+db:
+  one: primary
+  two: secondary
+spring:
+  shardingsphere:
+    # 展示修改以后的 sql
+    props:
+      sql:
+        show: true
+    #配置多数据源
+    datasource:
+      names: ${db.one}, ${db.two}
+      #第一个数据源
+      primary:
+        type: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/sharding_master?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+        username: root
+        password: root
+        max-active: 16
+      #第二个数据源
+      secondary:
+        type: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/sharding_salve?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+        username: root
+        password: root
+        max-active: 16
+    #配置分片规则，参见https://sharding sphere.apache.org/document/current/cn/user-manual/shardingsphere-jdbc/configuration/yaml/sharding/
+    sharding:
+      tables:
+        sys_log:
+          actual-data-nodes: ${db.one}.sys_log_$->{1..8}
+          table-strategy:
+            inline:
+              sharding-column: today
+              algorithm-expression: sys_log_$->{today}
+          key-generator:
+            column: id
+            type: SNOWFLAKE
+        #不分表的策略
+        sys_user:
+          actual-data-nodes: ${db.two}.sys_user
+
+
+

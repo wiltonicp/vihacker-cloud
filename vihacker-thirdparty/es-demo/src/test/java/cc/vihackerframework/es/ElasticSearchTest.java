@@ -17,7 +17,8 @@ import javax.annotation.Resource;
 import java.io.IOException;
 
 /**
- *
+ * 测试类
+ * Created by Ranger on 2020/5/2.
  */
 @SpringBootTest
 @Slf4j

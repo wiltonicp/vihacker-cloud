@@ -4,6 +4,8 @@ import cc.vihackerframework.resource.starter.handler.ViHackerAccessDeniedHandler
 import cc.vihackerframework.resource.starter.handler.ViHackerAuthExceptionEntryPoint;
 import cc.vihackerframework.resource.starter.properties.ViHackerSecurityProperties;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.core.annotation.Order;
@@ -21,25 +23,38 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  */
 @Order(5)
 @EnableResourceServer
-@RequiredArgsConstructor
 @EnableAutoConfiguration(exclude = UserDetailsServiceAutoConfiguration.class)
 public class ViHackerResourceServerConfigure extends ResourceServerConfigurerAdapter {
 
-    private final ViHackerSecurityProperties properties;
-    private final ViHackerAccessDeniedHandler accessDeniedHandler;
-    private final ViHackerAuthExceptionEntryPoint authExceptionEntryPoint;
+    private ViHackerSecurityProperties properties;
+    private ViHackerAccessDeniedHandler accessDeniedHandler;
+    private ViHackerAuthExceptionEntryPoint authExceptionEntryPoint;
+
+    @Autowired(required = false)
+    public void setProperties(ViHackerSecurityProperties properties) {
+        this.properties = properties;
+    }
+
+    @Autowired(required = false)
+    public void setAccessDeniedHandler(ViHackerAccessDeniedHandler accessDeniedHandler) {
+        this.accessDeniedHandler = accessDeniedHandler;
+    }
+
+    @Autowired(required = false)
+    public void setExceptionEntryPoint(ViHackerAuthExceptionEntryPoint authExceptionEntryPoint) {
+        this.authExceptionEntryPoint = authExceptionEntryPoint;
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-
-        String[] anonUrls = properties.getIgnoreUrls().toArray(new String[properties.getIgnoreUrls().size()]);
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config
                 = http.requestMatchers().anyRequest()
                 .and()
                 .authorizeRequests();
+        properties.getIgnoreUrls().forEach(url -> {
+            config.antMatchers(url).permitAll();
+        });
         config
-            .antMatchers(anonUrls).permitAll()
-            .antMatchers(properties.getAuthUri()).authenticated()
             //任何请求
             .anyRequest()
             //都需要身份认证
@@ -57,5 +72,10 @@ public class ViHackerResourceServerConfigure extends ResourceServerConfigurerAda
         if (accessDeniedHandler != null) {
             resources.accessDeniedHandler(accessDeniedHandler);
         }
+    }
+
+    private void permitAll(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.authorizeRequests().anyRequest().permitAll();
     }
 }

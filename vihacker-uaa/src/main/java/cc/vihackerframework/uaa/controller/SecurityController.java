@@ -1,18 +1,13 @@
 package cc.vihackerframework.uaa.controller;
 
-import cc.vihackerframework.core.api.ViHackerResult;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 /**
  * <p>
- *
  * @author Ranger
  * @email wilton.icp@gmail.com
  * @since 2021/6/8
@@ -21,10 +16,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class SecurityController {
 
-    private final ConsumerTokenServices consumerTokenServices;
-
-
-    @GetMapping("user/info")
+    @GetMapping("user")
     public@ResponseBody Principal currentUser(Principal principal) {
         return principal;
     }
@@ -34,11 +26,5 @@ public class SecurityController {
         return "login";
     }
 
-    @DeleteMapping("signout")
-    public @ResponseBody
-    ViHackerResult signout(HttpServletRequest request, @RequestHeader("Authorization") String token) {
-        token = StringUtils.replace(token, "bearer ", "");
-        consumerTokenServices.revokeToken(token);
-        return ViHackerResult.success("signout");
-    }
+
 }

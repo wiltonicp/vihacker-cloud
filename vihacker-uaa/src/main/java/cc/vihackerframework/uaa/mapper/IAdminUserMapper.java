@@ -22,4 +22,11 @@ public interface IAdminUserMapper extends BaseMapper<SysUser> {
      * @return 用户
      */
     SysUser findByName(String username);
+
+    /**
+     *  根据手机号查询
+     * @param mobile 手机号
+     * @return
+     */
+    SysUser findByMobile(String mobile);
 }

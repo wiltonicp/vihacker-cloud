@@ -1,10 +1,11 @@
 package cc.vihackerframework.log.starter.event;
 
 import cc.vihackerframework.core.entity.system.SysLog;
+import cc.vihackerframework.log.starter.feign.ISysLogProvider;
 import cc.vihackerframework.log.starter.properties.LogProperties;
 import cc.vihackerframework.log.starter.properties.LogType;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
@@ -21,10 +22,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class LogListener {
 
-    @Autowired(required = false)
+    private ISysLogProvider sysLogProvider;
     private LogProperties logProperties;
+
     public LogListener(){
 
+    }
+    public LogListener(ISysLogProvider sysLogProvider, LogProperties logProperties) {
+        this.sysLogProvider = sysLogProvider;
+        this.logProperties = logProperties;
     }
 
     @Async
@@ -38,11 +44,15 @@ public class LogListener {
             /**
              * 发送日志到kafka
              */
+            log.info("发送日志到-kafka:{}", sysLog);
             //此处调用发送消息
-        } else {
+
+        } else if(logProperties.getLogType().equals(LogType.DB)) {
             /**
-             * 此处调用保存到数据库
+             * 保存到数据库
              */
+            sysLogProvider.saveLog(sysLog);
+            log.info("保存日志的数据库成功:{}", sysLog);
         }
     }
 }

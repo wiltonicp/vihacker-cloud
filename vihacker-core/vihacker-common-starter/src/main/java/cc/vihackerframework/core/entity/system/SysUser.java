@@ -28,6 +28,12 @@ public class SysUser extends ViHackerEntity implements Serializable {
     private static final long serialVersionUID = -4352868070794165001L;
 
     /**
+     * 租户ID
+     */
+    @TableField(exist = false)
+    private String tenantId;
+
+    /**
      * 用户 ID
      */
     @TableId(value = "USER_ID", type = IdType.AUTO)
@@ -50,7 +56,7 @@ public class SysUser extends ViHackerEntity implements Serializable {
      * 部门 ID
      */
     @TableField("DEPT_ID")
-    private Long deptIds;
+    private Long deptId;
 
     /**
      * 邮箱
@@ -71,7 +77,7 @@ public class SysUser extends ViHackerEntity implements Serializable {
      */
     @TableField("STATUS")
     @NotBlank(message = "状态不能为空")
-    private Long status;
+    private Integer status;
 
     /**
      * 状态，用于展示
@@ -132,7 +138,7 @@ public class SysUser extends ViHackerEntity implements Serializable {
 
     public void created(SysUser user) {
         this.setSexVal(EnumUtil.getEnumByCode(SexEnum.class, user.getSex()));
-        this.setStatusVal(EnumUtil.getEnumByCode(StatusEnum.class, user.getStatus()));
+        this.setStatusVal(EnumUtil.getEnumByCode(StatusEnum.class, user.getStatus().longValue()));
     }
 
 }

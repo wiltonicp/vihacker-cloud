@@ -14,6 +14,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.OAuthBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
@@ -23,6 +24,7 @@ import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,14 +65,13 @@ public class ViHackerDocAutoConfigure {
                 .paths(PathSelectors.any())
                 .build()
                 .enable(properties.getEnable())
-                .securityContexts(Lists.newArrayList(securityContext()))
-                .securitySchemes(Lists.<SecurityScheme>newArrayList(apiKey()));
+                .securityContexts(securityContexts())
+                .securitySchemes(securitySchemes());
     }
 
     private ApiInfo groupApiInfo() {
         String description = String.format("<div style='font-size:%spx;color:%s;'>%s</div>",
                 properties.getDescriptionFontSize(), properties.getDescriptionColor(), properties.getDescription());
-
         Contact contact = new Contact(properties.getName(), properties.getUrl(), properties.getEmail());
 
         return new ApiInfoBuilder()
@@ -84,21 +85,31 @@ public class ViHackerDocAutoConfigure {
                 .build();
     }
 
-    private ApiKey apiKey() {
-        return new ApiKey("BearerToken", "Authorization", "header");
+    private List<SecurityScheme> securitySchemes(){
+        //schema
+        List<GrantType> grantTypes=new ArrayList<>();
+        //密码模式
+        String passwordTokenUrl = "http://localhost:8301/vihacker-uaa/oauth/token";
+        ResourceOwnerPasswordCredentialsGrant resourceOwnerPasswordCredentialsGrant = new ResourceOwnerPasswordCredentialsGrant(passwordTokenUrl);
+        grantTypes.add(resourceOwnerPasswordCredentialsGrant);
+        OAuth oAuth = new OAuthBuilder().name("oauth2")
+                .grantTypes(grantTypes).build();
+
+        return Lists.newArrayList(oAuth);
     }
 
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex("/*/.*"))
-                .build();
-    }
+    private List<SecurityContext> securityContexts(){
+        //context
+        //scope方位
+        List<AuthorizationScope> scopes=new ArrayList<>();
+        scopes.add(new AuthorizationScope("read","read  resources"));
+        scopes.add(new AuthorizationScope("write","write resources"));
+        scopes.add(new AuthorizationScope("reads","read all resources"));
+        scopes.add(new AuthorizationScope("writes","write all resources"));
+        SecurityReference securityReference=new SecurityReference("oauth2",scopes.toArray(new AuthorizationScope[]{}));
+        SecurityContext securityContext=new SecurityContext(Lists.newArrayList(securityReference),PathSelectors.ant("/api/**"));
 
-    List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(new SecurityReference("BearerToken", authorizationScopes));
+        //securityContext
+        return Lists.newArrayList(securityContext);
     }
 }

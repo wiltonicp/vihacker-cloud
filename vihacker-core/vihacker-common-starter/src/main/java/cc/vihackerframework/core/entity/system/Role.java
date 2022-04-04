@@ -39,7 +39,6 @@ public class Role implements Serializable {
 
     @TableField(value = "CREATED_TIME")
     @Excel(name = "创建时间", orderNum = "3", height = 20, width = 30, isImportField = "true_st")
-
     private LocalDateTime createdTime;
 
     @TableField(value = "MODIFY_TIME")

@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @email wilton.icp@gmail.com
  */
 @Data
+@Deprecated
 public class ViHackerResult<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;

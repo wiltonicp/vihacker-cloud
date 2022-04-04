@@ -6,7 +6,7 @@
 
     <artifactId>vihacker-core</artifactId>
     <groupId>cc.vihackerframework</groupId>
-    <version>1.0.5.R</version>
+    <version>1.0.6.R</version>
     <packaging>pom</packaging>
 
     <name>vihacker-core</name>
@@ -53,10 +53,13 @@
         <module>vihacker-feign-starter</module>
         <module>vihacker-mybatis-starter</module>
         <module>vihacker-elasticsearch-starter</module>
+        <module>vihacker-encrypt-starter</module>
+        <module>vihacker-sharding-starter</module>
+        <module>vihacker-mbg</module>
     </modules>
 
     <properties>
-        <vihacker.core.version>1.0.5.R</vihacker.core.version>
+        <vihacker.core.version>1.0.6.R</vihacker.core.version>
 
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>

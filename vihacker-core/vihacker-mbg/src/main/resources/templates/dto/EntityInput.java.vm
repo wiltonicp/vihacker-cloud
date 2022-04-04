@@ -1,0 +1,33 @@
+package ${package}.${moduleName}.dto.input;
+
+import java.io.Serializable;
+#if(${hasDate})
+import java.time.LocalDateTime;
+#end
+import lombok.Getter;
+import lombok.Setter;
+import io.swagger.annotations.ApiModelProperty;
+
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+/**
+ * ${comments}
+ * Created by ${author} on ${datetime}.
+ */
+@Getter
+@Setter
+public class ${className}Input implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+#foreach ($column in $columns)
+#if(${pk.attrname}!=$column.attrname)
+	#if(${column.attrname} != 'version' && ${column.attrname} != 'createdBy' && ${column.attrname} != 'createdTime' && ${column.attrname} != 'modifyTime'  && ${column.attrname} != 'modifyTime' && ${column.attrname} != 'version' && ${column.attrname} != 'deleted')
+	@ApiModelProperty(value = "${column.comments}")
+	private $column.attrType $column.attrname;
+
+#end
+#end
+#end
+
+}

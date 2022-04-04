@@ -33,7 +33,7 @@ public class GoodsESEntity {
     /**
      * 商品名称
      */
-    @ESField(value = "goodsName",type = ESFieldType.Keyword)
+    @ESField(value = "goodsName",type = ESFieldType.Text, analyzer = "ik_max_word")
     private String goodsName;
     /**
      * 品牌
@@ -59,7 +59,6 @@ public class GoodsESEntity {
     /**
      * 复合字段，会被分词后存储
      */
-    //@ESField(value = "groupData",type = ESFieldType.Text,analyzer = "ik_smart")
-    @ESField(value = "groupData",type = ESFieldType.Text)
+    @ESField(value = "groupData",type = ESFieldType.Text,analyzer = "ik_max_word")
     private String groupData;
 }
