@@ -10,5 +10,5 @@ EXPOSE 8130
 #COPY bin/  ./bin
 #RUN chmod +x ./bin/start.sh
 
-ADD vihacker-uaa-1.0.6.R.jar /vihacker/vihacker-uaa.jar
+ADD vihacker-uaa-1.0.7.R.jar /vihacker/vihacker-uaa.jar
 ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions","-XX:+UseCGroupMemoryLimitForHeap", "-Dspring.profiles.active=prod", "-jar", "/vihacker/vihacker-uaa.jar"]

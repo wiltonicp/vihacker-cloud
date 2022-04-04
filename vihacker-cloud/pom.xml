@@ -6,7 +6,7 @@
 
     <groupId>cc.vihackerframework</groupId>
     <artifactId>vihacker-cloud</artifactId>
-    <version>1.0.6.R</version>
+    <version>1.0.7.R</version>
     <packaging>pom</packaging>
 
     <name>vihacker-cloud</name>
@@ -43,7 +43,7 @@
     </scm>
 
     <properties>
-        <vihacker.core.version>1.0.6.R</vihacker.core.version>
+        <vihacker.core.version>1.0.7.R</vihacker.core.version>
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -67,7 +67,7 @@
         <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
         <docker.serverId>docker-aliyun</docker.serverId>
         <docker.registry>registry.cn-shanghai.aliyuncs.com/vihacker</docker.registry>
-        <docker.registry.name>vihacker/tools</docker.registry.name>
+        <docker.registry.name>vihacker</docker.registry.name>
     </properties>
 
     <dependencyManagement>
@@ -85,11 +85,11 @@
     <distributionManagement>
 <!--        <repository>-->
 <!--            <id>nexus-releases</id> &lt;!&ndash; nexus认证id &ndash;&gt;-->
-<!--            <url>http://rep.wiltonic.cn:8331/repository/maven-releases</url>-->
+<!--            <url>http://rep.vihacker.top:8331/repository/maven-releases</url>-->
 <!--        </repository>-->
 <!--        <snapshotRepository>-->
 <!--            <id>nexus-snapshots</id> &lt;!&ndash; nexus认证id &ndash;&gt;-->
-<!--            <url>http://rep.wiltonic.cn:8331/repository/maven-snapshots</url>-->
+<!--            <url>http://rep.vihacker.top:8331/repository/maven-snapshots</url>-->
 <!--        </snapshotRepository>-->
     </distributionManagement>
 
@@ -217,10 +217,10 @@
             <id>test</id>
             <properties>
                 <spring.active>test</spring.active>
-                <config.server-addr>172.26.85.32:8848</config.server-addr>
+                <config.server-addr>127.0.0.1:8101</config.server-addr>
                 <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
-                <config.group>DEFAULT_GROUP</config.group>
-                <discovery.server-addr>172.26.85.32:8848</discovery.server-addr>
+                <config.group>TEST_GROUP</config.group>
+                <discovery.server-addr>127.0.0.1:8101</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
                 <sentinel.dashboard>localhost:8080</sentinel.dashboard>
             </properties>

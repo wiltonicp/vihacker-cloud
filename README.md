@@ -28,7 +28,7 @@ VihackerCloud是一款基于Spring Cloud Alibaba的微服务架构。引入组�
 | vihacker-datasource-starter    | 数据库配置，包含 mybatis-plus                    | 是       |
 | vihacker-doc-starter           | 快速集成knife4j文档管理                          | 是       |
 | vihacker-redis-starter         | 内置redis连接池、常用接口、分布式锁              | 是       |
-| vihacker-web-starter           | web 项目                                         |          |
+| vihacker-web-starter           | web 项目                                         | 是       |
 | vihacker-security-starter      | 封装 SpringSecurity，快速集成资源服务器          | 是       |
 | vihacker-auth-starter          | Security相关工具类                               | 是       |
 | vihacker-sentinel-starter      | *Sentinel* 熔断降级快速集成                      |          |

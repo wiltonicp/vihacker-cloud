@@ -6,7 +6,7 @@
 
     <artifactId>vihacker-core</artifactId>
     <groupId>cc.vihackerframework</groupId>
-    <version>1.0.6.R</version>
+    <version>1.0.7.R</version>
     <packaging>pom</packaging>
 
     <name>vihacker-core</name>
@@ -59,7 +59,7 @@
     </modules>
 
     <properties>
-        <vihacker.core.version>1.0.6.R</vihacker.core.version>
+        <vihacker.core.version>1.0.7.R</vihacker.core.version>
 
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>

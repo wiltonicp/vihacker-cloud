@@ -10,5 +10,5 @@ EXPOSE 8301
 #COPY bin/  ./bin
 #RUN chmod +x ./bin/start.sh
 
-ADD vihacker-gateway-1.0.6.R.jar /vihacker/vihacker-gateway.jar
+ADD vihacker-gateway-1.0.7.R.jar /vihacker/vihacker-gateway.jar
 ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions","-XX:+UseCGroupMemoryLimitForHeap", "-Dspring.profiles.active=prod", "-jar", "/vihacker/vihacker-gateway.jar"]
