@@ -91,8 +91,8 @@ public class UserController {
 
     @GetMapping("/{userId}")
     @PreAuthorize("hasAuthority('user:update')")
-    @ApiOperation(value = "修改用户权限", notes = "修改")
-    @LogEndpoint(value = "修改用户权限", exception = "修改用户权限失败")
+    @ApiOperation(value = "查询用户权限", notes = "查询")
+    @LogEndpoint(value = "查询用户权限", exception = "查询用户权限失败")
     public ViHackerApiResult findUserDataPermissions(@NotBlank(message = "{required}") @PathVariable String userId) {
         String dataPermissions = this.userDataPermissionService.findByUserId(userId);
         return ViHackerApiResult.data(dataPermissions);

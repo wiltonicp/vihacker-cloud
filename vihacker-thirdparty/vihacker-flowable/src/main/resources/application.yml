@@ -13,7 +13,7 @@ flowable:
         user: root
         password: root
       idm-url:  http://localhost:8080/expense/
-  database-schema-update: false
+  database-schema-update: true
   ##关闭定时任务JOB
   async-executor-activate: false
   content:
@@ -35,7 +35,11 @@ spring:
       primary: base
       datasource:
         base:
-          username: postgres
-          password: wilton2019
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://180.76.186.48:5432/vihacker_flowbale
+          username: wilton
+          password: Wilton2019
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://rm-uf6rb2523f415bc6dno.mysql.rds.aliyuncs.com:3306/vihacker_flowable?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+
+vihacker:
+  doc:
+    enable: true

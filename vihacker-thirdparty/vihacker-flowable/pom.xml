@@ -40,8 +40,16 @@
         </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-doc-starter</artifactId>
+            <artifactId>vihacker-auth-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-feign-starter</artifactId>
+        </dependency>
+        <!--        <dependency>-->
+<!--            <groupId>cc.vihackerframework</groupId>-->
+<!--            <artifactId>vihacker-doc-starter</artifactId>-->
+<!--        </dependency>-->
 
     </dependencies>
 </project>

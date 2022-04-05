@@ -1,4 +1,5 @@
 vihacker:
+  enable: false
   doc:
     basic:
       username: admin
