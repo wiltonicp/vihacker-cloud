@@ -20,6 +20,7 @@
         <module>../vihacker-thirdparty</module>
         <module>Vihacker-filesystem</module>
         <module>Vihacker-system</module>
+        <module>vihacker-schedule</module>
 
     </modules>
 
