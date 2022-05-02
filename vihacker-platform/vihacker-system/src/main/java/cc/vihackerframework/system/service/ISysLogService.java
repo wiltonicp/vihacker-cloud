@@ -1,6 +1,6 @@
 package cc.vihackerframework.system.service;
 
-import cc.vihackerframework.core.datasource.starter.entity.Search;
+import cc.vihackerframework.core.datasource.entity.Search;
 import cc.vihackerframework.core.entity.system.SysLog;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;

@@ -1,7 +1,7 @@
 package cc.vihackerframework.uaa.service;
 
 import com.alibaba.fastjson.JSONObject;
-import cc.vihackerframework.redis.starter.service.RedisService;
+import cc.vihackerframework.core.redis.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

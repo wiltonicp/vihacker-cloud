@@ -1,10 +1,9 @@
 package cc.vihackerframework.uaa.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
-import cc.vihackerframework.core.auth.entity.AdminAuthUser;
 import cc.vihackerframework.core.auth.util.SecurityUtil;
 import cc.vihackerframework.core.exception.ValidateCodeException;
-import cc.vihackerframework.log.starter.annotation.LogEndpoint;
+import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.uaa.service.ValidateCodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
-import java.security.Principal;
 
 /**
  * 认证控制类

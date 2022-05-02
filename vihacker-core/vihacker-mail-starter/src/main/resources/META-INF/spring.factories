@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  cc.vihackerframework.mail.starter.configure.ViHackerMailAutoConfigure
+  cc.vihackerframework.core.mail.configure.ViHackerMailAutoConfigure
 
 

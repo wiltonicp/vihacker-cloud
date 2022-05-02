@@ -5,7 +5,7 @@ import cc.vihackerframework.core.entity.VueRouter;
 import cc.vihackerframework.core.entity.system.Menu;
 import cc.vihackerframework.core.util.ExcelUtil;
 import cc.vihackerframework.core.util.StringPool;
-import cc.vihackerframework.log.starter.annotation.LogEndpoint;
+import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.system.service.IMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -3,7 +3,7 @@ package cc.vihackerframework.uaa.controller;
 import cc.vihackerframework.core.api.ViHackerResult;
 import cc.vihackerframework.core.auth.entity.AdminAuthUser;
 import cc.vihackerframework.core.auth.util.SecurityUtil;
-import cc.vihackerframework.log.starter.annotation.LogEndpoint;
+import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

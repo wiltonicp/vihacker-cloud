@@ -2,14 +2,12 @@ package cc.vihackerframework.system.feign;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.entity.system.SysLog;
-import cc.vihackerframework.log.starter.feign.ISysLogProvider;
+import cc.vihackerframework.core.log.feign.ISysLogProvider;
 import cc.vihackerframework.system.service.ISysLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import kotlin.Result;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 

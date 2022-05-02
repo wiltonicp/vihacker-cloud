@@ -6,7 +6,7 @@ import cc.vihackerframework.core.entity.system.Role;
 import cc.vihackerframework.core.util.ExcelUtil;
 import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.core.util.ViHackerUtil;
-import cc.vihackerframework.log.starter.annotation.LogEndpoint;
+import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.system.service.IRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

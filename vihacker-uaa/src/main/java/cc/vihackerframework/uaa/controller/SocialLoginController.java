@@ -1,6 +1,6 @@
 package cc.vihackerframework.uaa.controller;
 
-import cc.vihackerframework.log.starter.annotation.LogEndpoint;
+import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import com.xkcoding.justauth.AuthRequestFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

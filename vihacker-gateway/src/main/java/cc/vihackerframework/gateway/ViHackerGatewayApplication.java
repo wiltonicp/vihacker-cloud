@@ -1,6 +1,6 @@
 package cc.vihackerframework.gateway;
 
-import cc.vihackerframework.feign.starter.annotation.EnableViHackerFeign;
+import cc.vihackerframework.core.feign.annotation.EnableViHackerFeign;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;

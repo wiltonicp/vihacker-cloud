@@ -1,6 +1,6 @@
 package cc.vihackerframework.flow;
 
-import cc.vihackerframework.feign.starter.annotation.EnableViHackerFeign;
+import cc.vihackerframework.core.feign.annotation.EnableViHackerFeign;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -1,7 +1,7 @@
 package cc.vihackerframework.uaa.granter;
 
 import cc.vihackerframework.core.constant.Oauth2Constant;
-import cc.vihackerframework.redis.starter.service.RedisService;
+import cc.vihackerframework.core.redis.service.RedisService;
 import cc.vihackerframework.uaa.service.ViHackerUserDetailsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.userdetails.UserDetails;

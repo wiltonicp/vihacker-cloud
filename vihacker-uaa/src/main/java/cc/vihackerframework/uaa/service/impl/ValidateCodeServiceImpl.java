@@ -4,7 +4,7 @@ import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.constant.Oauth2Constant;
 import cc.vihackerframework.core.constant.ViHackerConstant;
 import cc.vihackerframework.core.exception.ValidateCodeException;
-import cc.vihackerframework.redis.starter.service.RedisService;
+import cc.vihackerframework.core.redis.service.RedisService;
 import cc.vihackerframework.uaa.properties.ValidateCodeProperties;
 import cc.vihackerframework.uaa.service.ValidateCodeService;
 import com.wf.captcha.GifCaptcha;

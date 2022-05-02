@@ -1,7 +1,7 @@
 package ${package}.${moduleName}.service;
 
 import ${package}.${moduleName}.entity.${className};
-import cc.vihackerframework.core.datasource.starter.entity.Search;
+import cc.vihackerframework.core.datasource.entity.Search;
 import java.util.List;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.core.metadata.IPage;

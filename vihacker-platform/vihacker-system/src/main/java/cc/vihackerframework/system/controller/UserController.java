@@ -9,7 +9,7 @@ import cc.vihackerframework.core.exception.ViHackerException;
 import cc.vihackerframework.core.util.ExcelUtil;
 import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.core.util.ViHackerUtil;
-import cc.vihackerframework.log.starter.annotation.LogEndpoint;
+import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.system.service.ILoginLogService;
 import cc.vihackerframework.system.service.IUserDataPermissionService;
 import cc.vihackerframework.system.service.IUserService;

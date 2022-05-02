@@ -1,6 +1,6 @@
 package cc.vihackerframework.system.service.impl;
 
-import cc.vihackerframework.core.datasource.starter.util.PageUtil;
+import cc.vihackerframework.core.datasource.util.PageUtil;
 import cc.vihackerframework.core.entity.system.SysLog;
 import cc.vihackerframework.core.util.StringUtil;
 import cc.vihackerframework.system.mapper.ISysLogMapper;
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cc.vihackerframework.core.datasource.starter.entity.Search;
+import cc.vihackerframework.core.datasource.entity.Search;
 import org.springframework.stereotype.Service;
 
 /**

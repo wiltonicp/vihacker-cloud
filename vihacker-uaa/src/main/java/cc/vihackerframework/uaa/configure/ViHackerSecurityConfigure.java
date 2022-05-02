@@ -1,10 +1,9 @@
 package cc.vihackerframework.uaa.configure;
 
-import cc.vihackerframework.resource.starter.properties.ViHackerSecurityProperties;
+import cc.vihackerframework.core.security.properties.ViHackerSecurityProperties;
 import cc.vihackerframework.uaa.filter.ValidateCodeFilter;
 import cc.vihackerframework.uaa.handler.ViHackerAuthenticationFailureHandler;
 import cc.vihackerframework.uaa.handler.ViHackerAuthenticationSuccessHandler;
-import cc.vihackerframework.uaa.service.impl.ViHackerUserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;

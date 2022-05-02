@@ -2,7 +2,6 @@ package ${package}.${moduleName}.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import java.util.List;
@@ -10,8 +9,8 @@ import java.util.List;
 import ${package}.${moduleName}.mapper.${className}Mapper;
 import ${package}.${moduleName}.entity.${className};
 import ${package}.${moduleName}.service.I${className}Service;
-import cc.vihackerframework.core.datasource.starter.util.PageUtil;
-import cc.vihackerframework.core.datasource.starter.entity.Search;
+import cc.vihackerframework.core.datasource.util.PageUtil;
+import cc.vihackerframework.core.datasource.entity.Search;
 
 /**
  * ${comments}

@@ -2,7 +2,7 @@ package cc.vihackerframework.system.service.impl;
 
 import cc.vihackerframework.core.constant.PageConstant;
 import cc.vihackerframework.core.constant.ViHackerConstant;
-import cc.vihackerframework.core.datasource.starter.util.SortUtil;
+import cc.vihackerframework.core.datasource.util.SortUtil;
 import cc.vihackerframework.core.entity.DeptTree;
 import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.entity.Tree;
