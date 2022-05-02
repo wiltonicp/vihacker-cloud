@@ -14,7 +14,7 @@
     <artifactId>vihacker-platform</artifactId>
     <name>ViHacker-Platform</name>
     <packaging>pom</packaging>
-    <description>ViHacker-Platform 平台</description>
+    <description>ViHacker-Platform 平台 --公众号:【边城手记】</description>
 
     <modules>
 

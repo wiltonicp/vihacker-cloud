@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>vihacker-gateway</artifactId>
-    <description>ViHacker-Cloud 网关服务器</description>
+    <description>ViHacker-Cloud 网关服务器 --公众号:【边城手记】</description>
 
     <dependencies>
         <dependency>

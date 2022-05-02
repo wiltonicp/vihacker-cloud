@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>vihacker-datasource-starter</name>
-    <description>通用数据库模块</description>
+    <description>通用数据库模块 --公众号:【边城手记】</description>
     <packaging>jar</packaging>
     <artifactId>vihacker-datasource-starter</artifactId>
 

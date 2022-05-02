@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>vihacker-mbg</artifactId>
-    <description>逆向代码生成工具</description>
+    <description>逆向代码生成工具 --公众号:【边城手记】</description>
 
     <dependencies>
         <dependency>

@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>vihacker-system-demo</artifactId>
-    <description>微服务子系统测试 demo</description>
+    <description>微服务子系统测试 demo --公众号:【边城手记】</description>
 
     <dependencies>
         <dependency>

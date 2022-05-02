@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>vihacker-system</artifactId>
-    <description>系统服务</description>
+    <description>系统服务 --公众号:【边城手记】</description>
 
     <dependencies>
         <dependency>

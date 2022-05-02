@@ -11,7 +11,7 @@
 
     <name>vihacker-cloud</name>
     <url>https://github.com/wiltonicp/vihacker-cloud</url>
-    <description>ViHacker-Cloud：Spring Cloud，Spring Security OAuth2 微服务统一认证中心</description>
+    <description>ViHacker-Cloud：Spring Cloud，Spring Security OAuth2 微服务统一认证中心 --公众号:【边城手记】</description>
 
     <modules>
         <module>../vihacker-core</module>
@@ -94,6 +94,7 @@
     </distributionManagement>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -128,16 +129,16 @@
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>${docker.maven.plugin.version}</version>
                     <!--将插件绑定在某个phase执行 只需执行mvn package ，就会自动执行mvn docker:build -->
-                    <executions>
-                        <!--执行 mvn package 时 自动 执行 mvn docker:build-->
-                        <execution>
-                            <id>build-image</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>build</goal>
-                            </goals>
-                        </execution>
-                    </executions>
+<!--                    <executions>-->
+<!--                        &lt;!&ndash;执行 mvn package 时 自动 执行 mvn docker:build&ndash;&gt;-->
+<!--                        <execution>-->
+<!--                            <id>build-image</id>-->
+<!--                            <phase>package</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>build</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
                     <configuration>
                         <!-- 覆盖相同标签镜像 -->
                         <forceTags>true</forceTags>

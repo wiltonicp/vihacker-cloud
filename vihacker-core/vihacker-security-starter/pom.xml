@@ -12,7 +12,7 @@
 
     <artifactId>vihacker-security-starter</artifactId>
     <packaging>jar</packaging>
-    <description>资源服务器模块</description>
+    <description>资源服务器模块 --公众号:【边城手记】</description>
 
     <dependencies>
         <dependency>
