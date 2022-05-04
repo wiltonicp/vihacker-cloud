@@ -1,9 +1,8 @@
 package cc.vihackerframework.system.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
-import cc.vihackerframework.core.auth.context.UserContext;
-import cc.vihackerframework.core.auth.entity.AdminAuthUser;
-import cc.vihackerframework.core.auth.util.SecurityUtil;
+import cc.vihackerframework.core.context.UserContext;
+import cc.vihackerframework.core.entity.CurrentUser;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,8 +23,7 @@ public class TestController {
     //@PreAuthorize("hasAuthority('test:view')")
     public ViHackerApiResult getTest1(){
 
-        AdminAuthUser current = UserContext.current();
-        AdminAuthUser loginUser = SecurityUtil.getLoginUser();
+        CurrentUser current = UserContext.current();
         return ViHackerApiResult.data(current);
     }
 }

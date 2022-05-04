@@ -1,7 +1,8 @@
 package cc.vihackerframework.sso.controller;
 
 import cc.vihackerframework.core.auth.entity.AdminAuthUser;
-import cc.vihackerframework.core.auth.util.SecurityUtil;
+import cc.vihackerframework.core.auth.util.ViHackerAuthUser;
+import cc.vihackerframework.core.util.SecurityUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.ui.ModelMap;
@@ -19,7 +20,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String test(ModelMap modelMap,Authentication authentication){
-        AdminAuthUser loginUser = SecurityUtil.getLoginUser();
+        AdminAuthUser loginUser = ViHackerAuthUser.getUser();
         modelMap.put("username", loginUser.getUsername());
         Authentication userAuthentication = SecurityUtil.getUserAuthentication();
         modelMap.put("authorities", userAuthentication.getAuthorities());

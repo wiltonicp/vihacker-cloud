@@ -21,12 +21,16 @@
         <dependency>
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-auth-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.security.oauth.boot</groupId>
-                    <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-                </exclusion>
-            </exclusions>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.security.oauth.boot</groupId>-->
+<!--                    <artifactId>spring-security-oauth2-autoconfigure</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
         </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>

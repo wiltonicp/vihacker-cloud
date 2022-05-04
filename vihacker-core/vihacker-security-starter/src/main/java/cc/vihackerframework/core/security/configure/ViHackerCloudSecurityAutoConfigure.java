@@ -1,12 +1,8 @@
 package cc.vihackerframework.core.security.configure;
 
-import cc.vihackerframework.core.auth.util.SecurityUtil;
-import cc.vihackerframework.core.constant.ViHackerConstant;
 import cc.vihackerframework.core.security.handler.ViHackerAuthExceptionEntryPoint;
 import cc.vihackerframework.core.security.handler.ViHackerAccessDeniedHandler;
 import cc.vihackerframework.core.security.properties.ViHackerSecurityProperties;
-import feign.RequestInterceptor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -15,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
@@ -23,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.util.Base64Utils;
 
 /**
  * <p>
@@ -66,18 +60,6 @@ public class ViHackerCloudSecurityAutoConfigure extends GlobalMethodSecurityConf
     @ConditionalOnMissingBean(DefaultTokenServices.class)
     public ViHackerUserInfoTokenServices viHackerUserInfoTokenServices(ResourceServerProperties properties) {
         return new ViHackerUserInfoTokenServices(properties.getUserInfoUri(), properties.getClientId());
-    }
-
-    @Bean
-    public RequestInterceptor oauth2FeignRequestInterceptor() {
-        return requestTemplate -> {
-            String gatewayToken = new String(Base64Utils.encode(ViHackerConstant.GATEWAY_TOKEN_VALUE.getBytes()));
-            requestTemplate.header(ViHackerConstant.GATEWAY_TOKEN_HEADER, gatewayToken);
-            String authorizationToken = SecurityUtil.getCurrentTokenValue();
-            if (StringUtils.isNotBlank(authorizationToken)) {
-                requestTemplate.header(HttpHeaders.AUTHORIZATION, ViHackerConstant.OAUTH2_TOKEN_TYPE + authorizationToken);
-            }
-        };
     }
 
     @Override

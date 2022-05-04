@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -39,10 +40,10 @@ public class MenuController {
 
     @GetMapping("/{username}")
     @ApiOperation(value = "根据用户获取菜单路由", notes = "菜单路由")
-    public ViHackerApiResult getUserRouters(@NotBlank(message = "{required}") @PathVariable String username) {
+    public ViHackerApiResult getUserRouters(HttpServletRequest request, @NotBlank(message = "{required}") @PathVariable String username) {
         Map<String, Object> result = new HashMap<>(4);
-        List<VueRouter<Menu>> userRouters = this.menuService.getUserRouters(username);
-        String userPermissions = this.menuService.findUserPermissions(username);
+        List<VueRouter<Menu>> userRouters = this.menuService.getUserRouters(request,username);
+        String userPermissions = this.menuService.findUserPermissions(request,username);
         String[] permissionArray = new String[0];
         if (StringUtils.isNoneBlank(userPermissions)) {
             permissionArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(userPermissions, StringPool.COMMA);
@@ -61,8 +62,8 @@ public class MenuController {
 
     @GetMapping("/permissions")
     @ApiOperation(value = "获取用户权限菜单", notes = "用户权限菜单")
-    public String findUserPermissions(String username) {
-        return this.menuService.findUserPermissions(username);
+    public String findUserPermissions(HttpServletRequest request,String username) {
+        return this.menuService.findUserPermissions(request,username);
     }
 
     @PostMapping

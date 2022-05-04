@@ -1,5 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   cc.vihackerframework.core.web.configure.ViHackerExceptionAutoConfigure,\
-  cc.vihackerframework.core.web.configure.ViHackerStartedUpRunnerConfigure
+  cc.vihackerframework.core.web.configure.ViHackerStartedUpRunnerConfigure,\
+  cc.vihackerframework.core.web.configure.ViHackerWebMvcResolverConfigure
 
 

@@ -1,7 +1,7 @@
 package cc.vihackerframework.system.service.impl;
 
-import cc.vihackerframework.core.auth.entity.CurrentUser;
-import cc.vihackerframework.core.auth.util.SecurityUtil;
+import cc.vihackerframework.core.entity.CurrentUser;
+import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.constant.ViHackerConstant;
 import cc.vihackerframework.core.datasource.util.SortUtil;
 import cc.vihackerframework.core.entity.QueryRequest;
@@ -21,11 +21,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +42,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
 
     private final IUserRoleService userRoleService;
     private final IUserDataPermissionService userDataPermissionService;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public SysUser findByName(String username) {
@@ -80,7 +80,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
         // 创建用户
         user.setCreatedTime(LocalDateTime.now());
         user.setAvatar(ViHackerConstant.DEFAULT_AVATAR);
-        user.setPassword(passwordEncoder.encode(ViHackerConstant.DEFAULT_PASSWORD));
+        user.setPassword(new BCryptPasswordEncoder().encode(ViHackerConstant.DEFAULT_PASSWORD));
         save(user);
         // 保存用户角色
         String[] roles = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getRoleId().toString(), StringPool.COMMA);
@@ -122,11 +122,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateProfile(SysUser user) throws ViHackerException {
+    public void updateProfile(HttpServletRequest request,SysUser user) throws ViHackerException {
         user.setPassword(null);
         user.setUsername(null);
         user.setStatus(null);
-        if (isCurrentUser(user.getUserId())) {
+        if (isCurrentUser(user.getUserId(),request)) {
             updateById(user);
         } else {
             throw new ViHackerException("您无权修改别人的账号信息！");
@@ -135,19 +135,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateAvatar(String avatar) {
+    public void updateAvatar(HttpServletRequest request,String avatar) {
         SysUser user = new SysUser();
         user.setAvatar(avatar);
-        String currentUsername = SecurityUtil.getCurrentUsername();
+        String currentUsername = SecurityUtil.getCurrentUsername(request);
         this.baseMapper.update(user, new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, currentUsername));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updatePassword(String password) {
+    public void updatePassword(HttpServletRequest request,String password) {
         SysUser user = new SysUser();
-        user.setPassword(passwordEncoder.encode(password));
-        String currentUsername = SecurityUtil.getCurrentUsername();
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
+        String currentUsername = SecurityUtil.getCurrentUsername(request);
         this.baseMapper.update(user, new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, currentUsername));
     }
 
@@ -155,7 +155,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
     @Transactional(rollbackFor = Exception.class)
     public void resetPassword(String[] usernames) {
         SysUser params = new SysUser();
-        params.setPassword(passwordEncoder.encode(ViHackerConstant.DEFAULT_PASSWORD));
+        params.setPassword(new BCryptPasswordEncoder().encode(ViHackerConstant.DEFAULT_PASSWORD));
 
         List<String> list = Arrays.asList(usernames);
         this.baseMapper.update(params, new LambdaQueryWrapper<SysUser>().in(SysUser::getUsername, list));
@@ -184,8 +184,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
         userDataPermissionService.saveBatch(userDataPermissions);
     }
 
-    private boolean isCurrentUser(Long id) {
-        CurrentUser currentUser = SecurityUtil.getCurrentUser();
+    private boolean isCurrentUser(Long id,HttpServletRequest request) {
+        CurrentUser currentUser = SecurityUtil.getCurrentUser(request);
         return currentUser != null && id.equals(currentUser.getUserId());
     }
 }

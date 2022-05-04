@@ -32,10 +32,6 @@ public class ViHackerSecurityProperties {
      * 多个值时使用逗号分隔
      */
     private List<String> ignoreUrls = new ArrayList<>();
-    /**
-     * 是否只能通过网关获取资源
-     */
-    private Boolean onlyFetchByGateway = Boolean.TRUE;
 
     /**
      * 认证中心默认忽略验证地址

@@ -59,7 +59,8 @@ public class ViHackerResourceServerConfigure extends ResourceServerConfigurerAda
             .authenticated()
             //csrf跨站请求
             .and()
-            .csrf().disable();
+            .csrf().disable()
+            .httpBasic();
     }
 
     @Override

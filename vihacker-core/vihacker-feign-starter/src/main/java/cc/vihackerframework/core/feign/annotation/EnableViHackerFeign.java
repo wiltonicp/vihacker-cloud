@@ -1,7 +1,9 @@
 package cc.vihackerframework.core.feign.annotation;
 
+import cc.vihackerframework.core.feign.config.FeignInterceptorConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
+import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
@@ -14,6 +16,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @EnableFeignClients
+@Import({FeignInterceptorConfiguration.class})
 public @interface EnableViHackerFeign {
 
     /**

@@ -1,7 +1,7 @@
 package cc.vihackerframework.uaa.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
-import cc.vihackerframework.core.auth.util.SecurityUtil;
+import cc.vihackerframework.core.auth.util.ViHackerAuthUser;
 import cc.vihackerframework.core.exception.ValidateCodeException;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.uaa.service.ValidateCodeService;
@@ -43,7 +43,7 @@ public class AuthController {
     @LogEndpoint(value = "用户信息",exception = "用户信息请求异常")
     @ApiOperation(value = "用户信息", notes = "用户信息")
     public ViHackerApiResult currentUser() {
-        return ViHackerApiResult.data(SecurityUtil.getLoginUser());
+        return ViHackerApiResult.data(ViHackerAuthUser.getUser());
     }
 
     /**

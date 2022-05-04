@@ -1,7 +1,7 @@
 package cc.vihackerframework.core.mybatis.handler;
 
-import cc.vihackerframework.core.auth.entity.AdminAuthUser;
-import cc.vihackerframework.core.auth.util.SecurityUtil;
+import cc.vihackerframework.core.context.UserContext;
+import cc.vihackerframework.core.entity.CurrentUser;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.ibatis.reflection.MetaObject;
@@ -22,10 +22,10 @@ public class ViHackerMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        AdminAuthUser adminAuthUser = SecurityUtil.getLoginUser();
-        if(ObjectUtils.isNotEmpty(adminAuthUser)){
-            this.setFieldValByName("createdBy", adminAuthUser.getUserId(), metaObject);
-            this.setFieldValByName("modifyBy", adminAuthUser.getUserId(), metaObject);
+        CurrentUser current = UserContext.current();
+        if(ObjectUtils.isNotEmpty(current)){
+            this.setFieldValByName("createdBy", current.getUserId(), metaObject);
+            this.setFieldValByName("modifyBy", current.getUserId(), metaObject);
         }else{
             this.setFieldValByName("createdBy", 0L, metaObject);
             this.setFieldValByName("modifyBy", 0L, metaObject);
@@ -38,10 +38,10 @@ public class ViHackerMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        AdminAuthUser adminAuthUser = SecurityUtil.getLoginUser();
-        if(ObjectUtils.isNotEmpty(adminAuthUser)){
-            this.setFieldValByName("createdBy", adminAuthUser.getUserId(), metaObject);
-            this.setFieldValByName("modifyBy", adminAuthUser.getUserId(), metaObject);
+        CurrentUser current = UserContext.current();
+        if(ObjectUtils.isNotEmpty(current)){
+            this.setFieldValByName("createdBy", current.getUserId(), metaObject);
+            this.setFieldValByName("modifyBy", current.getUserId(), metaObject);
         }else{
             this.setFieldValByName("createdBy", 0L, metaObject);
             this.setFieldValByName("modifyBy", 0L, metaObject);

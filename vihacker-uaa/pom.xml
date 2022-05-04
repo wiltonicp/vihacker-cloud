@@ -2,7 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>cc.vihackerframework</groupId>
         <artifactId>vihacker-cloud</artifactId>
@@ -30,10 +29,6 @@
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-doc-starter</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>cc.vihackerframework</groupId>-->
-<!--            <artifactId>vihacker-auth-starter</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-security-starter</artifactId>
@@ -51,4 +46,30 @@
             <artifactId>justauth-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -1,7 +1,7 @@
 package cc.vihackerframework.gateway.handler;
 
 import cn.hutool.core.util.StrUtil;
-import cc.vihackerframework.core.api.ViHackerResult;
+import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.api.ResultCode;
 import cc.vihackerframework.core.handler.BaseExceptionHandler;
 import io.netty.channel.ConnectTimeoutException;
@@ -25,57 +25,57 @@ import org.springframework.web.server.ResponseStatusException;
 public class ExceptionHandlerAdvice extends BaseExceptionHandler {
 
     @ExceptionHandler(value = {ResponseStatusException.class})
-    public ViHackerResult<?> handle(ResponseStatusException ex) {
+    public ViHackerApiResult<?> handle(ResponseStatusException ex) {
         log.error("response status exception:{}", ex.getMessage());
         if (StrUtil.contains(ex.getMessage(), HttpStatus.NOT_FOUND.toString())) {
-            return ViHackerResult.failed(ResultCode.VALIDATE_FAILED, ex.getMessage());
+            return ViHackerApiResult.failed(ResultCode.VALIDATE_FAILED, ex.getMessage());
         } else {
-            return ViHackerResult.failed(ResultCode.FAILED);
+            return ViHackerApiResult.failed(ResultCode.FAILED);
         }
     }
 
     @ExceptionHandler(value = {ConnectTimeoutException.class})
-    public ViHackerResult<?> handle(ConnectTimeoutException ex) {
+    public ViHackerApiResult<?> handle(ConnectTimeoutException ex) {
         log.error("connect timeout exception:{}", ex.getMessage());
-        return ViHackerResult.failed(ResultCode.FAILED);
+        return ViHackerApiResult.failed(ResultCode.FAILED);
     }
 
     @ExceptionHandler(value = {NotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ViHackerResult<?> handle(NotFoundException ex) {
+    public ViHackerApiResult<?> handle(NotFoundException ex) {
         log.error("not found exception:{}", ex.getMessage());
-        return ViHackerResult.failed(ResultCode.VALIDATE_FAILED);
+        return ViHackerApiResult.failed(ResultCode.VALIDATE_FAILED);
     }
 
     @ExceptionHandler(value = {RuntimeException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ViHackerResult<?> handle(RuntimeException ex) {
+    public ViHackerApiResult<?> handle(RuntimeException ex) {
         log.error("runtime exception:{}", ex.getMessage());
-        return ViHackerResult.failed(ex.getMessage());
+        return ViHackerApiResult.failed(ex.getMessage());
     }
 
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ViHackerResult<?> handle(Exception ex) {
+    public ViHackerApiResult<?> handle(Exception ex) {
         log.error("exception:{}", ex.getMessage());
-        return ViHackerResult.failed();
+        return ViHackerApiResult.failed();
     }
 
     @ExceptionHandler(value = {Throwable.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ViHackerResult<?> handle(Throwable throwable) {
-        ViHackerResult viHackerResult = ViHackerResult.failed();
+    public ViHackerApiResult<?> handle(Throwable throwable) {
+        ViHackerApiResult failed = ViHackerApiResult.failed();
         if (throwable instanceof ResponseStatusException) {
-            viHackerResult = handle((ResponseStatusException) throwable);
+            failed = handle((ResponseStatusException) throwable);
         } else if (throwable instanceof ConnectTimeoutException) {
-            viHackerResult = handle((ConnectTimeoutException) throwable);
+            failed = handle((ConnectTimeoutException) throwable);
         } else if (throwable instanceof NotFoundException) {
-            viHackerResult = handle((NotFoundException) throwable);
+            failed = handle((NotFoundException) throwable);
         } else if (throwable instanceof RuntimeException) {
-            viHackerResult = handle((RuntimeException) throwable);
+            failed = handle((RuntimeException) throwable);
         } else if (throwable instanceof Exception) {
-            viHackerResult = handle((Exception) throwable);
+            failed = handle((Exception) throwable);
         }
-        return viHackerResult;
+        return failed;
     }
 }

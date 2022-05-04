@@ -1,7 +1,5 @@
 package cc.vihackerframework.core.security.configure;
 
-import cc.vihackerframework.core.security.handler.ViHackerServerHandlerInterceptor;
-import cc.vihackerframework.core.security.interceptor.UserInfoInterceptor;
 import cc.vihackerframework.core.security.properties.ViHackerSecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,22 +22,13 @@ public class ViHackerCloudSecurityInteceptorConfigure implements WebMvcConfigure
         this.properties = properties;
     }
 
-    @Bean
-    public HandlerInterceptor serverProtectInterceptor() {
-        ViHackerServerHandlerInterceptor serverHandlerInterceptor = new ViHackerServerHandlerInterceptor();
-        serverHandlerInterceptor.setProperties(properties);
-        return serverHandlerInterceptor;
-    }
-
-
 
     @Override
     @SuppressWarnings("all")
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(serverProtectInterceptor());
         /**
          * 注册用户信息拦截器
          */
-        registry.addInterceptor(new UserInfoInterceptor()).addPathPatterns("/**");
+        //registry.addInterceptor(new UserInfoInterceptor()).addPathPatterns("/**");
     }
 }

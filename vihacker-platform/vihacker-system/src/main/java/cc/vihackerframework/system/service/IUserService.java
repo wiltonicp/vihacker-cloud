@@ -6,6 +6,8 @@ import cc.vihackerframework.core.exception.ViHackerException;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by Ranger on 2022/02/24
  */
@@ -70,21 +72,21 @@ public interface IUserService extends IService<SysUser> {
      * @param user 个人信息
      * @throws ViHackerException 异常
      */
-    void updateProfile(SysUser user) throws ViHackerException;
+    void updateProfile(HttpServletRequest request,SysUser user) throws ViHackerException;
 
     /**
      * 更新用户头像
      *
      * @param avatar 用户头像
      */
-    void updateAvatar(String avatar);
+    void updateAvatar(HttpServletRequest request,String avatar);
 
     /**
      * 更新用户密码
      *
      * @param password 新密码
      */
-    void updatePassword(String password);
+    void updatePassword(HttpServletRequest request,String password);
 
     /**
      * 重置密码

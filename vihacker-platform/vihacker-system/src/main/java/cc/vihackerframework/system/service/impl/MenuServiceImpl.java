@@ -1,13 +1,12 @@
 package cc.vihackerframework.system.service.impl;
 
-import cc.vihackerframework.core.auth.util.SecurityUtil;
+import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.constant.PageConstant;
 import cc.vihackerframework.core.entity.MenuTree;
 import cc.vihackerframework.core.entity.RouterMeta;
 import cc.vihackerframework.core.entity.Tree;
 import cc.vihackerframework.core.entity.VueRouter;
 import cc.vihackerframework.core.entity.system.Menu;
-import cc.vihackerframework.core.exception.ViHackerException;
 import cc.vihackerframework.core.exception.ViHackerRuntimeException;
 import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.core.util.TreeUtil;
@@ -16,13 +15,13 @@ import cc.vihackerframework.system.service.IMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.sun.javafx.binding.StringConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,15 +35,15 @@ import java.util.stream.Collectors;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
 
     @Override
-    public String findUserPermissions(String username) {
-        checkUser(username);
+    public String findUserPermissions(HttpServletRequest request,String username) {
+        checkUser(request,username);
         List<Menu> userPermissions = this.baseMapper.findUserPermissions(username);
         return userPermissions.stream().map(Menu::getPerms).collect(Collectors.joining(StringPool.COMMA));
     }
 
     @Override
-    public List<Menu> findUserMenus(String username) {
-        checkUser(username);
+    public List<Menu> findUserMenus(HttpServletRequest request,String username) {
+        checkUser(request,username);
         return this.baseMapper.findUserMenus(username);
     }
 
@@ -76,10 +75,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     }
 
     @Override
-    public List<VueRouter<Menu>> getUserRouters(String username) {
-        checkUser(username);
+    public List<VueRouter<Menu>> getUserRouters(HttpServletRequest request,String username) {
+        checkUser(request,username);
         List<VueRouter<Menu>> routes = new ArrayList<>();
-        List<Menu> menus = this.findUserMenus(username);
+        List<Menu> menus = this.findUserMenus(request,username);
         menus.forEach(menu -> {
             VueRouter<Menu> route = new VueRouter<>();
             route.setId(menu.getMenuId().toString());
@@ -167,8 +166,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         }
     }
 
-    private void checkUser(String username) {
-        String currentUsername = SecurityUtil.getCurrentUsername();
+    private void checkUser(HttpServletRequest request, String username) {
+        String currentUsername = SecurityUtil.getCurrentUsername(request);
         if (StringUtils.isNotBlank(currentUsername)
                 && !StringUtils.equalsIgnoreCase(currentUsername, username)) {
             throw new ViHackerRuntimeException("无权获取别的用户数据");

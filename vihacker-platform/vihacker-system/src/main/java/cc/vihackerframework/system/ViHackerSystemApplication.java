@@ -1,7 +1,6 @@
 package cc.vihackerframework.system;
 
 import cc.vihackerframework.core.feign.annotation.EnableViHackerFeign;
-import cc.vihackerframework.core.security.annotation.EnableViHackerResourceServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -14,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @EnableViHackerFeign
 @SpringBootApplication
-@EnableViHackerResourceServer
 public class ViHackerSystemApplication {
 
     public static void main(String[] args) {

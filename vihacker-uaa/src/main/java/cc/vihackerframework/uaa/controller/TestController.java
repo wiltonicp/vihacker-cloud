@@ -2,7 +2,8 @@ package cc.vihackerframework.uaa.controller;
 
 import cc.vihackerframework.core.api.ViHackerResult;
 import cc.vihackerframework.core.auth.entity.AdminAuthUser;
-import cc.vihackerframework.core.auth.util.SecurityUtil;
+import cc.vihackerframework.core.auth.util.ViHackerAuthUser;
+import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +22,13 @@ public class TestController {
     @GetMapping("user1")
     @LogEndpoint(value = "获取用户信息",exception = "获取用户信息异常")
     public ViHackerResult user() {
-        AdminAuthUser loginUser = SecurityUtil.getLoginUser();
+        AdminAuthUser loginUser = ViHackerAuthUser.getUser();
         return ViHackerResult.data(loginUser);
     }
 
 
     @GetMapping("test")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('role:add')")
     public ViHackerResult test() {
         return ViHackerResult.success();
     }

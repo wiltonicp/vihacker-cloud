@@ -1,7 +1,7 @@
 package cc.vihackerframework.system.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
-import cc.vihackerframework.core.auth.util.SecurityUtil;
+import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.entity.system.LoginLog;
 import cc.vihackerframework.core.entity.system.SysUser;
@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,12 +43,11 @@ public class UserController {
     private final IUserService userService;
     private final IUserDataPermissionService userDataPermissionService;
     private final ILoginLogService loginLogService;
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("success")
     @ApiOperation(value = "登录成功调用,保存登录日志", notes = "新增")
     public void loginSuccess(HttpServletRequest request) {
-        String currentUsername = SecurityUtil.getCurrentUsername();
+        String currentUsername = SecurityUtil.getCurrentUsername(request);
         // update last login time
         this.userService.updateLoginTime(currentUsername);
         // save login log
@@ -110,31 +109,31 @@ public class UserController {
     @PutMapping("profile")
     @ApiOperation(value = "修改个人信息", notes = "修改")
     @LogEndpoint(value = "修改个人信息",exception = "修改个人信息失败")
-    public void updateProfile(@Valid SysUser user) throws ViHackerException {
-        this.userService.updateProfile(user);
+    public void updateProfile(HttpServletRequest request, @Valid SysUser user) throws ViHackerException {
+        this.userService.updateProfile(request,user);
     }
 
     @PutMapping("avatar")
     @ApiOperation(value = "修改头像", notes = "修改")
     @LogEndpoint(value = "修改头像",exception = "修改头像失败")
-    public void updateAvatar(@NotBlank(message = "{required}") String avatar) {
-        this.userService.updateAvatar(avatar);
+    public void updateAvatar(HttpServletRequest request,@NotBlank(message = "{required}") String avatar) {
+        this.userService.updateAvatar(request,avatar);
     }
 
     @GetMapping("password/check")
     @ApiOperation(value = "校验密码", notes = "校验密码")
     @LogEndpoint(value = "修改密码",exception = "修改密码失败")
-    public boolean checkPassword(@NotBlank(message = "{required}") String password) {
-        String currentUsername = SecurityUtil.getCurrentUsername();
+    public boolean checkPassword(HttpServletRequest request, @NotBlank(message = "{required}") String password) {
+        String currentUsername = SecurityUtil.getCurrentUsername(request);
         SysUser user = userService.findByName(currentUsername);
-        return user != null && passwordEncoder.matches(password, user.getPassword());
+        return user != null && new BCryptPasswordEncoder().matches(password, user.getPassword());
     }
 
     @PutMapping("password")
     @ApiOperation(value = "修改密码", notes = "修改密码")
     @LogEndpoint(value = "修改密码",exception = "修改密码失败")
-    public void updatePassword(@NotBlank(message = "{required}") String password) {
-        userService.updatePassword(password);
+    public void updatePassword(HttpServletRequest request,@NotBlank(message = "{required}") String password) {
+        userService.updatePassword(request,password);
     }
 
     @PutMapping("password/reset")

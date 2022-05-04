@@ -1,10 +1,7 @@
 package cc.vihackerframework.core.entity.system;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -41,22 +38,28 @@ public class SysLog implements Serializable {
      * 日志标题
      */
     @ApiModelProperty(value = "日志标题")
-    @TableField(exist=false)
+    @TableField("TITLE")
     private String title;
 
     /**
      * 跟踪ID
      */
     @ApiModelProperty(value = "跟踪ID")
-    @TableField(exist=false)
+    @TableField("TRACE_ID")
     private String traceId;
+
+    /**
+     * 请求路径
+     */
+    @ApiModelProperty(value = "请求路径")
+    @TableField("URL")
+    private String url;
 
     /**
      * 操作内容
      */
     @TableField("OPERATION")
     @Excel(name = "操作内容", orderNum = "2", height = 20, width = 30, isImportField = "true_st")
-
     private String operation;
 
     /**
@@ -65,11 +68,6 @@ public class SysLog implements Serializable {
     @TableField("TIME")
     @Excel(name = "耗时（毫秒）", orderNum = "3", height = 20, width = 30, isImportField = "true_st")
     private Long time;
-
-    /**
-     * 请求路径
-     */
-    private String url;
 
     /**
      * 操作方法
@@ -95,7 +93,7 @@ public class SysLog implements Serializable {
     /**
      * 创建时间
      */
-    @TableField("CREATED_TIME")
+    @TableField(value = "CREATED_TIME", fill = FieldFill.INSERT)
     @Excel(name = "操作时间", orderNum = "7", height = 20, width = 30, isImportField = "true_st")
     private LocalDateTime createdTime;
 

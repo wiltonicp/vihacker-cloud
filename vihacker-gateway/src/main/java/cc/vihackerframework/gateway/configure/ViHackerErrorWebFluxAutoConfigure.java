@@ -41,7 +41,7 @@ import java.util.List;
 @ConditionalOnClass(WebFluxConfigurer.class)
 @AutoConfigureBefore(WebFluxAutoConfiguration.class)
 @EnableConfigurationProperties({ServerProperties.class, ResourceProperties.class})
-public class CustomErrorWebFluxAutoConfiguration {
+public class ViHackerErrorWebFluxAutoConfigure {
 
     private final ServerProperties serverProperties;
     private final ApplicationContext applicationContext;

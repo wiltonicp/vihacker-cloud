@@ -1,8 +1,9 @@
 package cc.vihackerframework.flow.service.impl;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
-import cc.vihackerframework.core.auth.context.UserContext;
 import cc.vihackerframework.core.auth.entity.AdminAuthUser;
+import cc.vihackerframework.core.context.UserContext;
+import cc.vihackerframework.core.entity.CurrentUser;
 import cc.vihackerframework.core.entity.system.SysUser;
 import cc.vihackerframework.core.exception.ViHackerRuntimeException;
 import cc.vihackerframework.flow.entity.*;
@@ -445,7 +446,7 @@ public class FlowTaskServiceImpl extends ViHackerFlowServiceFactory implements I
         if (CollectionUtils.isEmpty(task)) {
             throw new ViHackerRuntimeException("流程未启动或已执行完成，取消申请失败");
         }
-        AdminAuthUser current = UserContext.current();
+        CurrentUser current = UserContext.current();
         ProcessInstance processInstance =
                 runtimeService.createProcessInstanceQuery().processInstanceId(flowTaskVo.getInstanceId()).singleResult();
         BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance.getProcessDefinitionId());
@@ -481,7 +482,7 @@ public class FlowTaskServiceImpl extends ViHackerFlowServiceFactory implements I
         if (task == null) {
             throw new ViHackerRuntimeException("流程未启动或已执行完成，无法撤回");
         }
-        AdminAuthUser current = UserContext.current();
+        CurrentUser current = UserContext.current();
         List<HistoricTaskInstance> htiList = historyService.createHistoricTaskInstanceQuery()
                 .processInstanceId(task.getProcessInstanceId())
                 .orderByTaskCreateTime()

@@ -1,7 +1,7 @@
 package cc.vihackerframework.system.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
-import cc.vihackerframework.core.auth.util.SecurityUtil;
+import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.entity.system.LoginLog;
 import cc.vihackerframework.core.util.ExcelUtil;
@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -39,9 +40,9 @@ public class LoginLogController {
     }
 
     @GetMapping("currentUser")
-    @ApiOperation("通过用户名获取用户最近7次登录日志")
-    public ViHackerApiResult getUserLastSevenLoginLogs() {
-        String currentUsername = SecurityUtil.getCurrentUsername();
+    @ApiOperation("获取用户最近7次登录日志")
+    public ViHackerApiResult getUserLastSevenLoginLogs(HttpServletRequest request) {
+        String currentUsername = SecurityUtil.getCurrentUsername(request);
         List<LoginLog> userLastSevenLoginLogs = this.loginLogService.findUserLastSevenLoginLogs(currentUsername);
         return ViHackerApiResult.data(userLastSevenLoginLogs);
     }

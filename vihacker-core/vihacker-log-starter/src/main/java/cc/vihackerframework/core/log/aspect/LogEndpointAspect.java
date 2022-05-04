@@ -1,6 +1,6 @@
 package cc.vihackerframework.core.log.aspect;
 
-import cc.vihackerframework.core.auth.util.SecurityUtil;
+import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.core.log.event.LogEvent;
 import cc.vihackerframework.core.util.StringPool;
@@ -99,7 +99,7 @@ public class LogEndpointAspect {
         if (!url.contains("oauth") && !(url.contains("code"))){
             //判断header是否存在，存在则获取用户名
             if (StringUtils.isNotBlank(SecurityUtil.getHeaderToken(request))) {
-                userName = SecurityUtil.getLoginUser().getUsername();
+                userName = SecurityUtil.getCurrentUsername(request);
             }
         }
         //　封装SysLog
@@ -109,7 +109,7 @@ public class LogEndpointAspect {
         .setMethod(method)
         .setTitle(logAnn.value())
         .setUrl(url)
-        .setOperation(String.valueOf(result))
+        .setOperation(JSON.toJSONString(result))
         .setLocation(StringUtils.isEmpty(region) ? "本地" : region)
         .setTime(tookTime)
         .setParams(JSON.toJSONString(requestParam));

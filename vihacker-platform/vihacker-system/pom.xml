@@ -25,15 +25,15 @@
         </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-common-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-web-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-log-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-auth-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
@@ -43,9 +43,5 @@
 <!--            <groupId>cc.vihackerframework</groupId>-->
 <!--            <artifactId>vihacker-redis-starter</artifactId>-->
 <!--        </dependency>-->
-        <dependency>
-            <groupId>cc.vihackerframework</groupId>
-            <artifactId>vihacker-security-starter</artifactId>
-        </dependency>
     </dependencies>
 </project>
