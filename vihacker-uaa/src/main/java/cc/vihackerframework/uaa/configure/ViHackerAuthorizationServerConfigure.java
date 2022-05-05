@@ -9,6 +9,7 @@ import cc.vihackerframework.uaa.properties.ViHackerAuthProperties;
 import cc.vihackerframework.uaa.service.RedisAuthenticationCodeService;
 import cc.vihackerframework.uaa.service.RedisClientDetailsService;
 import cc.vihackerframework.uaa.service.ViHackerUserDetailsService;
+import cc.vihackerframework.uaa.service.impl.SingleLoginTokenServices;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -96,7 +97,7 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
     @Bean
     @Primary
     public DefaultTokenServices defaultTokenServices() {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        DefaultTokenServices tokenServices = new SingleLoginTokenServices(properties.isSingleLogin());
 
         tokenServices.setTokenStore(tokenStore());
         tokenServices.setSupportRefreshToken(true);
