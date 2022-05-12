@@ -12,6 +12,7 @@ vihacker:
     url: https://blog.vihackerframework.cc
     license: Powered by ViHackerCLoud
     license-url: https://github.com/wiltonicp/vihacker-cloud/blob/master/LICENSE
+    password-token-url: http://localhost:8301/vihacker-uaa/oauth/token
 
 
 # knife4j配置

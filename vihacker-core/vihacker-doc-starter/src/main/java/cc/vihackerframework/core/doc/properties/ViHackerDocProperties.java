@@ -46,6 +46,11 @@ public class ViHackerDocProperties {
      * 文档描述字体大小
      */
     private String descriptionFontSize = "14";
+
+    /**
+     * 密码模式获取token的地址
+     */
+    private String passwordTokenUrl = "http://localhost:8301/vihacker-uaa/oauth/token";
     /**
      * 服务url
      */
