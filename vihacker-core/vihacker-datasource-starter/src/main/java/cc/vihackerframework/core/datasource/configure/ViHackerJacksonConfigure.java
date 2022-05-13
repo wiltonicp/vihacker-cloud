@@ -52,6 +52,8 @@ public class ViHackerJacksonConfigure {
 
             builder.failOnUnknownProperties(false);
             builder.featuresToDisable(new Object[]{SerializationFeature.WRITE_DATES_AS_TIMESTAMPS});
+            //序列化枚举值为数据库存储值
+            builder.featuresToEnable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
         };
     }
 

@@ -19,32 +19,30 @@ import java.time.LocalDateTime;
 @Component
 public class ViHackerMetaObjectHandler implements MetaObjectHandler {
 
-
     @Override
     public void insertFill(MetaObject metaObject) {
         CurrentUser current = UserContext.current();
         if(ObjectUtils.isNotEmpty(current)){
-            this.setFieldValByName("createdBy", current.getUserId(), metaObject);
-            this.setFieldValByName("modifyBy", current.getUserId(), metaObject);
+            this.strictInsertFill(metaObject, "createdBy", Long.class, current.getUserId());
+            this.strictInsertFill(metaObject, "modifyBy", Long.class, current.getUserId());
         }else{
-            this.setFieldValByName("createdBy", 0L, metaObject);
-            this.setFieldValByName("modifyBy", 0L, metaObject);
+            this.strictInsertFill(metaObject, "createdBy", Long.class, 0L);
+            this.strictInsertFill(metaObject, "modifyBy", Long.class, 0L);
         }
-        this.setFieldValByName("version", 0L, metaObject);
-        this.setFieldValByName("deleted", 0, metaObject);
-        this.setFieldValByName("createdTime", LocalDateTime.now(), metaObject);
-        this.setFieldValByName("modifyTime", LocalDateTime.now(), metaObject);
+        this.strictInsertFill(metaObject, "version", Long.class, 0L);
+        this.strictInsertFill(metaObject, "deleted", Integer.class, 0);
+        this.strictInsertFill(metaObject, "createdTime", LocalDateTime.class, LocalDateTime.now());
+        this.strictInsertFill(metaObject, "modifyTime", LocalDateTime.class, LocalDateTime.now());
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         CurrentUser current = UserContext.current();
         if(ObjectUtils.isNotEmpty(current)){
-            this.setFieldValByName("createdBy", current.getUserId(), metaObject);
-            this.setFieldValByName("modifyBy", current.getUserId(), metaObject);
+            this.strictInsertFill(metaObject, "modifyBy", Long.class, current.getUserId());
         }else{
-            this.setFieldValByName("createdBy", 0L, metaObject);
-            this.setFieldValByName("modifyBy", 0L, metaObject);
+            this.strictInsertFill(metaObject, "modifyBy", Long.class, 0L);
         }
+        this.strictInsertFill(metaObject, "modifyTime", LocalDateTime.class, LocalDateTime.now());
     }
 }
