@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>文字对比工具 | ViHacker</title>
+      <meta name="description" content="管理个人和项目中的文件，支持存储和分享文件，支持api加密上传，可以快速和项目对接">
+      <!-- Favicon -->
+      <link rel="shortcut icon" th:href="@{/assets/images/favicon.ico}" />
+      <link rel="stylesheet" href="http://libs.baidu.com/jquery/2.1.4/jquery.min.js">
+      </head>
+  <body class=" ">
+    <div>
+        <div style="margin: 20px">
+            <textarea id="text" style="width: 100%;height: 250px;" placeholder="请输入文字！"></textarea>
+            <button id="start">开始查找</button>
+        </div>
+
+        <div id="result" style="margin: 20px; color: brown">
+
+        </div>
+    </div>
+  </body>
+    <!-- Backend Bundle JavaScript -->
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+    var correctpass = true;
+        $(document).on("click", "#start",function () {
+            $('#result').html("提取中......")
+            getString();
+        });
+
+        function getString(){
+            $.ajax({
+                url:"/getString",
+                type:"POST",
+                data:{text:$('#text').val()},
+                success:function (result) {
+                    $('#result').html("");
+                    $('#result').html(result);
+                }
+            });
+        }
+    </script>
+  </body>
+</html>

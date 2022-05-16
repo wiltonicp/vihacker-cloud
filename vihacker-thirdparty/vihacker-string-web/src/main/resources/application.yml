@@ -1,0 +1,15 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: ViHacker-String
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    mode: LEGACYHTML5
+    encoding: UTF-8

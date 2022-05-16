@@ -18,6 +18,7 @@
         <module>vihacker-demo</module>
         <module>es-demo</module>
         <module>vihacker-flowable</module>
+        <module>vihacker-string-web</module>
     </modules>
 
 </project>
