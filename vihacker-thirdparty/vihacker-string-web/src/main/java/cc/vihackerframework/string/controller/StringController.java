@@ -29,7 +29,15 @@ public class StringController {
         Set<String> set = new HashSet<>();
         for (int i = 0; i < list.size(); i++) {
             for (int j = list.size() - 1; j > i; j--) {
-                String maxSameString = StringUtils.getMaxSameString(list.get(i).substring(0,15), list.get(j).substring(0,15));
+                String str1 = list.get(i);
+                String str2 = list.get(j);
+                if(list.get(i) != null && list.get(i) != "" && list.get(i).length() > 14){
+                    str1 = list.get(i).substring(0, 15);
+                }
+                if(list.get(j) != null && list.get(j) != "" && list.get(j).length() > 14){
+                    str2 = list.get(j).substring(0, 15);
+                }
+                String maxSameString = StringUtils.getMaxSameString(str1, str2);
                 if(maxSameString!= null && maxSameString != "" && maxSameString.length() > 5 && maxSameString.length() <= 15 && StringUtils.check(maxSameString)){
                     set.add("<pre>" + maxSameString + "</pre>");
                 }
