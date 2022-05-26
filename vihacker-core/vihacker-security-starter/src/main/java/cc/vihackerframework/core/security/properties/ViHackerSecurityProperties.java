@@ -57,7 +57,9 @@ public class ViHackerSecurityProperties {
             "/error/**",
             "/assets/**",
             "/auth/logout",
-            "/auth/sms-code"
+            "/auth/sms-code",
+            "/auth/captcha",
+            "/auth/code"
     };
 
     /**

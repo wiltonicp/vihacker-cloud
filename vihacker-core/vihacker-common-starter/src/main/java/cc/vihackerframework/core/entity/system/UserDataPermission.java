@@ -1,5 +1,6 @@
 package cc.vihackerframework.core.entity.system;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -13,10 +14,11 @@ import lombok.Data;
 @TableName("t_user_data_permission")
 public class UserDataPermission {
 
-
-    @TableId("USER_ID")
+    @TableId("ID")
+    private Long id;
+    @TableField("USER_ID")
     private Long userId;
-    @TableId("DEPT_ID")
+    @TableField("DEPT_ID")
     private Long deptId;
 
 }

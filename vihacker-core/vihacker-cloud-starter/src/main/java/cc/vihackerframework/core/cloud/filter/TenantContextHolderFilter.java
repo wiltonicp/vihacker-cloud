@@ -32,33 +32,34 @@ public class TenantContextHolderFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        if(request.getRequestURI().contains("oauth")){
+        if(request.getRequestURI().contains("oauth") || request.getRequestURI().contains("/captcha") || request.getRequestURI().contains("/code")){
             filterChain.doFilter(request, response);
-        }
-        try {
-            //优先取请求参数中的tenantId值
-            String tenantId = request.getHeader(TenantConstant.VIHACKER_TENANT_ID);
-            if (StringUtil.isBlank(tenantId)) {
-                String token = SecurityUtil.getHeaderToken(request);
-                if (StringUtil.isNotBlank(token)) {
-                    //取token中的tenantId值
-                    CurrentUser currentUser = SecurityUtil.getCurrentUser(request);
-                    if (currentUser != null) {
-                        tenantId = String.valueOf(currentUser.getTenantId());
+        }else {
+            try {
+                //优先取请求参数中的tenantId值
+                String tenantId = request.getHeader(TenantConstant.VIHACKER_TENANT_ID);
+                if (StringUtil.isBlank(tenantId)) {
+                    String token = SecurityUtil.getHeaderToken(request);
+                    if (StringUtil.isNotBlank(token)) {
+                        //取token中的tenantId值
+                        CurrentUser currentUser = SecurityUtil.getCurrentUser(request);
+                        if (currentUser != null) {
+                            tenantId = String.valueOf(currentUser.getTenantId());
+                        }
                     }
                 }
-            }
-            log.info("获取到的租户ID为:{}", tenantId);
-            if (StringUtil.isNotBlank(tenantId)) {
-                TenantContextHolder.setTenantId(tenantId);
-            } else {
-                if (StringUtil.isBlank(TenantContextHolder.getTenantId())) {
-                    TenantContextHolder.setTenantId(TenantConstant.TENANT_ID_DEFAULT);
+                log.info("获取到的租户ID为:{}", tenantId);
+                if (StringUtil.isNotBlank(tenantId)) {
+                    TenantContextHolder.setTenantId(tenantId);
+                } else {
+                    if (StringUtil.isBlank(TenantContextHolder.getTenantId())) {
+                        TenantContextHolder.setTenantId(TenantConstant.TENANT_ID_DEFAULT);
+                    }
                 }
+                filterChain.doFilter(request, response);
+            } finally {
+                TenantContextHolder.clear();
             }
-            filterChain.doFilter(request, response);
-        } finally {
-            TenantContextHolder.clear();
         }
     }
 }

@@ -3,6 +3,7 @@ package cc.vihackerframework.core.doc.configure;
 import cc.vihackerframework.core.factory.YamlPropertySourceFactory;
 import cc.vihackerframework.core.doc.properties.ViHackerDocProperties;
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -13,6 +14,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
+import springfox.documentation.PathProvider;
+import springfox.documentation.annotations.ApiIgnore;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.OAuthBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -20,12 +23,20 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
+import springfox.documentation.spring.web.paths.DefaultPathProvider;
 import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -45,10 +56,36 @@ public class ViHackerDocAutoConfigure {
 
     private final ViHackerDocProperties properties;
 
-    public ViHackerDocAutoConfigure(ViHackerDocProperties properties) {
+    private final OpenApiExtensionResolver openApiExtensionResolver;
+
+    public ViHackerDocAutoConfigure(ViHackerDocProperties properties, OpenApiExtensionResolver openApiExtensionResolver) {
         this.properties = properties;
+        this.openApiExtensionResolver = openApiExtensionResolver;
     }
 
+    @Bean
+    public PathProvider pathProvider1() {
+        return new DefaultPathProvider() {
+            @Override
+            public String getOperationPath(String operationPath) {
+                return super.getOperationPath(operationPath);
+            }
+        };
+    }
+
+    /**
+     * Swagger忽略的参数类型
+     */
+    private final Class[] ignoredParameterTypes = new Class[]{
+            ServletRequest.class,
+            ServletResponse.class,
+            HttpServletRequest.class,
+            HttpServletResponse.class,
+            HttpSession.class,
+            ApiIgnore.class,
+            Principal.class,
+            Map.class
+    };
 
     @Bean
     @Order(-1)
@@ -65,6 +102,9 @@ public class ViHackerDocAutoConfigure {
                 .paths(PathSelectors.any())
                 .build()
                 .enable(properties.getEnable())
+                .pathProvider(pathProvider1())
+                .ignoredParameterTypes(ignoredParameterTypes)
+                .pathMapping("/").extensions(openApiExtensionResolver.buildSettingExtensions())
                 .securityContexts(securityContexts())
                 .securitySchemes(securitySchemes());
     }
@@ -85,30 +125,28 @@ public class ViHackerDocAutoConfigure {
                 .build();
     }
 
-    private List<SecurityScheme> securitySchemes(){
-        //schema
-        List<GrantType> grantTypes=new ArrayList<>();
-        //密码模式
-        ResourceOwnerPasswordCredentialsGrant resourceOwnerPasswordCredentialsGrant = new ResourceOwnerPasswordCredentialsGrant(properties.getPasswordTokenUrl());
-        grantTypes.add(resourceOwnerPasswordCredentialsGrant);
-        OAuth oAuth = new OAuthBuilder().name("oauth2")
-                .grantTypes(grantTypes).build();
-
-        return Lists.newArrayList(oAuth);
+    private List<ApiKey> securitySchemes(){
+        List<ApiKey> apiKeyList = new ArrayList<>();
+        apiKeyList.add(new ApiKey("Authorization", "Authorization", "header"));
+        return apiKeyList;
     }
 
     private List<SecurityContext> securityContexts(){
-        //context
-        //scope方位
-        List<AuthorizationScope> scopes=new ArrayList<>();
-        scopes.add(new AuthorizationScope("read","read  resources"));
-        scopes.add(new AuthorizationScope("write","write resources"));
-        scopes.add(new AuthorizationScope("reads","read all resources"));
-        scopes.add(new AuthorizationScope("writes","write all resources"));
-        SecurityReference securityReference=new SecurityReference("oauth2",scopes.toArray(new AuthorizationScope[]{}));
-        SecurityContext securityContext=new SecurityContext(Lists.newArrayList(securityReference),PathSelectors.ant("/api/**"));
+        List<SecurityContext> securityContexts = new ArrayList<>();
+        securityContexts.add(
+                SecurityContext.builder()
+                        .securityReferences(defaultAuth())
+                        .forPaths(PathSelectors.regex("^(?!auth).*$"))
+                        .build());
+        return securityContexts;
+    }
 
-        //securityContext
-        return Lists.newArrayList(securityContext);
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        List<SecurityReference> securityReferences = new ArrayList<>();
+        securityReferences.add(new SecurityReference("Authorization", authorizationScopes));
+        return securityReferences;
     }
 }

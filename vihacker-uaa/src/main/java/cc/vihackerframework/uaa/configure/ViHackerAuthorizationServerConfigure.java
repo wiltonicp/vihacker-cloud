@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
@@ -25,12 +26,14 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
 import java.util.*;
@@ -50,16 +53,35 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
 
     private final RedisService redisService;
     private final ViHackerAuthProperties properties;
+    private final RedisConnectionFactory redisConnectionFactory;
     private final ViHackerUserDetailsService userDetailService;
     private final AuthenticationManager authenticationManager;
     private final RedisClientDetailsService redisClientDetailsService;
     private final RedisAuthenticationCodeService redisAuthenticationCodeService;
     private final ViHackerAuthWebResponseExceptionTranslator exceptionTranslator;
 
+    /**
+     * 配置token存储到redis中
+     */
+    @Bean
+    public RedisTokenStore redisTokenStore() {
+        return new RedisTokenStore(redisConnectionFactory);
+    }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(redisClientDetailsService);
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security
+                // 允许表单认证请求
+                .allowFormAuthenticationForClients()
+                // spel表达式 访问公钥端点（/auth/token_key）需要认证
+                .tokenKeyAccess("isAuthenticated()")
+                // spel表达式 访问令牌解析端点（/auth/check_token）需要认证
+                .checkTokenAccess("isAuthenticated()");
     }
 
     @Override
@@ -78,7 +100,7 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
         // 增加原有的验证认证方式
         tokenGranters.add(endpoints.getTokenGranter());
 
-        endpoints.tokenStore(tokenStore())
+        endpoints.tokenServices(tokenServices)
                 .tokenGranter(new CompositeTokenGranter(tokenGranters))
                 .userDetailsService(userDetailService)
                 .authorizationCodeServices(redisAuthenticationCodeService)
@@ -99,9 +121,12 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
     public DefaultTokenServices defaultTokenServices() {
         DefaultTokenServices tokenServices = new SingleLoginTokenServices(properties.isSingleLogin());
 
-        tokenServices.setTokenStore(tokenStore());
-        tokenServices.setSupportRefreshToken(true);
+        tokenServices.setTokenStore(redisTokenStore());
+        tokenServices.setSupportRefreshToken(Boolean.TRUE);
+        tokenServices.setReuseRefreshToken(Boolean.FALSE);
         tokenServices.setClientDetailsService(redisClientDetailsService);
+        // 配置tokenServices参数
+        addUserDetailsService(tokenServices);
         return tokenServices;
     }
 
@@ -116,17 +141,17 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
         return accessTokenConverter;
     }
 
-    @Bean
-    public ResourceOwnerPasswordTokenGranter resourceOwnerPasswordTokenGranter(AuthenticationManager authenticationManager, OAuth2RequestFactory oAuth2RequestFactory) {
-        DefaultTokenServices defaultTokenServices = defaultTokenServices();
-        defaultTokenServices.setTokenEnhancer(jwtAccessTokenConverter());
-        return new ResourceOwnerPasswordTokenGranter(authenticationManager, defaultTokenServices, redisClientDetailsService, oAuth2RequestFactory);
-    }
-
-    @Bean
-    public DefaultOAuth2RequestFactory oAuth2RequestFactory() {
-        return new DefaultOAuth2RequestFactory(redisClientDetailsService);
-    }
+//    @Bean
+//    public ResourceOwnerPasswordTokenGranter resourceOwnerPasswordTokenGranter(AuthenticationManager authenticationManager, OAuth2RequestFactory oAuth2RequestFactory) {
+//        DefaultTokenServices defaultTokenServices = defaultTokenServices();
+//        defaultTokenServices.setTokenEnhancer(jwtAccessTokenConverter());
+//        return new ResourceOwnerPasswordTokenGranter(authenticationManager, defaultTokenServices, redisClientDetailsService, oAuth2RequestFactory);
+//    }
+//
+//    @Bean
+//    public DefaultOAuth2RequestFactory oAuth2RequestFactory() {
+//        return new DefaultOAuth2RequestFactory(redisClientDetailsService);
+//    }
 
     private void addUserDetailsService(DefaultTokenServices tokenServices) {
         if (userDetailService != null) {
@@ -156,14 +181,13 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
             public OAuth2AccessToken enhance(OAuth2AccessToken oAuth2AccessToken, OAuth2Authentication oAuth2Authentication) {
 
                 // 添加额外信息的map
-                final Map<String, Object> additionMessage = new HashMap<>(2);
+                final Map<String, Object> additionMessage = new LinkedHashMap<>(8);
                 // 对于客户端鉴权模式，直接返回token
                 if (oAuth2Authentication.getUserAuthentication() == null) {
                     return oAuth2AccessToken;
                 }
                 // 获取当前登录的用户
                 AdminAuthUser user = (AdminAuthUser) oAuth2Authentication.getUserAuthentication().getPrincipal();
-
                 // 如果用户不为空 则把id放入jwt token中
                 if (user != null) {
                     additionMessage.put(Oauth2Constant.VIHACKER_USER_ID, String.valueOf(user.getUserId()));

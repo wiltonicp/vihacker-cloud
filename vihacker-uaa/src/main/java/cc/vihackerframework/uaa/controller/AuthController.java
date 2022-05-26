@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,7 +39,6 @@ public class AuthController {
     @Qualifier("consumerTokenServices")
     private final ConsumerTokenServices consumerTokenServices;
 
-
     @GetMapping("/user")
     @LogEndpoint(value = "用户信息",exception = "用户信息请求异常")
     @ApiOperation(value = "用户信息", notes = "用户信息")
@@ -46,16 +46,24 @@ public class AuthController {
         return ViHackerApiResult.data(ViHackerAuthUser.getUser());
     }
 
+
+    @LogEndpoint(value = "验证码获取", exception = "验证码获取请求异常")
+    @GetMapping("/code")
+    @ApiOperation(value = "验证码获取", notes = "验证码获取")
+    public ViHackerApiResult authCode() {
+        return validateCodeService.getCode();
+    }
+
     /**
-     * 验证码获取
+     * 验证码获取 流模式
      * @param request
      * @param response
      * @throws IOException
      * @throws ValidateCodeException
      */
     @GetMapping("/captcha")
-    @LogEndpoint(value = "验证码获取",exception = "验证码获取请求异常")
-    @ApiOperation(value = "验证码获取", notes = "验证码获取")
+    @LogEndpoint(value = "验证码获取 流模式",exception = "验证码获取请求异常")
+    @ApiOperation(value = "验证码获取 流模式", notes = "验证码获取")
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException, ValidateCodeException {
         validateCodeService.getCode(request, response);
     }

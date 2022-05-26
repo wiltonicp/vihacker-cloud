@@ -4,6 +4,7 @@ vihacker:
     basic:
       username: admin
       password: vihacker
+    enable: true
     title: ViHackerCLoud文档管理中心
     description: ViHackerCLoud文档管理
     service-url: http://api.vihacker.top
@@ -12,7 +13,7 @@ vihacker:
     url: https://blog.vihackerframework.cc
     license: Powered by ViHackerCLoud
     license-url: https://github.com/wiltonicp/vihacker-cloud/blob/master/LICENSE
-    password-token-url: http://localhost:8301/vihacker-uaa/oauth/token
+    password-token-url: http://localhost:10001/vihacker-uaa/oauth/token
 
 
 # knife4j配置
@@ -21,7 +22,7 @@ knife4j:
   # 开启生产环境屏蔽
   #production: false
   basic:
-    enable: true
+    enable: false
     username: ${vihacker.doc.basic.username}
     password: ${vihacker.doc.basic.password}
   setting:

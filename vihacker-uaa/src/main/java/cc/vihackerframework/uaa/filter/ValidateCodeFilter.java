@@ -48,7 +48,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
                 filterChain.doFilter(httpServletRequest, httpServletResponse);
             } catch (ValidateCodeException e) {
                 ViHackerUtil.response(httpServletResponse, MediaType.APPLICATION_JSON_VALUE,
-                        HttpServletResponse.SC_OK, ViHackerApiResult.failed(e.getMessage()));
+                        HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ViHackerApiResult.failed(e.getMessage()));
                 log.error(e.getMessage(), e);
             }
         } else {

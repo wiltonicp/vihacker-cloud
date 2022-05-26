@@ -23,7 +23,7 @@ public class ViHackerAuthWebResponseExceptionTranslator implements WebResponseEx
 
     @Override
     public ResponseEntity<?> translate(Exception e) {
-        ResponseEntity.BodyBuilder status = ResponseEntity.status(HttpStatus.OK);
+        ResponseEntity.BodyBuilder status = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
         String message = "认证失败";
         if (e instanceof UnsupportedGrantTypeException) {
             message = "不支持该认证类型";

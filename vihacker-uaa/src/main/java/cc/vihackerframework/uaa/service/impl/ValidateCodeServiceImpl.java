@@ -5,8 +5,10 @@ import cc.vihackerframework.core.constant.Oauth2Constant;
 import cc.vihackerframework.core.constant.ViHackerConstant;
 import cc.vihackerframework.core.exception.ValidateCodeException;
 import cc.vihackerframework.core.redis.service.RedisService;
+import cc.vihackerframework.core.util.IdUtil;
 import cc.vihackerframework.uaa.properties.ValidateCodeProperties;
 import cc.vihackerframework.uaa.service.ValidateCodeService;
+import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
@@ -20,6 +22,10 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * 验证码业务实现类
@@ -31,6 +37,22 @@ import java.io.IOException;
 public class ValidateCodeServiceImpl implements ValidateCodeService {
 
     private final RedisService redisService;
+
+    @Override
+    public ViHackerApiResult getCode() {
+        Map<String, String> data = new HashMap<>(2);
+        String uuid = IdUtil.getUUID();
+        ArithmeticCaptcha captcha = new ArithmeticCaptcha(120, 40);
+        captcha.getArithmeticString();  // 获取运算的公式：3+2=?
+        // 获取运算的结果：5
+        String text = StringUtils.lowerCase(captcha.text());
+        ValidateCodeProperties properties = new ValidateCodeProperties();
+        redisService.set(Oauth2Constant.CAPTCHA_KEY + uuid, text, properties.getTime());
+        data.put("key", uuid);
+        data.put("codeUrl", captcha.toBase64());
+
+        return ViHackerApiResult.data(data);
+    }
 
     @Override
     public void getCode(HttpServletRequest request, HttpServletResponse response) throws IOException, ValidateCodeException {

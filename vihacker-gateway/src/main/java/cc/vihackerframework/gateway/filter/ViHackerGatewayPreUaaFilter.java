@@ -1,15 +1,20 @@
 package cc.vihackerframework.gateway.filter;
 
 import cc.vihackerframework.core.cloud.properties.ViHackerSecurityProperties;
+import cc.vihackerframework.core.constant.Oauth2Constant;
 import cc.vihackerframework.core.constant.ViHackerConstant;
 import cc.vihackerframework.core.util.ResponseUtil;
+import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.util.StringPool;
+import cc.vihackerframework.core.util.TokenUtil;
+import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -43,25 +48,27 @@ public class ViHackerGatewayPreUaaFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        ServerHttpRequest request = exchange.getRequest();
 
         //　如果在忽略的url里，则跳过
         String path = replacePrefix(exchange.getRequest().getURI().getPath());
         String requestUrl = exchange.getRequest().getURI().getRawPath();
         if (ignore(path) || ignore(requestUrl)) {
+            log.debug("当前接口：{}, 不解析用户token", request.getPath().toString());
             return chain.filter(exchange);
         }
 
         // 验证token是否有效
-//        ServerHttpResponse resp = exchange.getResponse();
-//        String headerToken = exchange.getRequest().getHeaders().getFirst(Oauth2Constant.HEADER_TOKEN);
-//        if (headerToken == null) {
-//            return unauthorized(resp, "没有携带Token信息！");
-//        }
-//        String token = TokenUtil.getToken(headerToken);
-//        Claims claims = SecurityUtil.getClaims(token);
-//        if (claims == null) {
-//            return unauthorized(resp, "token已过期或验证不正确！");
-//        }
+        ServerHttpResponse resp = exchange.getResponse();
+        String headerToken = exchange.getRequest().getHeaders().getFirst(Oauth2Constant.HEADER_TOKEN);
+        if (headerToken == null) {
+            return unauthorized(resp, "没有携带Token信息！");
+        }
+        String token = TokenUtil.getToken(headerToken);
+        Claims claims = SecurityUtil.getClaims(token);
+        if (claims == null) {
+            return unauthorized(resp, "token已过期或验证不正确！");
+        }
         return chain.filter(exchange);
     }
 

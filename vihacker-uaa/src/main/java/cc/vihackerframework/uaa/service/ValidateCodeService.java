@@ -15,6 +15,9 @@ import java.io.IOException;
  */
 public interface ValidateCodeService {
 
+
+    ViHackerApiResult getCode();
+
     /**
      * 获取验证码
      * @param request

@@ -50,7 +50,7 @@ public class ViHackerDocProperties {
     /**
      * 密码模式获取token的地址
      */
-    private String passwordTokenUrl = "http://localhost:8301/vihacker-uaa/oauth/token";
+    private String passwordTokenUrl = "http://localhost:10001/vihacker-uaa/oauth/token";
     /**
      * 服务url
      */
