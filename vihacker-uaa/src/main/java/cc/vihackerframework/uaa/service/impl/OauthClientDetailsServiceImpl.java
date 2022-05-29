@@ -1,5 +1,6 @@
 package cc.vihackerframework.uaa.service.impl;
 
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.util.StringPool;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -40,12 +41,12 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
     private final RedisClientDetailsService redisClientDetailsService;
 
     @Override
-    public IPage<OauthClientDetails> findOauthClientDetails(QuerySearch search, OauthClientDetails oauthClientDetails) {
+    public IPage<OauthClientDetails> findOauthClientDetails(QuerySearch search) {
         LambdaQueryWrapper<OauthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.isNotBlank(oauthClientDetails.getClientId())) {
-            queryWrapper.eq(OauthClientDetails::getClientId, oauthClientDetails.getClientId());
+        if (StringUtils.isNotBlank(search.getKeyword())) {
+            queryWrapper.eq(OauthClientDetails::getClientId, search.getKeyword());
         }
-        Page<OauthClientDetails> page = new Page<>(request.getPageNum(), request.getPageSize());
+        Page<OauthClientDetails> page = new Page<>(search.getCurrent(), search.getSize());
         IPage<OauthClientDetails> result = this.page(page, queryWrapper);
 
         List<OauthClientDetails> records = new ArrayList<>();

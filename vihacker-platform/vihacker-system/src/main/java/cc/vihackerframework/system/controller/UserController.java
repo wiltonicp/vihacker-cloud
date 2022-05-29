@@ -132,8 +132,12 @@ public class UserController {
     @PreAuthorize("hasAuthority('user:reset')")
     @ApiOperation(value = "管理员重置用户密码", notes = "重置")
     @LogEndpoint(value = "管理员重置用户密码", exception = "重置用户密码失败")
-    public ViHackerApiResult resetPassword(@RequestParam String id, @RequestParam String password) {
-        return ViHackerApiResult.success(this.userService.resetPassword(id,password));
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", required = true, value = "用户ID", paramType = "form"),
+            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form")
+    })
+    public ViHackerApiResult resetPassword(@RequestBody SysUser sysUser) {
+        return ViHackerApiResult.success(this.userService.resetPassword(sysUser));
     }
 
     @PostMapping("excel")

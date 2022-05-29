@@ -1,9 +1,12 @@
 package cc.vihackerframework.system.service.impl;
 
+import cc.vihackerframework.core.api.IErrorCode;
+import cc.vihackerframework.core.api.ResultCode;
 import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.CurrentUser;
 import cc.vihackerframework.core.entity.enums.StatusEnum;
 import cc.vihackerframework.core.entity.system.Role;
+import cc.vihackerframework.core.exception.Asserts;
 import cc.vihackerframework.core.util.CollectionUtil;
 import cc.vihackerframework.core.util.EnumUtil;
 import cc.vihackerframework.core.util.SecurityUtil;
@@ -23,6 +26,7 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -183,15 +187,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean resetPassword(String id,String password) {
-        String pwd = null;
-        if (StringUtils.isNotBlank(password)) {
-            pwd = new BCryptPasswordEncoder().encode(password);
+    public boolean resetPassword(SysUser sysUser) {
+        if (StringUtils.isBlank(sysUser.getPassword()) || ObjectUtils.isEmpty(sysUser.getId())) {
+            Asserts.fail(ResultCode.GLOBAL_PARAM_ERROR);
         }
-        SysUser sysUser = new SysUser();
-        sysUser.setId(CollectionUtil.strToLong(id, 0L));
-        sysUser.setPassword(pwd);
-        return updateById(sysUser);
+        String pwd = new BCryptPasswordEncoder().encode(sysUser.getPassword());
+        SysUser asysUser = new SysUser();
+        asysUser.setId(sysUser.getId());
+        asysUser.setPassword(pwd);
+        return updateById(asysUser);
     }
 
     private void setUserRoles(SysUser user, String[] roles) {

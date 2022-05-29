@@ -89,9 +89,9 @@ public interface IUserService extends IService<SysUser> {
 
     /**
      * 重置密码
-     * @param id
-     * @param password
+     * @param sysUser
+     * @return
      */
-    boolean resetPassword(String id,String password);
+    boolean resetPassword(SysUser sysUser);
 
 }

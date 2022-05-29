@@ -74,8 +74,8 @@ public class ViHackerUserDetailsServiceImpl implements ViHackerUserDetailsServic
                 = AuthorityUtils.createAuthorityList(Convert.toStrArray(userInfo.getPermissions()));
         log.info("authorities: {}", authorities);
         return new AdminAuthUser(sysUser.getUsername(),sysUser.getPassword(),true,true,true, notLocked,authorities,
-                sysUser.getId(),sysUser.getAvatar(),sysUser.getEmail(),sysUser.getMobile(),sysUser.getSex(), userInfo.getType(),sysUser.getTenantId(),
-                sysUser.getDeptId(),sysUser.getDeptName(),sysUser.getRoleId(),sysUser.getRoleName(),sysUser.getLastLoginTime(),sysUser.getStatus().longValue());
+                sysUser.getId(),sysUser.getAvatar(),sysUser.getEmail(),sysUser.getMobile(),sysUser.getSex().longValue(), userInfo.getType(),sysUser.getTenantId(),
+                sysUser.getDeptId(),sysUser.getDeptName(),Long.valueOf(sysUser.getRoleId()),sysUser.getRoleName(),sysUser.getLastLoginTime(),sysUser.getStatus().longValue());
     }
 
     @Override

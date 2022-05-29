@@ -1,6 +1,7 @@
 package cc.vihackerframework.uaa.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.uaa.entity.OauthClientDetails;
 import cc.vihackerframework.uaa.service.OauthClientDetailsService;
 import cc.vihackerframework.core.exception.Asserts;
@@ -54,9 +55,8 @@ public class OauthClientDetailsController {
     @GetMapping
     @PreAuthorize("hasAuthority('client:view')")
     @ApiOperation(value = "分页查询客户端", notes = "客户端")
-    public ViHackerApiResult oauthClientDetailsList(QuerySearch search, OauthClientDetails oAuthClientDetails) {
-        Map<String, Object> dataTable = ViHackerUtil.getDataTable(this.oauthClientDetailsService.findOauthClientDetails(request, oAuthClientDetails));
-        return ViHackerApiResult.data(dataTable);
+    public ViHackerApiResult oauthClientDetailsList(QuerySearch search) {
+        return ViHackerApiResult.data(this.oauthClientDetailsService.findOauthClientDetails(search));
     }
 
 

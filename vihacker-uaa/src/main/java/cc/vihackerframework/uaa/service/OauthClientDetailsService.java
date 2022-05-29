@@ -1,5 +1,6 @@
 package cc.vihackerframework.uaa.service;
 
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cc.vihackerframework.uaa.entity.OauthClientDetails;
@@ -15,12 +16,10 @@ public interface OauthClientDetailsService extends IService<OauthClientDetails> 
 
     /**
      * 查询（分页）
-     *
-     * @param request            QueryRequest
-     * @param oauthClientDetails oauthClientDetails
-     * @return IPage<OauthClientDetails>
+     * @param search
+     * @return
      */
-    IPage<OauthClientDetails> findOauthClientDetails(QuerySearch search, OauthClientDetails oauthClientDetails);
+    IPage<OauthClientDetails> findOauthClientDetails(QuerySearch search);
 
     /**
      * 根据主键查询
