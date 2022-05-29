@@ -94,6 +94,16 @@ public class ViHackerApiResult<T> implements Serializable {
     }
 
     /**
+     * 成功返回结果
+     * @param flag
+     * @return
+     * @param <T>
+     */
+    public static <T> ViHackerApiResult<T> success(boolean flag) {
+        return flag ? success() : failed();
+    }
+
+    /**
      * 失败返回结果
      *
      * @param errorCode 错误码

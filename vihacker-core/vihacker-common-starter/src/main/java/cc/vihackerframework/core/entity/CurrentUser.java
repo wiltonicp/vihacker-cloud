@@ -32,11 +32,6 @@ public class CurrentUser implements Serializable {
     @ApiModelProperty(hidden = true)
     private String account;
     /**
-     * 用户名
-     */
-    @ApiModelProperty(hidden = true)
-    private String userName;
-    /**
      * 昵称
      */
     @ApiModelProperty(hidden = true)

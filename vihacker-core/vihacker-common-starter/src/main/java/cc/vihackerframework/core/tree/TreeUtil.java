@@ -1,4 +1,4 @@
-package cc.vihackerframework.core.util;
+package cc.vihackerframework.core.tree;
 
 import cc.vihackerframework.core.entity.Tree;
 import cc.vihackerframework.core.entity.VueRouter;
@@ -65,7 +65,6 @@ public abstract class TreeUtil {
             return null;
         }
         List<VueRouter<T>> topRoutes = new ArrayList<>();
-        VueRouter<T> router = new VueRouter<>();
         routes.forEach(route -> {
             String parentId = route.getParentId();
             if (parentId == null || TOP_NODE_ID.equals(parentId)) {
@@ -87,12 +86,6 @@ public abstract class TreeUtil {
                 }
             }
         });
-        VueRouter<T> router404 = new VueRouter<>();
-        router404.setName("404");
-        router404.setComponent("error-page/404");
-        router404.setPath("*");
-
-        topRoutes.add(router404);
         return topRoutes;
     }
 }

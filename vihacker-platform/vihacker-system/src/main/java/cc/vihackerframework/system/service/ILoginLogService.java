@@ -1,11 +1,13 @@
 package cc.vihackerframework.system.service;
 
+import cc.vihackerframework.core.entity.CurrentUser;
 import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.entity.system.LoginLog;
 import cc.vihackerframework.core.entity.system.SysUser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -25,10 +27,9 @@ public interface ILoginLogService extends IService<LoginLog> {
 
     /**
      * 保存登录日志
-     *
-     * @param loginLog 登录日志
+     * @param request
      */
-    void saveLoginLog(LoginLog loginLog);
+    void saveLoginLog(HttpServletRequest request, CurrentUser user);
 
     /**
      * 删除登录日志

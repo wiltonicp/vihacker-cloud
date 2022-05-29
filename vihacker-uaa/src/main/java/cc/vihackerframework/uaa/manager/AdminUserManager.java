@@ -52,24 +52,13 @@ public class AdminUserManager {
         return getUserInfo(user);
     }
 
-    /**
-     * 通过用户名查询用户权限串
-     *
-     * @param username 用户名
-     * @return 权限
-     */
-    public String findUserPermission(String username) {
-        List<Menu> userPermissions = adminMenuMapper.findUserPermission(username);
-        return userPermissions.stream().map(Menu::getPerms).collect(Collectors.joining(StringPool.COMMA));
-    }
-
     public UserInfo getUserInfo(SysUser sysUser) {
         if (sysUser == null) {
             return null;
         }
         UserInfo userInfo = new UserInfo();
         userInfo.setSysUser(sysUser);
-        userInfo.setPermissions(adminMenuMapper.findUserPermission(sysUser.getUsername()).stream().map(Menu::getPerms).collect(Collectors.toList()));
+        userInfo.setPermissions(adminMenuMapper.findUserPermission(sysUser.getUsername()).stream().map(Menu::getPermission).collect(Collectors.toList()));
         userInfo.setTenantId(sysUser.getTenantId());
         log.debug("userInfo:{}", userInfo);
         return userInfo;

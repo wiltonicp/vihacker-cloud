@@ -1,11 +1,15 @@
 package cc.vihackerframework.system.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
+import cc.vihackerframework.core.datasource.entity.Search;
+import cc.vihackerframework.core.entity.CurrentUser;
 import cc.vihackerframework.core.entity.VueRouter;
 import cc.vihackerframework.core.entity.system.Menu;
+import cc.vihackerframework.core.util.CollectionUtil;
 import cc.vihackerframework.core.util.ExcelUtil;
 import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.web.annotation.LoginAuth;
 import cc.vihackerframework.system.service.IMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,57 +43,46 @@ public class MenuController {
 
     private final IMenuService menuService;
 
-    @GetMapping("/{username}")
+    @GetMapping("/tree")
     @ApiOperation(value = "根据用户获取菜单路由", notes = "菜单路由")
-    public ViHackerApiResult getUserRouters(HttpServletRequest request, @NotBlank(message = "{required}") @PathVariable String username) {
-        Map<String, Object> result = new HashMap<>(4);
-        List<VueRouter<Menu>> userRouters = this.menuService.getUserRouters(request,username);
-        String userPermissions = this.menuService.findUserPermissions(request,username);
-        String[] permissionArray = new String[0];
-        if (StringUtils.isNoneBlank(userPermissions)) {
-            permissionArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(userPermissions, StringPool.COMMA);
-        }
-        result.put("routes", userRouters);
-        result.put("permissions", permissionArray);
-        return ViHackerApiResult.data(result);
+    public ViHackerApiResult<?> getUserRouters(@ApiIgnore @LoginAuth CurrentUser user) {
+        return ViHackerApiResult.data(this.menuService.getUserRouters(user.getAccount()));
     }
 
     @GetMapping
-    @ApiOperation(value = "获取菜单树", notes = "菜单树")
-    public ViHackerApiResult menuList(Menu menu) {
-        Map<String, Object> menus = this.menuService.findMenus(menu);
-        return ViHackerApiResult.data(menus);
+    @ApiOperation(value = "菜单管理", notes = "列表")
+    public ViHackerApiResult<?> menuList(Search search) {
+        return ViHackerApiResult.data(this.menuService.findMenus(search));
     }
 
     @GetMapping("/permissions")
     @ApiOperation(value = "获取用户权限菜单", notes = "用户权限菜单")
     public String findUserPermissions(HttpServletRequest request,String username) {
-        return this.menuService.findUserPermissions(request,username);
+        return this.menuService.findUserPermissions(username);
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('menu:add')")
     @ApiOperation(value = "新增菜单/按钮", notes = "新增")
     @LogEndpoint(value = "新增菜单/按钮", exception = "新增菜单/按钮失败")
-    public void addMenu(@Valid Menu menu) {
-        this.menuService.createMenu(menu);
+    public ViHackerApiResult<?> addMenu(@Valid @RequestBody Menu menu) {
+        return ViHackerApiResult.success(this.menuService.createMenu(menu));
     }
 
     @DeleteMapping("/{menuIds}")
     @PreAuthorize("hasAuthority('menu:delete')")
     @ApiOperation(value = "删除菜单/按钮", notes = "删除")
     @LogEndpoint(value = "删除菜单/按钮", exception = "删除菜单/按钮失败")
-    public void deleteMenus(@NotBlank(message = "{required}") @PathVariable String menuIds) {
-        String[] ids = menuIds.split(StringPool.COMMA);
-        this.menuService.deleteMeuns(ids);
+    public ViHackerApiResult<?> deleteMenus(@NotBlank(message = "{required}") @PathVariable String menuIds) {
+        return ViHackerApiResult.success(this.menuService.removeByIds(CollectionUtil.stringToCollection(menuIds)));
     }
 
     @PutMapping
     @PreAuthorize("hasAuthority('menu:update')")
     @ApiOperation(value = "修改菜单/按钮", notes = "修改")
     @LogEndpoint(value = "修改菜单/按钮", exception = "修改菜单/按钮失败")
-    public void updateMenu(@Valid Menu menu) {
-        this.menuService.updateMenu(menu);
+    public ViHackerApiResult<?> updateMenu(@Valid @RequestBody Menu menu) {
+        return ViHackerApiResult.success(this.menuService.updateMenu(menu));
     }
 
     @PostMapping("excel")

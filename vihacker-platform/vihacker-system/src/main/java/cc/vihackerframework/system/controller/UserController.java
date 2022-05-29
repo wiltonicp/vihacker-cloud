@@ -3,14 +3,12 @@ package cc.vihackerframework.system.controller;
 import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.entity.QueryRequest;
-import cc.vihackerframework.core.entity.system.LoginLog;
 import cc.vihackerframework.core.entity.system.SysUser;
 import cc.vihackerframework.core.exception.ViHackerException;
 import cc.vihackerframework.core.util.ExcelUtil;
 import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.core.util.ViHackerUtil;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
-import cc.vihackerframework.system.service.ILoginLogService;
 import cc.vihackerframework.system.service.IUserDataPermissionService;
 import cc.vihackerframework.system.service.IUserService;
 import io.swagger.annotations.Api;
@@ -42,21 +40,6 @@ public class UserController {
 
     private final IUserService userService;
     private final IUserDataPermissionService userDataPermissionService;
-    private final ILoginLogService loginLogService;
-
-    @GetMapping("success")
-    @ApiOperation(value = "登录成功调用,保存登录日志", notes = "新增")
-    public void loginSuccess(HttpServletRequest request) {
-        String currentUsername = SecurityUtil.getCurrentUsername(request);
-        // update last login time
-        this.userService.updateLoginTime(currentUsername);
-        // save login log
-        LoginLog loginLog = new LoginLog();
-        loginLog.setUsername(currentUsername);
-        loginLog.setSystemBrowserInfo(request.getHeader("user-agent"));
-        this.loginLogService.saveLoginLog(loginLog);
-    }
-
 
     @GetMapping
     @PreAuthorize("hasAuthority('user:view')")

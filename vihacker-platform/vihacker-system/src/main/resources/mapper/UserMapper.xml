@@ -3,7 +3,7 @@
 <mapper namespace="cc.vihackerframework.system.mapper.UserMapper">
     <select id="findUserDetailPage" parameterType="sysUser" resultType="sysUser">
         SELECT
-        u.user_id userId,
+        u.id,
         u.username,
         u.email,
         u.mobile,
@@ -21,7 +21,7 @@
         FROM
         t_user u
         LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
-        LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN t_user_role ur ON (u.id = ur.user_id)
         LEFT JOIN t_role r ON (r.role_id = ur.role_id)
         WHERE 1 = 1
         <if test="user.username != null and user.username != ''">
@@ -48,13 +48,13 @@
         <if test="user.createdTimeTo!= null and user.createdTimeTo !=''">
             And u.created_time &lt; #{user.createdTimeTo}
         </if>
-        group by u.username,u.user_id,u.email,u.mobile,u.status,u.created_time,u.ssex,
+        group by u.username,u.id,u.email,u.mobile,u.status,u.created_time,u.ssex,
         u.dept_id,u.last_login_time,u.modify_time,u.description,u.avatar
     </select>
 
     <select id="findUserDetail" parameterType="sysUser" resultType="sysUser">
         SELECT
-        u.user_id userId,
+        u.id,
         u.username,
         u.password,
         u.email,
@@ -73,7 +73,7 @@
         FROM
         t_user u
         LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
-        LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN t_user_role ur ON (u.id = ur.user_id)
         LEFT JOIN t_role r ON r.role_id = ur.role_id
         WHERE 1 = 1
         <if test="user.username != null and user.username != ''">
@@ -97,7 +97,7 @@
         <if test="user.createdTimeTo!= null and user.createdTimeTo !=''">
             And u.created_time &lt; #{user.createdTimeTo}
         </if>
-        group by u.username,u.user_id,u.email,u.mobile,u.status,u.created_time,u.ssex,
+        group by u.username,u.id,u.email,u.mobile,u.status,u.created_time,u.ssex,
         u.dept_id,u.last_login_time,u.modify_time,u.description,u.avatar
     </select>
 </mapper>

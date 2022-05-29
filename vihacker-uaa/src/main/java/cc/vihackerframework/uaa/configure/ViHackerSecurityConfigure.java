@@ -77,8 +77,8 @@ public class ViHackerSecurityConfigure extends WebSecurityConfigurerAdapter {
             .authenticated()
             //csrf跨站请求
             .and()
-            .csrf().disable();
-            //.httpBasic().disable();
+            .csrf().disable()
+            .httpBasic().disable();
     }
 
     @Override

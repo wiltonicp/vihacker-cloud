@@ -1,9 +1,14 @@
 package cc.vihackerframework.uaa.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
+import cc.vihackerframework.core.auth.entity.UserInfo;
 import cc.vihackerframework.core.auth.util.ViHackerAuthUser;
+import cc.vihackerframework.core.entity.CurrentUser;
 import cc.vihackerframework.core.exception.ValidateCodeException;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.util.SecurityUtil;
+import cc.vihackerframework.uaa.entity.enums.LoginType;
+import cc.vihackerframework.uaa.manager.AdminUserManager;
 import cc.vihackerframework.uaa.service.ValidateCodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -22,6 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 认证控制类
@@ -35,6 +43,7 @@ import java.io.IOException;
 @Api(tags = "认证管理")
 public class AuthController {
 
+    private final AdminUserManager adminUserManager;
     private final ValidateCodeService validateCodeService;
     @Qualifier("consumerTokenServices")
     private final ConsumerTokenServices consumerTokenServices;
@@ -42,8 +51,26 @@ public class AuthController {
     @GetMapping("/user")
     @LogEndpoint(value = "用户信息",exception = "用户信息请求异常")
     @ApiOperation(value = "用户信息", notes = "用户信息")
-    public ViHackerApiResult currentUser() {
-        return ViHackerApiResult.data(ViHackerAuthUser.getUser());
+    public ViHackerApiResult currentUser(HttpServletRequest request) {
+        CurrentUser currentUser = SecurityUtil.getCurrentUser(request);
+        UserInfo userInfo = null;
+
+        if(currentUser.getType() == LoginType.USERNAME.getType()){
+            userInfo = adminUserManager.findByName(currentUser.getAccount());
+        }else {
+            userInfo = adminUserManager.findByMobile(currentUser.getAccount());
+        }
+
+        Map<String, Object> data = new HashMap<>(8);
+        data.put("userName", currentUser.getAccount());
+        data.put("nickName", userInfo.getSysUser().getNickName());
+        data.put("realName", userInfo.getSysUser().getRealName());
+        data.put("avatar", userInfo.getSysUser().getAvatar());
+        data.put("roleId", userInfo.getSysUser().getRoleId());
+        data.put("departId", userInfo.getSysUser().getDeptId());
+        data.put("tenantId", userInfo.getSysUser().getTenantId());
+        data.put("permissions", userInfo.getPermissions());
+        return ViHackerApiResult.data(data);
     }
 
 

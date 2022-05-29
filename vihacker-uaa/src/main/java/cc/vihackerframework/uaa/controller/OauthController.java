@@ -38,12 +38,12 @@ public class OauthController {
     @LogEndpoint(value = "用户登录", exception = "用户登录请求异常")
     @PostMapping("/token")
     @ApiOperation(value = "用户登录Post", notes = "用户登录Post")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "grant_type", required = true, value = "授权类型", paramType = "query"),
-//            @ApiImplicitParam(name = "username", required = false, value = "用户名", paramType = "query"),
-//            @ApiImplicitParam(name = "password", required = false, value = "密码", paramType = "query"),
-//            @ApiImplicitParam(name = "scope", required = true, value = "使用范围", paramType = "query"),
-//    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "grant_type", required = true, value = "授权类型", paramType = "query"),
+            @ApiImplicitParam(name = "username", required = false, value = "用户名", paramType = "query"),
+            @ApiImplicitParam(name = "password", required = false, value = "密码", paramType = "query"),
+            @ApiImplicitParam(name = "scope", required = true, value = "使用范围", paramType = "query"),
+    })
     public ViHackerApiResult postAccessToken(Principal principal, @RequestBody Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         return custom(tokenEndpoint.postAccessToken(principal, parameters).getBody());
     }

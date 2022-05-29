@@ -100,7 +100,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
         user.setModifyTime(LocalDateTime.now());
         updateById(user);
 
-        String[] userIds = {String.valueOf(user.getUserId())};
+        String[] userIds = {String.valueOf(user.getId())};
         userRoleService.deleteUserRolesByUserId(userIds);
         String[] roles = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getRoleId().toString(), StringPool.COMMA);
         setUserRoles(user, roles);
@@ -126,7 +126,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
         user.setPassword(null);
         user.setUsername(null);
         user.setStatus(null);
-        if (isCurrentUser(user.getUserId(),request)) {
+        if (isCurrentUser(user.getId(),request)) {
             updateById(user);
         } else {
             throw new ViHackerException("您无权修改别人的账号信息！");
@@ -166,7 +166,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
         List<UserRole> userRoles = new ArrayList<>();
         Arrays.stream(roles).forEach(roleId -> {
             UserRole userRole = new UserRole();
-            userRole.setUserId(user.getUserId());
+            userRole.setUserId(user.getId());
             userRole.setRoleId(Long.valueOf(roleId));
             userRoles.add(userRole);
         });
@@ -178,7 +178,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
         Arrays.stream(deptIds).forEach(deptId -> {
             UserDataPermission permission = new UserDataPermission();
             permission.setDeptId(Long.valueOf(deptId));
-            permission.setUserId(user.getUserId());
+            permission.setUserId(user.getId());
             userDataPermissions.add(permission);
         });
         userDataPermissionService.saveBatch(userDataPermissions);

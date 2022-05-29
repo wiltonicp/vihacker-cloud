@@ -1,27 +1,26 @@
 package cc.vihackerframework.system.service.impl;
 
-import cc.vihackerframework.core.util.SecurityUtil;
-import cc.vihackerframework.core.constant.PageConstant;
+import cc.vihackerframework.core.datasource.entity.Search;
 import cc.vihackerframework.core.entity.MenuTree;
 import cc.vihackerframework.core.entity.RouterMeta;
-import cc.vihackerframework.core.entity.Tree;
 import cc.vihackerframework.core.entity.VueRouter;
+import cc.vihackerframework.core.entity.enums.MenuTypeEnum;
 import cc.vihackerframework.core.entity.system.Menu;
-import cc.vihackerframework.core.exception.ViHackerRuntimeException;
 import cc.vihackerframework.core.util.StringPool;
-import cc.vihackerframework.core.util.TreeUtil;
+import cc.vihackerframework.core.tree.TreeUtil;
 import cc.vihackerframework.system.mapper.MenuMapper;
 import cc.vihackerframework.system.service.IMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,108 +34,111 @@ import java.util.stream.Collectors;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
 
     @Override
-    public String findUserPermissions(HttpServletRequest request,String username) {
-        checkUser(request,username);
+    public String findUserPermissions(String username) {
         List<Menu> userPermissions = this.baseMapper.findUserPermissions(username);
-        return userPermissions.stream().map(Menu::getPerms).collect(Collectors.joining(StringPool.COMMA));
+        return userPermissions.stream().map(Menu::getPermission).collect(Collectors.joining(StringPool.COMMA));
     }
 
     @Override
-    public List<Menu> findUserMenus(HttpServletRequest request,String username) {
-        checkUser(request,username);
+    public List<Menu> findUserMenus(String username) {
         return this.baseMapper.findUserMenus(username);
     }
 
     @Override
-    public Map<String, Object> findMenus(Menu menu) {
-        Map<String, Object> result = new HashMap<>(4);
+    public List<VueRouter<Menu>> findMenus(Search search) {
+        List<VueRouter<Menu>> routes = new ArrayList<>();
         try {
-            LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.orderByAsc(Menu::getOrderNum);
-            List<Menu> menus = baseMapper.selectList(queryWrapper);
-
-            List<MenuTree> trees = new ArrayList<>();
-            buildTrees(trees, menus);
-
-            if (StringUtils.equals(menu.getType(), Menu.TYPE_BUTTON)) {
-                result.put(PageConstant.ROWS, trees);
-            } else {
-                List<? extends Tree<?>> menuTree = TreeUtil.build(trees);
-                result.put(PageConstant.ROWS, menuTree);
-            }
-
-            result.put("total", menus.size());
+            List<Menu> menus = new LambdaQueryChainWrapper<>(baseMapper)
+                    .between(StringUtils.isNotBlank(search.getStartDate()),
+                            Menu::getCreatedTime, search.getStartDate(), search.getEndDate())
+                    .like(StringUtils.isNotBlank(search.getKeyword()), Menu::getName, search.getKeyword())
+                    .orderByAsc(Menu::getOrderNum)
+                    .list();
+            setVueRouter(routes, menus);
         } catch (NumberFormatException e) {
             log.error("查询菜单失败", e);
-            result.put(PageConstant.ROWS, null);
-            result.put(PageConstant.TOTAL, 0);
         }
-        return result;
+        return TreeUtil.buildVueRouter(routes);
     }
 
     @Override
-    public List<VueRouter<Menu>> getUserRouters(HttpServletRequest request,String username) {
-        checkUser(request,username);
+    public List<VueRouter<Menu>> getUserRouters(String username) {
         List<VueRouter<Menu>> routes = new ArrayList<>();
-        List<Menu> menus = this.findUserMenus(request,username);
+        List<Menu> menus = this.findUserMenus(username);
+        setVueRouter(routes, menus);
+        return TreeUtil.buildVueRouter(routes);
+    }
+
+    /**
+     * 生成菜单树
+     * @param routes
+     * @param menus
+     */
+    private void setVueRouter(List<VueRouter<Menu>> routes, List<Menu> menus) {
         menus.forEach(menu -> {
             VueRouter<Menu> route = new VueRouter<>();
-            route.setId(menu.getMenuId().toString());
+            route.setId(menu.getId().toString());
             route.setParentId(menu.getParentId().toString());
             route.setPath(menu.getPath());
             route.setComponent(menu.getComponent());
-            route.setName(menu.getMenuName());
-            route.setMeta(new RouterMeta(menu.getMenuName(), menu.getIcon(), true));
+            route.setName(menu.getName());
+            route.setIcon(menu.getIcon());
+            route.setType(menu.getType());
+            route.setStatus(menu.getStatus());
+            route.setOrderNum(menu.getOrderNum());
+            route.setPermission(menu.getPermission());
+            route.setCreateTime(menu.getCreatedTime());
+            if (MenuTypeEnum.LIB.getCode().equals(menu.getType())) {
+                route.setTypeName(MenuTypeEnum.LIB.getMessage());
+            } else if (MenuTypeEnum.MENU.getCode().equals(menu.getType())) {
+                route.setTypeName(MenuTypeEnum.MENU.getMessage());
+            } else if (MenuTypeEnum.BUTTON.getCode().equals(menu.getType())) {
+                route.setTypeName(MenuTypeEnum.BUTTON.getMessage());
+            }
+            route.setMeta(new RouterMeta(menu.getName(), menu.getIcon(), true));
             routes.add(route);
         });
-        return TreeUtil.buildVueRouter(routes);
     }
 
 
     @Override
     public List<Menu> findMenuList(Menu menu) {
         LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.isNotBlank(menu.getMenuName())) {
-            queryWrapper.like(Menu::getMenuName, menu.getMenuName());
+        if (StringUtils.isNotBlank(menu.getName())) {
+            queryWrapper.like(Menu::getName, menu.getName());
         }
-        queryWrapper.orderByAsc(Menu::getMenuId);
+        queryWrapper.orderByAsc(Menu::getId);
         return this.baseMapper.selectList(queryWrapper);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createMenu(Menu menu) {
+    public boolean createMenu(Menu menu) {
         menu.setCreatedTime(LocalDateTime.now());
         setMenu(menu);
-        this.save(menu);
+        return this.save(menu);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateMenu(Menu menu) {
+    public boolean updateMenu(Menu menu) {
         menu.setModifyTime(LocalDateTime.now());
         setMenu(menu);
-        baseMapper.updateById(menu);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void deleteMeuns(String[] menuIds) {
-        this.delete(Arrays.asList(menuIds));
+        return this.updateById(menu);
     }
 
     private void buildTrees(List<MenuTree> trees, List<Menu> menus) {
         menus.forEach(menu -> {
             MenuTree tree = new MenuTree();
-            tree.setId(menu.getMenuId());
+            tree.setId(menu.getId());
             tree.setParentId(menu.getParentId());
-            tree.setLabel(menu.getMenuName());
+            tree.setLabel(menu.getName());
             tree.setComponent(menu.getComponent());
             tree.setIcon(menu.getIcon());
             tree.setOrderNum(menu.getOrderNum());
             tree.setPath(menu.getPath());
             tree.setType(menu.getType());
-            tree.setPerms(menu.getPerms());
+            tree.setPermission(menu.getPermission());
             trees.add(tree);
         });
     }
@@ -145,33 +147,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         if (menu.getParentId() == null) {
             menu.setParentId(Menu.TOP_MENU_ID);
         }
-        if (Menu.TYPE_BUTTON.equals(menu.getType())) {
+        if (MenuTypeEnum.BUTTON.getCode().equals(menu.getType())) {
             menu.setPath(null);
             menu.setIcon(null);
             menu.setComponent(null);
             menu.setOrderNum(null);
         }
     }
-
-    private void delete(List<String> menuIds) {
-        removeByIds(menuIds);
-
-        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.in(Menu::getParentId, menuIds);
-        List<Menu> menus = baseMapper.selectList(queryWrapper);
-        if (CollectionUtils.isNotEmpty(menus)) {
-            List<String> menuIdList = new ArrayList<>();
-            menus.forEach(m -> menuIdList.add(String.valueOf(m.getMenuId())));
-            this.delete(menuIdList);
-        }
-    }
-
-    private void checkUser(HttpServletRequest request, String username) {
-        String currentUsername = SecurityUtil.getCurrentUsername(request);
-        if (StringUtils.isNotBlank(currentUsername)
-                && !StringUtils.equalsIgnoreCase(currentUsername, username)) {
-            throw new ViHackerRuntimeException("无权获取别的用户数据");
-        }
-    }
-
 }

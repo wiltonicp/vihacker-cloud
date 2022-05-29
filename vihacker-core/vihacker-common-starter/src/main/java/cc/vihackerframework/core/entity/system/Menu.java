@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import cc.vihackerframework.core.entity.ViHackerEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,17 +21,13 @@ import java.io.Serializable;
 public class Menu extends ViHackerEntity implements Serializable {
     private static final long serialVersionUID = 7187628714679791771L;
 
-    // 菜单
-    public static final String TYPE_MENU = "0";
-    // 按钮
-    public static final String TYPE_BUTTON = "1";
     public static final Long TOP_MENU_ID = 0L;
 
     /**
      * 菜单/按钮ID
      */
-    @TableId(value = "MENU_ID", type = IdType.AUTO)
-    private Long menuId;
+    @TableId(value = "ID", type = IdType.AUTO)
+    private Long id;
 
     /**
      * 上级菜单ID
@@ -41,8 +38,8 @@ public class Menu extends ViHackerEntity implements Serializable {
     /**
      * 菜单/按钮名称
      */
-    @TableField("MENU_NAME")
-    private String menuName;
+    @TableField("NAME")
+    private String name;
 
     /**
      * 菜单URL
@@ -59,8 +56,8 @@ public class Menu extends ViHackerEntity implements Serializable {
     /**
      * 权限标识
      */
-    @TableField("PERMS")
-    private String perms;
+    @TableField("PERMISSION")
+    private String permission;
 
     /**
      * 图标
@@ -69,10 +66,16 @@ public class Menu extends ViHackerEntity implements Serializable {
     private String icon;
 
     /**
-     * 类型 0菜单 1按钮
+     * 类型 0目录 1菜单 2按钮
      */
     @TableField("TYPE")
     private String type;
+
+    /**
+     * 状态 0启用 1停用
+     */
+    @TableField("STATUS")
+    private String status;
 
     /**
      * 排序

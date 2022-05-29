@@ -28,16 +28,16 @@ public class SysUser extends ViHackerEntity implements Serializable {
     private static final long serialVersionUID = -4352868070794165001L;
 
     /**
-     * 租户ID
-     */
-    @TableField(exist = false)
-    private String tenantId;
-
-    /**
      * 用户 ID
      */
-    @TableId(value = "USER_ID", type = IdType.AUTO)
-    private Long userId;
+    @TableId(value = "ID", type = IdType.AUTO)
+    private Long id;
+
+    /**
+     * 租户ID
+     */
+    @TableField("TENANT_ID")
+    private String tenantId;
 
     /**
      * 用户名
@@ -57,6 +57,18 @@ public class SysUser extends ViHackerEntity implements Serializable {
      */
     @TableField("DEPT_ID")
     private Long deptId;
+
+    /**
+     * 昵称
+     */
+    @TableField("NICK_NAME")
+    private String nickName;
+
+    /**
+     * 真实姓名
+     */
+    @TableField("REAL_NAME")
+    private String realName;
 
     /**
      * 邮箱

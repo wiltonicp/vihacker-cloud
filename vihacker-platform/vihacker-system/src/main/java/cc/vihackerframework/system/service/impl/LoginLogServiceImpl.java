@@ -2,6 +2,7 @@ package cc.vihackerframework.system.service.impl;
 
 import cc.vihackerframework.core.constant.ViHackerConstant;
 import cc.vihackerframework.core.datasource.util.SortUtil;
+import cc.vihackerframework.core.entity.CurrentUser;
 import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.entity.system.LoginLog;
 import cc.vihackerframework.core.entity.system.SysUser;
@@ -9,13 +10,16 @@ import cc.vihackerframework.core.util.AddressUtil;
 import cc.vihackerframework.core.util.ViHackerUtil;
 import cc.vihackerframework.system.mapper.LoginLogMapper;
 import cc.vihackerframework.system.service.ILoginLogService;
+import cc.vihackerframework.system.service.IUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -25,8 +29,10 @@ import java.util.Map;
  * Created by Ranger on 2022/02/24
  */
 @Service("loginLogService")
+@RequiredArgsConstructor
 public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> implements ILoginLogService {
 
+    private final IUserService userService;
     @Override
     public IPage<LoginLog> findLoginLogs(LoginLog loginLog, QueryRequest request) {
         QueryWrapper<LoginLog> queryWrapper = new QueryWrapper<>();
@@ -47,7 +53,13 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
     }
 
     @Override
-    public void saveLoginLog(LoginLog loginLog) {
+    public void saveLoginLog(HttpServletRequest request, CurrentUser user) {
+        // update last login time
+        this.userService.updateLoginTime(user.getAccount());
+        // save login log
+        LoginLog loginLog = new LoginLog();
+        loginLog.setUsername(user.getAccount());
+        loginLog.setSystemBrowserInfo(request.getHeader("user-agent"));
         loginLog.setLoginTime(LocalDateTime.now());
         String ip = ViHackerUtil.getHttpServletRequestIpAddress();
         loginLog.setIp(ip);
