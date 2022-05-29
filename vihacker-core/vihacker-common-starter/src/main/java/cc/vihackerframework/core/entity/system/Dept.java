@@ -1,10 +1,13 @@
 package cc.vihackerframework.core.entity.system;
 
+import cc.vihackerframework.core.entity.ViHackerEntity;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -19,12 +22,14 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("t_dept")
-public class Dept implements Serializable {
-
-    public static final Long TOP_DEPT_ID = 0L;
+@ApiModel(value = "Depart对象", description = "组织机构表")
+public class Dept extends ViHackerEntity implements Serializable {
     private static final long serialVersionUID = -7790334862410409053L;
-    @TableId(value = "DEPT_ID", type = IdType.AUTO)
-    private Long deptId;
+    public static final Long TOP_DEPT_ID = 0L;
+
+
+    @TableId(value = "ID", type = IdType.AUTO)
+    private Long id;
 
     @TableField(value = "PARENT_ID")
     private Long parentId;
@@ -32,21 +37,21 @@ public class Dept implements Serializable {
     @NotBlank(message = "部门名称不能为空")
     @Size(max = 20, message = "部门名称长度不能超过20个字符")
     @Excel(name = "部门名称", orderNum = "1", height = 20, width = 30, isImportField = "true_st")
-    private String deptName;
+    private String name;
+
+    /**
+     * 状态 0启用 1停用
+     */
+    @TableField("STATUS")
+    private String status;
 
     @TableField(value = "ORDER_NUM")
     private Integer orderNum;
 
-    @TableField(value = "CREATED_TIME")
-    @Excel(name = "创建时间", orderNum = "2", height = 20, width = 30, isImportField = "true_st")
-    private LocalDateTime createdTime;
-
-    @TableField(value = "MODIFY_TIME")
-    @Excel(name = "修改时间", orderNum = "3", height = 20, width = 30, isImportField = "true_st")
-    private LocalDateTime modifyTime;
-
-    private transient String createTimeFrom;
-
-    private transient String createTimeTo;
-
+    /**
+     * 租户ID
+     */
+    @TableField(value = "TENANT_ID")
+    @ApiModelProperty(value = "租户ID")
+    private String tenantId;
 }

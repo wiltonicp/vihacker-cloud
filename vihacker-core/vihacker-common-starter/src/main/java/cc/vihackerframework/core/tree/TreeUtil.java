@@ -27,13 +27,13 @@ public abstract class TreeUtil {
         }
         List<Tree<T>> topNodes = new ArrayList<>();
         nodes.forEach(node -> {
-            Long pid = node.getParentId();
+            String pid = node.getParentId();
             if (pid == null || TOP_NODE_ID.equals(pid)) {
                 topNodes.add(node);
                 return;
             }
             for (Tree<T> n : nodes) {
-                Long id = n.getId();
+                String id = n.getId();
                 if (id != null && id.equals(pid)) {
                     if (n.getChildren() == null) {
                         n.initChildren();
@@ -50,6 +50,34 @@ public abstract class TreeUtil {
             }
         });
         return topNodes;
+    }
+
+    public static <T> List<Tree<T>> buildTree(List<Tree<T>> trees) {
+        if (trees == null) {
+            return null;
+        }
+        List<Tree<T>> topTrees = new ArrayList<>();
+        trees.forEach(route -> {
+            String parentId = route.getParentId();
+            if (parentId == null || TOP_NODE_ID.equals(parentId)) {
+                topTrees.add(route);
+                return;
+            }
+            for (Tree<T> parent : trees) {
+                String id = parent.getId();
+                if (id != null && id.equals(parentId)) {
+                    if (parent.getChildren() == null) {
+                        parent.initChildren();
+                    }
+                    parent.getChildren().add(route);
+                    parent.setHasChildren(true);
+                    route.setHasParent(true);
+                    parent.setHasParent(true);
+                    return;
+                }
+            }
+        });
+        return topTrees;
     }
 
 

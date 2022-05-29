@@ -24,7 +24,7 @@
         GROUP_CONCAT(r.ROLE_NAME) roleName
         FROM
         t_user u
-        LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
+        LEFT JOIN t_dept d ON (u.dept_id = d.id)
         LEFT JOIN t_user_role ur ON (u.id = ur.user_id)
         LEFT JOIN t_role r ON r.role_id = ur.role_id
         WHERE u.username = #{username}
@@ -54,7 +54,7 @@
             GROUP_CONCAT(r.ROLE_NAME) roleName
         FROM
             t_user u
-                LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
+                LEFT JOIN t_dept d ON (u.dept_id = d.id)
                 LEFT JOIN t_user_role ur ON (u.id = ur.user_id)
                 LEFT JOIN t_role r ON r.role_id = ur.role_id
         WHERE u.mobile = #{mobile} OR u.username = #{mobile}

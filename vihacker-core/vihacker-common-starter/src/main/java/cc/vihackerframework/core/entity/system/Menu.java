@@ -82,4 +82,11 @@ public class Menu extends ViHackerEntity implements Serializable {
      */
     @TableField("ORDER_NUM")
     private Integer orderNum;
+
+    /**
+     * 租户ID
+     */
+    @TableField(value = "TENANT_ID")
+    @ApiModelProperty(value = "租户ID")
+    private String tenantId;
 }

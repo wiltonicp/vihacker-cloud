@@ -1,8 +1,8 @@
 package cc.vihackerframework.core.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,20 +13,27 @@ import java.util.List;
  * @Email wilton.icp@gmail.com
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Tree<T> {
 
-    private Long id;
+    private String id;
 
-    private String label;
+    private String name;
+
+    private String parentId;
 
     private List<Tree<T>> children;
 
-    private Long parentId;
+    private Integer orderNum;
+
+    private String status;
+
+    private String tenantId;
 
     private boolean hasParent = false;
 
     private boolean hasChildren = false;
+
+    private LocalDateTime createTime;
 
     public void initChildren() {
         this.children = new ArrayList<>();

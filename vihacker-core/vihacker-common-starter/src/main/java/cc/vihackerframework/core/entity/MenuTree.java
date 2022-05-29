@@ -18,5 +18,5 @@ public class MenuTree extends Tree<Menu> {
     private String permission;
     private String icon;
     private String type;
-    private Integer orderNum;
+    private String status;
 }

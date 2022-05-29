@@ -1,5 +1,6 @@
 package cc.vihackerframework.system.service.impl;
 
+import cc.vihackerframework.core.context.UserContext;
 import cc.vihackerframework.core.datasource.entity.Search;
 import cc.vihackerframework.core.entity.MenuTree;
 import cc.vihackerframework.core.entity.RouterMeta;
@@ -54,7 +55,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
                     .like(StringUtils.isNotBlank(search.getKeyword()), Menu::getName, search.getKeyword())
                     .orderByAsc(Menu::getOrderNum)
                     .list();
-            setVueRouter(routes, menus);
+            buildVueRouter(routes, menus);
         } catch (NumberFormatException e) {
             log.error("查询菜单失败", e);
         }
@@ -65,7 +66,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     public List<VueRouter<Menu>> getUserRouters(String username) {
         List<VueRouter<Menu>> routes = new ArrayList<>();
         List<Menu> menus = this.findUserMenus(username);
-        setVueRouter(routes, menus);
+        buildVueRouter(routes, menus);
         return TreeUtil.buildVueRouter(routes);
     }
 
@@ -74,7 +75,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
      * @param routes
      * @param menus
      */
-    private void setVueRouter(List<VueRouter<Menu>> routes, List<Menu> menus) {
+    private void buildVueRouter(List<VueRouter<Menu>> routes, List<Menu> menus) {
         menus.forEach(menu -> {
             VueRouter<Menu> route = new VueRouter<>();
             route.setId(menu.getId().toString());
@@ -114,7 +115,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean createMenu(Menu menu) {
-        menu.setCreatedTime(LocalDateTime.now());
+        menu.setTenantId(UserContext.current().getTenantId());
         setMenu(menu);
         return this.save(menu);
     }
@@ -122,7 +123,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateMenu(Menu menu) {
-        menu.setModifyTime(LocalDateTime.now());
         setMenu(menu);
         return this.updateById(menu);
     }
@@ -130,14 +130,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     private void buildTrees(List<MenuTree> trees, List<Menu> menus) {
         menus.forEach(menu -> {
             MenuTree tree = new MenuTree();
-            tree.setId(menu.getId());
-            tree.setParentId(menu.getParentId());
-            tree.setLabel(menu.getName());
+            tree.setId(menu.getId().toString());
+            tree.setParentId(menu.getParentId().toString());
+            tree.setName(menu.getName());
             tree.setComponent(menu.getComponent());
             tree.setIcon(menu.getIcon());
             tree.setOrderNum(menu.getOrderNum());
             tree.setPath(menu.getPath());
             tree.setType(menu.getType());
+            tree.setStatus(menu.getStatus());
+            tree.setTenantId(menu.getTenantId());
             tree.setPermission(menu.getPermission());
             trees.add(tree);
         });

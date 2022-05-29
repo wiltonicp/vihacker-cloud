@@ -1,23 +1,20 @@
 package cc.vihackerframework.system.service.impl;
 
-import cc.vihackerframework.core.constant.PageConstant;
-import cc.vihackerframework.core.constant.ViHackerConstant;
-import cc.vihackerframework.core.datasource.util.SortUtil;
-import cc.vihackerframework.core.entity.DeptTree;
-import cc.vihackerframework.core.entity.QueryRequest;
-import cc.vihackerframework.core.entity.Tree;
+import cc.vihackerframework.core.context.UserContext;
+import cc.vihackerframework.core.datasource.entity.Search;
+import cc.vihackerframework.core.entity.*;
 import cc.vihackerframework.core.entity.system.Dept;
 import cc.vihackerframework.core.tree.TreeUtil;
+import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.system.mapper.DeptMapper;
 import cc.vihackerframework.system.service.IUserDataPermissionService;
 import cc.vihackerframework.system.service.IDeptService;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,89 +34,61 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     private final IUserDataPermissionService userDataPermissionService;
 
     @Override
-    public Map<String, Object> findDepts(QueryRequest request, Dept dept) {
-        Map<String, Object> result = new HashMap<>(4);
-        try {
-            List<Dept> depts = findDepts(dept, request);
-            List<DeptTree> trees = new ArrayList<>();
-            buildTrees(trees, depts);
-            List<? extends Tree<?>> deptTree = TreeUtil.build(trees);
-
-            result.put(PageConstant.ROWS, deptTree);
-            result.put(PageConstant.TOTAL, depts.size());
-        } catch (Exception e) {
-            log.error("获取部门列表失败", e);
-            result.put(PageConstant.ROWS, null);
-            result.put(PageConstant.TOTAL, 0);
-        }
-        return result;
+    public List<? extends Tree<?>> findDepts(Search search) {
+        List<Tree<Dept>> trees = new ArrayList<>();
+        List<Dept> depts = new LambdaQueryChainWrapper<>(baseMapper)
+                .between(StringUtils.isNotBlank(search.getStartDate()),
+                        Dept::getCreatedTime, search.getStartDate(), search.getEndDate())
+                .like(StringUtils.isNotBlank(search.getKeyword()), Dept::getName, search.getKeyword())
+                .orderByAsc(Dept::getOrderNum)
+                .list();
+        buildTrees(trees,depts);
+        return TreeUtil.buildTree(trees);
     }
 
     @Override
-    public List<Dept> findDepts(Dept dept, QueryRequest request) {
-        QueryWrapper<Dept> queryWrapper = new QueryWrapper<>();
-
-        if (StringUtils.isNotBlank(dept.getDeptName())) {
-            queryWrapper.lambda().like(Dept::getDeptName, dept.getDeptName());
-        }
-        if (StringUtils.isNotBlank(dept.getCreateTimeFrom()) && StringUtils.isNotBlank(dept.getCreateTimeTo())) {
-            queryWrapper.lambda()
-                    .ge(Dept::getCreatedTime, dept.getCreateTimeFrom())
-                    .le(Dept::getCreatedTime, dept.getCreateTimeTo());
-        }
-        SortUtil.handleWrapperSort(request, queryWrapper, "orderNum", ViHackerConstant.ORDER_ASC, true);
-        return this.baseMapper.selectList(queryWrapper);
+    public List<Dept> export(Search search) {
+        List<Dept> deptList = new LambdaQueryChainWrapper<>(baseMapper)
+                .between(StringUtils.isNotBlank(search.getStartDate()),
+                        Dept::getCreatedTime, search.getStartDate(), search.getEndDate())
+                .like(StringUtils.isNotBlank(search.getKeyword()), Dept::getName, search.getKeyword())
+                .orderByAsc(Dept::getOrderNum)
+                .list();
+        return deptList;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createDept(Dept dept) {
+    public boolean createDept(Dept dept) {
         if (dept.getParentId() == null) {
             dept.setParentId(Dept.TOP_DEPT_ID);
         }
+        dept.setTenantId(UserContext.current().getTenantId());
         dept.setCreatedTime(LocalDateTime.now());
-        this.save(dept);
+        return this.save(dept);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateDept(Dept dept) {
+    public boolean updateDept(Dept dept) {
         if (dept.getParentId() == null) {
             dept.setParentId(Dept.TOP_DEPT_ID);
         }
         dept.setModifyTime(LocalDateTime.now());
-        this.baseMapper.updateById(dept);
+        return this.updateById(dept);
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void deleteDepts(String[] deptIds) {
-        this.delete(Arrays.asList(deptIds));
-    }
-
-    private void buildTrees(List<DeptTree> trees, List<Dept> depts) {
+    private void buildTrees(List<Tree<Dept>> trees, List<Dept> depts) {
         depts.forEach(dept -> {
             DeptTree tree = new DeptTree();
-            tree.setId(dept.getDeptId());
-            tree.setParentId(dept.getParentId());
-            tree.setLabel(dept.getDeptName());
+            BeanUtils.copyProperties(dept,tree);
+            tree.setId(dept.getId().toString());
+            tree.setStatus(dept.getStatus());
+            tree.setParentId(dept.getParentId().toString());
+            tree.setName(dept.getName());
             tree.setOrderNum(dept.getOrderNum());
+            tree.setCreateTime(dept.getCreatedTime());
             trees.add(tree);
         });
     }
-
-    private void delete(List<String> deptIds) {
-        removeByIds(deptIds);
-        userDataPermissionService.deleteByDeptIds(deptIds);
-
-        LambdaQueryWrapper<Dept> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.in(Dept::getParentId, deptIds);
-        List<Dept> depts = baseMapper.selectList(queryWrapper);
-        if (CollectionUtils.isNotEmpty(depts)) {
-            List<String> deptIdList = new ArrayList<>();
-            depts.forEach(d -> deptIdList.add(String.valueOf(d.getDeptId())));
-            this.delete(deptIdList);
-        }
-    }
-
 }

@@ -1,10 +1,10 @@
 package cc.vihackerframework.system.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
-import cc.vihackerframework.core.entity.QueryRequest;
+import cc.vihackerframework.core.datasource.entity.Search;
 import cc.vihackerframework.core.entity.system.Dept;
+import cc.vihackerframework.core.util.CollectionUtil;
 import cc.vihackerframework.core.util.ExcelUtil;
-import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.system.service.IDeptService;
 import io.swagger.annotations.Api;
@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 部门相关
@@ -36,43 +35,43 @@ public class DeptController {
     private final IDeptService deptService;
 
     @GetMapping
-    @ApiOperation(value = "查询部门")
-    public ViHackerApiResult deptList(QueryRequest request, Dept dept) {
-        Map<String, Object> depts = this.deptService.findDepts(request, dept);
-        return ViHackerApiResult.data(depts);
+    @PreAuthorize("hasAuthority('dept:view')")
+    @ApiOperation(value = "查询部门列表", notes = "部门列表")
+    @LogEndpoint(value = "查询部门列表", exception = "查询部门列表失败")
+    public ViHackerApiResult deptList(Search search) {
+        return ViHackerApiResult.data(this.deptService.findDepts(search));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('dept:add')")
     @ApiOperation(value = "新增部门")
     @LogEndpoint(value = "新增部门", exception = "新增部门失败")
-    public void addDept(@Valid Dept dept) {
-        this.deptService.createDept(dept);
+    public ViHackerApiResult addDept(@Valid @RequestBody Dept dept) {
+        return ViHackerApiResult.success(this.deptService.createDept(dept));
     }
 
     @DeleteMapping("/{deptIds}")
     @PreAuthorize("hasAuthority('dept:delete')")
     @ApiOperation(value = "删除部门")
     @LogEndpoint(value = "删除部门", exception = "删除部门失败")
-    public void deleteDepts(@NotBlank(message = "{required}") @PathVariable String deptIds) {
-        String[] ids = deptIds.split(StringPool.COMMA);
-        this.deptService.deleteDepts(ids);
+    public ViHackerApiResult deleteDepts(@NotBlank(message = "{required}") @PathVariable String deptIds) {
+        return ViHackerApiResult.success(this.deptService.removeByIds(CollectionUtil.stringToCollection(deptIds)));
     }
 
     @PutMapping
     @PreAuthorize("hasAuthority('dept:update')")
     @ApiOperation(value = "修改部门")
     @LogEndpoint(value = "修改部门", exception = "修改部门失败")
-    public void updateDept(@Valid Dept dept) {
-        this.deptService.updateDept(dept);
+    public ViHackerApiResult updateDept(@Valid @RequestBody Dept dept) {
+        return ViHackerApiResult.success(this.deptService.updateDept(dept));
     }
 
     @PostMapping("excel")
     @PreAuthorize("hasAuthority('dept:export')")
     @ApiOperation(value = "导出部门数据")
     @LogEndpoint(value = "导出部门数据", exception = "导出Excel失败")
-    public void export(Dept dept, QueryRequest request, HttpServletResponse response) {
-        List<Dept> depts = this.deptService.findDepts(dept, request);
+    public void export(Search search, HttpServletResponse response) {
+        List<Dept> depts = this.deptService.export(search);
         //使用工具类导出excel
         ExcelUtil.exportExcel(depts, null, "部门", Dept.class, "depart", response);
     }
