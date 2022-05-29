@@ -1,8 +1,8 @@
 package cc.vihackerframework.system.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.util.SecurityUtil;
-import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.entity.system.LoginLog;
 import cc.vihackerframework.core.util.ExcelUtil;
 import cc.vihackerframework.core.util.StringPool;
@@ -34,9 +34,8 @@ public class LoginLogController {
 
     @GetMapping
     @ApiOperation("获取登录日志分页信息")
-    public ViHackerApiResult loginLogList(LoginLog loginLog, QueryRequest request) {
-        Map<String, Object> dataTable = ViHackerUtil.getDataTable(this.loginLogService.findLoginLogs(loginLog, request));
-        return ViHackerApiResult.data(dataTable);
+    public ViHackerApiResult loginLogList(QuerySearch search) {
+        return ViHackerApiResult.data(this.loginLogService.findLoginLogs(search));
     }
 
     @GetMapping("currentUser")
@@ -60,8 +59,8 @@ public class LoginLogController {
     @PreAuthorize("hasAuthority('loginlog:export')")
     @ApiOperation("导出登录日志数据")
     @LogEndpoint(value = "导出登录日志数据", exception = "导出Excel失败")
-    public void export(QueryRequest request, LoginLog loginLog, HttpServletResponse response) {
-        List<LoginLog> loginLogs = this.loginLogService.findLoginLogs(loginLog, request).getRecords();
+    public void export(QuerySearch search, HttpServletResponse response) {
+        List<LoginLog> loginLogs = this.loginLogService.findLoginLogs(search).getRecords();
         //使用工具类导出excel
         ExcelUtil.exportExcel(loginLogs, null, "用户数据", LoginLog.class, "user", response);
     }

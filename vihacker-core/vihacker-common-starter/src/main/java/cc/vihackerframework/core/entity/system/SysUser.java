@@ -12,6 +12,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -88,14 +89,14 @@ public class SysUser extends ViHackerEntity implements Serializable {
      * 状态 0锁定 1有效
      */
     @TableField("STATUS")
-    @NotBlank(message = "状态不能为空")
+    @NotNull(message = "状态不能为空")
     private Integer status;
 
     /**
      * 状态，用于展示
      */
     @TableField(exist = false)
-    private StatusEnum statusVal;
+    private StatusEnum statusName;
 
     /**
      * 最近访问时间
@@ -107,14 +108,14 @@ public class SysUser extends ViHackerEntity implements Serializable {
      * 性别 0男 1女 2 保密
      */
     @TableField("SSEX")
-    @NotBlank(message = "性别不能为空")
-    private Long sex;
+    @NotNull(message = "性别不能为空")
+    private Integer sex;
 
     /**
      * 性别,用于展示
      */
     @TableField(exist = false)
-    private SexEnum sexVal;
+    private SexEnum sexName;
 
     /**
      * 头像
@@ -135,22 +136,18 @@ public class SysUser extends ViHackerEntity implements Serializable {
     @TableField(exist = false)
     private String deptName;
 
-    @TableField(exist = false)
-    private String createdTimeFrom;
-    @TableField(exist = false)
-    private String createdTimeTo;
     /**
      * 角色 ID
      */
     @TableField(exist = false)
-    private Long roleId;
+    private String roleId;
 
     @TableField(exist = false)
     private String roleName;
 
     public void created(SysUser user) {
-        this.setSexVal(EnumUtil.getEnumByCode(SexEnum.class, user.getSex()));
-        this.setStatusVal(EnumUtil.getEnumByCode(StatusEnum.class, user.getStatus().longValue()));
+        this.setSexName(EnumUtil.getEnumByCode(SexEnum.class, user.getSex().toString()));
+        this.setStatusName(EnumUtil.getEnumByCode(StatusEnum.class, user.getStatus().toString()));
     }
 
 }

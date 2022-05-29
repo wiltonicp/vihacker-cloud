@@ -1,13 +1,11 @@
 package cc.vihackerframework.system.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
-import cc.vihackerframework.core.datasource.entity.Search;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.CurrentUser;
-import cc.vihackerframework.core.entity.VueRouter;
 import cc.vihackerframework.core.entity.system.Menu;
 import cc.vihackerframework.core.util.CollectionUtil;
 import cc.vihackerframework.core.util.ExcelUtil;
-import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.core.web.annotation.LoginAuth;
 import cc.vihackerframework.system.service.IMenuService;
@@ -15,7 +13,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 菜单相关接口
@@ -50,9 +45,11 @@ public class MenuController {
     }
 
     @GetMapping
-    @ApiOperation(value = "菜单管理", notes = "列表")
-    public ViHackerApiResult<?> menuList(Search search) {
-        return ViHackerApiResult.data(this.menuService.findMenus(search));
+    @PreAuthorize("hasAuthority('menu:view')")
+    @ApiOperation(value = "查询菜单列表", notes = "查询")
+    @LogEndpoint(value = "查询菜单列表", exception = "查询菜单列表失败")
+    public ViHackerApiResult<?> menuList(QuerySearch querySearch) {
+        return ViHackerApiResult.data(this.menuService.findMenus(querySearch));
     }
 
     @GetMapping("/permissions")

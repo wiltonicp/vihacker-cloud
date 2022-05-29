@@ -1,9 +1,9 @@
 package cc.vihackerframework.system.service.impl;
 
 import cc.vihackerframework.core.constant.ViHackerConstant;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.datasource.util.SortUtil;
 import cc.vihackerframework.core.entity.CurrentUser;
-import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.entity.system.LoginLog;
 import cc.vihackerframework.core.entity.system.SysUser;
 import cc.vihackerframework.core.util.AddressUtil;
@@ -34,20 +34,20 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
 
     private final IUserService userService;
     @Override
-    public IPage<LoginLog> findLoginLogs(LoginLog loginLog, QueryRequest request) {
+    public IPage<LoginLog> findLoginLogs(QuerySearch search) {
         QueryWrapper<LoginLog> queryWrapper = new QueryWrapper<>();
 
-        if (StringUtils.isNotBlank(loginLog.getUsername())) {
-            queryWrapper.lambda().eq(LoginLog::getUsername, loginLog.getUsername().toLowerCase());
+        if (StringUtils.isNotBlank(search.getKeyword())) {
+            queryWrapper.lambda().eq(LoginLog::getUsername, search.getKeyword().toLowerCase());
         }
-        if (StringUtils.isNotBlank(loginLog.getLoginTimeFrom()) && StringUtils.isNotBlank(loginLog.getLoginTimeTo())) {
+        if (StringUtils.isNotBlank(search.getStartDate())) {
             queryWrapper.lambda()
-                    .ge(LoginLog::getLoginTime, loginLog.getLoginTimeFrom())
-                    .le(LoginLog::getLoginTime, loginLog.getLoginTimeTo());
+                    .ge(LoginLog::getLoginTime, search.getStartDate())
+                    .le(LoginLog::getLoginTime, search.getEndDate());
         }
 
-        Page<LoginLog> page = new Page<>(request.getPageNum(), request.getPageSize());
-        SortUtil.handlePageSort(request, page, "loginTime", ViHackerConstant.ORDER_DESC, true);
+        Page<LoginLog> page = new Page<>(search.getCurrent(), search.getSize());
+        SortUtil.handlePageSort(search, page, "loginTime", ViHackerConstant.ORDER_DESC, true);
 
         return this.page(page, queryWrapper);
     }
@@ -98,12 +98,12 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
         LoginLog loginLog = new LoginLog();
         loginLog.setUsername(username);
 
-        QueryRequest request = new QueryRequest();
-        request.setPageNum(1);
+        QuerySearch search = new QuerySearch();
+        search.setCurrent(1);
         // 近7日记录
-        request.setPageSize(7);
+        search.setSize(7);
 
-        IPage<LoginLog> loginLogs = this.findLoginLogs(loginLog, request);
+        IPage<LoginLog> loginLogs = this.findLoginLogs(search);
         return loginLogs.getRecords();
     }
 }

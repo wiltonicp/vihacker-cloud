@@ -1,7 +1,7 @@
 package cc.vihackerframework.system.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
-import cc.vihackerframework.core.datasource.entity.Search;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.system.Dept;
 import cc.vihackerframework.core.util.CollectionUtil;
 import cc.vihackerframework.core.util.ExcelUtil;
@@ -38,8 +38,8 @@ public class DeptController {
     @PreAuthorize("hasAuthority('dept:view')")
     @ApiOperation(value = "查询部门列表", notes = "部门列表")
     @LogEndpoint(value = "查询部门列表", exception = "查询部门列表失败")
-    public ViHackerApiResult deptList(Search search) {
-        return ViHackerApiResult.data(this.deptService.findDepts(search));
+    public ViHackerApiResult deptList(QuerySearch querySearch) {
+        return ViHackerApiResult.data(this.deptService.findDepts(querySearch));
     }
 
     @PostMapping
@@ -70,8 +70,8 @@ public class DeptController {
     @PreAuthorize("hasAuthority('dept:export')")
     @ApiOperation(value = "导出部门数据")
     @LogEndpoint(value = "导出部门数据", exception = "导出Excel失败")
-    public void export(Search search, HttpServletResponse response) {
-        List<Dept> depts = this.deptService.export(search);
+    public void export(QuerySearch querySearch, HttpServletResponse response) {
+        List<Dept> depts = this.deptService.export(querySearch);
         //使用工具类导出excel
         ExcelUtil.exportExcel(depts, null, "部门", Dept.class, "depart", response);
     }

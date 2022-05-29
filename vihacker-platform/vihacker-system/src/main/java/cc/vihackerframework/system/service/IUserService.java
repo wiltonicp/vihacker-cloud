@@ -1,6 +1,6 @@
 package cc.vihackerframework.system.service;
 
-import cc.vihackerframework.core.entity.QueryRequest;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.system.SysUser;
 import cc.vihackerframework.core.exception.ViHackerException;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -23,12 +23,11 @@ public interface IUserService extends IService<SysUser> {
 
     /**
      * 查找用户详细信息
-     *
-     * @param request request
-     * @param user    用户对象，用于传递查询条件
-     * @return IPage
+     * @param querySearch
+     * @param deptId
+     * @return
      */
-    IPage<SysUser> findUserDetailList(SysUser user, QueryRequest request);
+    IPage<SysUser> findUserDetailList(QuerySearch querySearch, String deptId);
 
     /**
      * 通过用户名查找用户详细信息
@@ -50,21 +49,21 @@ public interface IUserService extends IService<SysUser> {
      *
      * @param user user
      */
-    void createUser(SysUser user);
+    boolean createUser(SysUser user);
 
     /**
      * 修改用户
      *
      * @param user user
      */
-    void updateUser(SysUser user);
+    boolean updateUser(SysUser user);
 
     /**
      * 删除用户
      *
      * @param userIds 用户 id数组
      */
-    void deleteUsers(String[] userIds);
+    boolean deleteUsers(String userIds);
 
     /**
      * 更新个人信息
@@ -90,9 +89,9 @@ public interface IUserService extends IService<SysUser> {
 
     /**
      * 重置密码
-     *
-     * @param usernames 用户集合
+     * @param id
+     * @param password
      */
-    void resetPassword(String[] usernames);
+    boolean resetPassword(String id,String password);
 
 }

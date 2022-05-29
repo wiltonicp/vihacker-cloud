@@ -9,7 +9,6 @@ import cc.vihackerframework.uaa.entity.OauthClientDetails;
 import cc.vihackerframework.uaa.mapper.OauthClientDetailsMapper;
 import cc.vihackerframework.uaa.service.OauthClientDetailsService;
 import cc.vihackerframework.uaa.service.RedisClientDetailsService;
-import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.exception.Asserts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +40,7 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
     private final RedisClientDetailsService redisClientDetailsService;
 
     @Override
-    public IPage<OauthClientDetails> findOauthClientDetails(QueryRequest request, OauthClientDetails oauthClientDetails) {
+    public IPage<OauthClientDetails> findOauthClientDetails(QuerySearch search, OauthClientDetails oauthClientDetails) {
         LambdaQueryWrapper<OauthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(oauthClientDetails.getClientId())) {
             queryWrapper.eq(OauthClientDetails::getClientId, oauthClientDetails.getClientId());

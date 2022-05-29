@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cc.vihackerframework.core.datasource.entity.Search;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,15 +19,15 @@ import org.springframework.stereotype.Service;
 public class SysLogServiceImpl extends ServiceImpl<ISysLogMapper, SysLog> implements ISysLogService {
 
     @Override
-    public IPage<SysLog> listPage(Search search) {
-        boolean isKeyword = StringUtil.isNotBlank(search.getKeyword());
+    public IPage<SysLog> listPage(QuerySearch querySearch) {
+        boolean isKeyword = StringUtil.isNotBlank(querySearch.getKeyword());
         LambdaQueryWrapper<SysLog> queryWrapper = Wrappers.lambdaQuery();
         // 查询开始日期和结束日期
-        queryWrapper.between(StringUtil.isNotBlank(search.getStartDate()), SysLog::getCreatedTime, search.getStartDate(), search.getEndDate());
+        queryWrapper.between(StringUtil.isNotBlank(querySearch.getStartDate()), SysLog::getCreatedTime, querySearch.getStartDate(), querySearch.getEndDate());
         // 关键词查询
-        queryWrapper.like(isKeyword, SysLog::getOperation, search.getKeyword()).or(isKeyword).like(isKeyword, SysLog::getTraceId, search.getKeyword());
+        queryWrapper.like(isKeyword, SysLog::getOperation, querySearch.getKeyword()).or(isKeyword).like(isKeyword, SysLog::getTraceId, querySearch.getKeyword());
         //　字段排序
         queryWrapper.orderByDesc(SysLog::getCreatedTime);
-        return this.baseMapper.selectPage(PageUtil.getPage(search), queryWrapper);
+        return this.baseMapper.selectPage(PageUtil.getPage(querySearch), queryWrapper);
     }
 }

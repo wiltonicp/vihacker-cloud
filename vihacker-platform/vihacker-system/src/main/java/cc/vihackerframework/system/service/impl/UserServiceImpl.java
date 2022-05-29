@@ -1,22 +1,25 @@
 package cc.vihackerframework.system.service.impl;
 
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.CurrentUser;
+import cc.vihackerframework.core.entity.enums.StatusEnum;
+import cc.vihackerframework.core.entity.system.Role;
+import cc.vihackerframework.core.util.CollectionUtil;
+import cc.vihackerframework.core.util.EnumUtil;
 import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.constant.ViHackerConstant;
-import cc.vihackerframework.core.datasource.util.SortUtil;
-import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.entity.system.SysUser;
 import cc.vihackerframework.core.entity.system.UserDataPermission;
 import cc.vihackerframework.core.entity.system.UserRole;
 import cc.vihackerframework.core.exception.ViHackerException;
 import cc.vihackerframework.core.util.StringPool;
 import cc.vihackerframework.system.mapper.UserMapper;
-import cc.vihackerframework.system.service.IUserDataPermissionService;
-import cc.vihackerframework.system.service.IUserRoleService;
-import cc.vihackerframework.system.service.IUserService;
+import cc.vihackerframework.system.service.*;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Ranger on 2022/02/24
@@ -41,6 +45,10 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements IUserService {
 
     private final IUserRoleService userRoleService;
+    private final IDeptService deptService;
+
+    private final IRoleService roleService;
+
     private final IUserDataPermissionService userDataPermissionService;
 
     @Override
@@ -51,10 +59,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
     }
 
     @Override
-    public IPage<SysUser> findUserDetailList(SysUser user, QueryRequest request) {
-        Page<SysUser> page = new Page<>(request.getPageNum(), request.getPageSize());
-        SortUtil.handlePageSort(request, page, "userId", ViHackerConstant.ORDER_ASC, false);
-        return this.baseMapper.findUserDetailPage(page, user);
+    public IPage<SysUser> findUserDetailList(QuerySearch querySearch, String deptId) {
+        Page<SysUser> page = new Page<>(querySearch.getCurrent(), querySearch.getSize());
+        Page<SysUser> sysUserPage = new LambdaQueryChainWrapper<>(baseMapper)
+                .eq(StringUtils.isNotBlank(deptId),SysUser::getDeptId,deptId)
+                .between(StrUtil.isNotBlank(querySearch.getStartDate()), SysUser::getCreatedTime, querySearch.getStartDate(), querySearch.getEndDate())
+                .like(StringUtils.isNotBlank(querySearch.getKeyword()), SysUser::getNickName, querySearch.getKeyword())
+                .or(StringUtils.isNotBlank(querySearch.getKeyword()))
+                .like(StringUtils.isNotBlank(querySearch.getKeyword()), SysUser::getRealName, querySearch.getKeyword())
+                .or(StringUtils.isNotBlank(querySearch.getKeyword()))
+                .like(StringUtils.isNotBlank(querySearch.getKeyword()), SysUser::getUsername, querySearch.getKeyword())
+                .or(StringUtils.isNotBlank(querySearch.getKeyword()))
+                .like(StringUtils.isNotBlank(querySearch.getKeyword()), SysUser::getId, querySearch.getKeyword())
+                .orderByDesc(SysUser::getId)
+                .page(page);
+        sysUserPage.getRecords().stream().forEach(sysUser -> {
+            sysUser.setStatusName(EnumUtil.getEnumByCode(StatusEnum.class,sysUser.getStatus().toString()));
+            sysUser.setDeptName(deptService.getById(sysUser.getDeptId()).getName());
+            List<Role> userRole = roleService.findUserRole(sysUser.getUsername());
+            sysUser.setRoleId(userRole.stream().map(role -> role.getId().toString()).collect(Collectors.joining(StringPool.COMMA)));
+            sysUser.setRoleName(userRole.stream().map(role -> role.getRoleName()).collect(Collectors.joining(StringPool.COMMA)));
+        });
+
+        return sysUserPage;
     }
 
     @Override
@@ -76,7 +103,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createUser(SysUser user) {
+    public boolean createUser(SysUser user) {
         // 创建用户
         user.setCreatedTime(LocalDateTime.now());
         user.setAvatar(ViHackerConstant.DEFAULT_AVATAR);
@@ -88,11 +115,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
         // 保存用户数据权限关联关系
         String[] deptIds = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getDeptId().toString(), StringPool.COMMA);
         setUserDataPermissions(user, deptIds);
+        return true;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateUser(SysUser user) {
+    public boolean updateUser(SysUser user) {
         // 更新用户
         user.setPassword(null);
         user.setUsername(null);
@@ -108,16 +136,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
         userDataPermissionService.deleteByUserIds(userIds);
         String[] deptIds = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getDeptId().toString(), StringPool.COMMA);
         setUserDataPermissions(user, deptIds);
+        return true;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteUsers(String[] userIds) {
-        List<String> list = Arrays.asList(userIds);
-        removeByIds(list);
+    public boolean deleteUsers(String userIds) {
+        removeByIds(CollectionUtil.stringToCollection(userIds));
         // 删除用户角色
-        this.userRoleService.deleteUserRolesByUserId(userIds);
-        this.userDataPermissionService.deleteByUserIds(userIds);
+        String[] userIdArr = userIds.split(StringPool.COMMA);
+        this.userRoleService.deleteUserRolesByUserId(userIdArr);
+        this.userDataPermissionService.deleteByUserIds(userIdArr);
+        return true;
     }
 
     @Override
@@ -153,13 +183,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void resetPassword(String[] usernames) {
-        SysUser params = new SysUser();
-        params.setPassword(new BCryptPasswordEncoder().encode(ViHackerConstant.DEFAULT_PASSWORD));
-
-        List<String> list = Arrays.asList(usernames);
-        this.baseMapper.update(params, new LambdaQueryWrapper<SysUser>().in(SysUser::getUsername, list));
-
+    public boolean resetPassword(String id,String password) {
+        String pwd = null;
+        if (StringUtils.isNotBlank(password)) {
+            pwd = new BCryptPasswordEncoder().encode(password);
+        }
+        SysUser sysUser = new SysUser();
+        sysUser.setId(CollectionUtil.strToLong(id, 0L));
+        sysUser.setPassword(pwd);
+        return updateById(sysUser);
     }
 
     private void setUserRoles(SysUser user, String[] roles) {

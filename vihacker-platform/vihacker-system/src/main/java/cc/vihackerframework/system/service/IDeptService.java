@@ -1,6 +1,6 @@
 package cc.vihackerframework.system.service;
 
-import cc.vihackerframework.core.datasource.entity.Search;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.Tree;
 import cc.vihackerframework.core.entity.system.Dept;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -14,17 +14,17 @@ public interface IDeptService extends IService<Dept> {
 
     /**
      * 部门列表
-     * @param search
+     * @param querySearch
      * @return
      */
-    List<? extends Tree<?>> findDepts(Search search);
+    List<? extends Tree<?>> findDepts(QuerySearch querySearch);
 
     /**
      * 获取部门列表
-     * @param search
+     * @param querySearch
      * @return
      */
-    List<Dept> export(Search search);
+    List<Dept> export(QuerySearch querySearch);
 
     /**
      * 创建部门

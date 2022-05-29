@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(description = "搜索条件")
-public class Search implements Serializable {
+public class QuerySearch implements Serializable {
 
 	/**
 	 * 关键词

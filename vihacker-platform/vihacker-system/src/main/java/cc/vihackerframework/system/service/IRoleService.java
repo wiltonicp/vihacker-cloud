@@ -1,6 +1,6 @@
 package cc.vihackerframework.system.service;
 
-import cc.vihackerframework.core.entity.QueryRequest;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.system.Role;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -13,13 +13,11 @@ import java.util.List;
 public interface IRoleService extends IService<Role> {
 
     /**
-     * 查找角色分页数据
-     *
-     * @param role    role
-     * @param request request
-     * @return 角色分页数据
+     * 查找角色分页数据s
+     * @param querySearch
+     * @return
      */
-    IPage<Role> findRoles(Role role, QueryRequest request);
+    IPage<Role> findRoles(QuerySearch querySearch);
 
     /**
      * 获取用户角色

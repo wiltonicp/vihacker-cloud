@@ -5,7 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import cc.vihackerframework.core.datasource.entity.Search;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import org.springframework.web.bind.annotation.PathVariable;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,15 +29,15 @@ public class ${className}Controller {
 
     /**
     * 列表
-    * @param search
+    * @param querySearch
     * @param ${classname}
     * @return
     */
     @GetMapping
     @ApiOperation("获取分页信息")
     @LogEndpoint(value = "获取分页信息", exception = "获取分页信息失败")
-    public ViHackerApiResult list(Search search,${className} ${classname}) {
-        return ViHackerApiResult.data(${classname}Service.find${className}ByPage(search,${classname}));
+    public ViHackerApiResult list(QuerySearch querySearch,${className} ${classname}) {
+        return ViHackerApiResult.data(${classname}Service.find${className}ByPage(querySearch,${classname}));
     }
 
 

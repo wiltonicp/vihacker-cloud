@@ -1,7 +1,7 @@
 package cc.vihackerframework.system.service;
 
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.CurrentUser;
-import cc.vihackerframework.core.entity.QueryRequest;
 import cc.vihackerframework.core.entity.system.LoginLog;
 import cc.vihackerframework.core.entity.system.SysUser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -18,12 +18,10 @@ public interface ILoginLogService extends IService<LoginLog> {
 
     /**
      * 获取登录日志分页信息
-     *
-     * @param loginLog 传参
-     * @param request  request
-     * @return IPage<LoginLog>
+     * @param search
+     * @return
      */
-    IPage<LoginLog> findLoginLogs(LoginLog loginLog, QueryRequest request);
+    IPage<LoginLog> findLoginLogs(QuerySearch search);
 
     /**
      * 保存登录日志

@@ -93,22 +93,6 @@ public class ViHackerUtil {
     }
 
     /**
-     * 封装前端分页表格所需数据
-     *
-     * @param pageInfo pageInfo
-     * @return Map<String, Object>
-     */
-    public static Map<String, Object> getDataTable(IPage<?> pageInfo) {
-        Map<String, Object> data = new HashMap<>();
-        data.put("pageNum", pageInfo.getCurrent());
-        data.put("pageSize", pageInfo.getSize());
-        data.put("pages", pageInfo.getPages());
-        data.put("rows", pageInfo.getRecords());
-        data.put("total", pageInfo.getTotal());
-        return data;
-    }
-
-    /**
      * 正则校验
      *
      * @param regex 正则表达式字符串

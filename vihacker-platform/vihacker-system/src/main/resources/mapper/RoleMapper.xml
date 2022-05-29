@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.vihackerframework.system.mapper.RoleMapper">
-    <resultMap id="roleMap" type="role">
-        <result column="ROLE_ID" jdbcType="DECIMAL" property="roleId"/>
-        <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName"/>
-        <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
-        <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime"/>
-        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
-    </resultMap>
 
-    <select id="findUserRole" resultMap="roleMap">
+    <select id="findUserRole" resultType="role">
         SELECT
             r.*
         FROM
             t_role r
-        LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id)
+        LEFT JOIN t_user_role ur ON (r.id = ur.role_id)
         LEFT JOIN t_user u ON (u.id = ur.user_id)
         WHERE
             u.username = #{username}
@@ -22,7 +15,7 @@
 
     <select id="findRolePage" parameterType="role" resultType="role">
         SELECT
-        r.role_id roleId,
+        r.id,
         r.role_name roleName,
         r.remark,
         r.created_time createdTime,
@@ -30,13 +23,13 @@
         GROUP_CONCAT( rm.menu_id ) menuIds
         FROM
         t_role r
-        LEFT JOIN t_role_menu rm ON ( r.role_id = rm.role_id )
+        LEFT JOIN t_role_menu rm ON ( r.id = rm.role_id )
         WHERE 1 = 1
         <if test="role.roleName != null and role.roleName != ''">
             AND r.role_name like CONCAT('%',#{role.roleName},'%')
         </if>
         GROUP BY
-        r.role_id
+        r.id
     </select>
 
 </mapper>

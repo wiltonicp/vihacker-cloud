@@ -1,7 +1,7 @@
 package ${package}.${moduleName}.service;
 
 import ${package}.${moduleName}.entity.${className};
-import cc.vihackerframework.core.datasource.entity.Search;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import java.util.List;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -14,11 +14,11 @@ public interface I${className}Service  extends IService<${className}>  {
 
     /**
      * 分页查询
-     * @param search 搜索参数
+     * @param querySearch 搜索参数
      * @param ${classname}  实体
      * @return
      */
-    IPage<${className}> find${className}ByPage(Search search,${className} ${classname});
+    IPage<${className}> find${className}ByPage(QuerySearch querySearch,${className} ${classname});
 
     /**
     * 多条件查询

@@ -3,7 +3,6 @@ package cc.vihackerframework.uaa.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cc.vihackerframework.uaa.entity.OauthClientDetails;
-import cc.vihackerframework.core.entity.QueryRequest;
 
 /**
  * <p>
@@ -21,7 +20,7 @@ public interface OauthClientDetailsService extends IService<OauthClientDetails> 
      * @param oauthClientDetails oauthClientDetails
      * @return IPage<OauthClientDetails>
      */
-    IPage<OauthClientDetails> findOauthClientDetails(QueryRequest request, OauthClientDetails oauthClientDetails);
+    IPage<OauthClientDetails> findOauthClientDetails(QuerySearch search, OauthClientDetails oauthClientDetails);
 
     /**
      * 根据主键查询

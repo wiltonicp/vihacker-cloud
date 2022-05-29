@@ -1,11 +1,10 @@
 package cc.vihackerframework.system.service.impl;
 
 import cc.vihackerframework.core.context.UserContext;
-import cc.vihackerframework.core.datasource.entity.Search;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.*;
 import cc.vihackerframework.core.entity.system.Dept;
 import cc.vihackerframework.core.tree.TreeUtil;
-import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.system.mapper.DeptMapper;
 import cc.vihackerframework.system.service.IUserDataPermissionService;
 import cc.vihackerframework.system.service.IDeptService;
@@ -34,12 +33,12 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     private final IUserDataPermissionService userDataPermissionService;
 
     @Override
-    public List<? extends Tree<?>> findDepts(Search search) {
+    public List<? extends Tree<?>> findDepts(QuerySearch querySearch) {
         List<Tree<Dept>> trees = new ArrayList<>();
         List<Dept> depts = new LambdaQueryChainWrapper<>(baseMapper)
-                .between(StringUtils.isNotBlank(search.getStartDate()),
-                        Dept::getCreatedTime, search.getStartDate(), search.getEndDate())
-                .like(StringUtils.isNotBlank(search.getKeyword()), Dept::getName, search.getKeyword())
+                .between(StringUtils.isNotBlank(querySearch.getStartDate()),
+                        Dept::getCreatedTime, querySearch.getStartDate(), querySearch.getEndDate())
+                .like(StringUtils.isNotBlank(querySearch.getKeyword()), Dept::getName, querySearch.getKeyword())
                 .orderByAsc(Dept::getOrderNum)
                 .list();
         buildTrees(trees,depts);
@@ -47,11 +46,11 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     }
 
     @Override
-    public List<Dept> export(Search search) {
+    public List<Dept> export(QuerySearch querySearch) {
         List<Dept> deptList = new LambdaQueryChainWrapper<>(baseMapper)
-                .between(StringUtils.isNotBlank(search.getStartDate()),
-                        Dept::getCreatedTime, search.getStartDate(), search.getEndDate())
-                .like(StringUtils.isNotBlank(search.getKeyword()), Dept::getName, search.getKeyword())
+                .between(StringUtils.isNotBlank(querySearch.getStartDate()),
+                        Dept::getCreatedTime, querySearch.getStartDate(), querySearch.getEndDate())
+                .like(StringUtils.isNotBlank(querySearch.getKeyword()), Dept::getName, querySearch.getKeyword())
                 .orderByAsc(Dept::getOrderNum)
                 .list();
         return deptList;

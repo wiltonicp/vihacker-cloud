@@ -1,11 +1,10 @@
 package cc.vihackerframework.system.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
-import cc.vihackerframework.core.entity.QueryRequest;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.system.Role;
 import cc.vihackerframework.core.util.ExcelUtil;
 import cc.vihackerframework.core.util.StringPool;
-import cc.vihackerframework.core.util.ViHackerUtil;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.system.service.IRoleService;
 import io.swagger.annotations.Api;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 角色相关
@@ -38,16 +36,14 @@ public class RoleController {
 
     @GetMapping
     @ApiOperation(value = "分页查询角色", notes = "查询角色")
-    public ViHackerApiResult roleList(QueryRequest queryRequest, Role role) {
-        Map<String, Object> dataTable = ViHackerUtil.getDataTable(roleService.findRoles(role, queryRequest));
-        return ViHackerApiResult.data(dataTable);
+    public ViHackerApiResult roleList(QuerySearch querySearch) {
+        return ViHackerApiResult.data(roleService.findRoles(querySearch));
     }
 
     @GetMapping("options")
-    @ApiOperation(value = "查询所有角色", notes = "所有角色")
+    @ApiOperation(value = "查询所有角色-下拉框使用", notes = "所有角色")
     public ViHackerApiResult roles() {
-        List<Role> allRoles = roleService.findAllRoles();
-        return ViHackerApiResult.data(allRoles);
+        return ViHackerApiResult.data(roleService.findAllRoles());
     }
 
     @GetMapping("check/{roleName}")
@@ -86,8 +82,8 @@ public class RoleController {
     @PreAuthorize("hasAuthority('role:export')")
     @ApiOperation(value = "导出角色", notes = "导出")
     @LogEndpoint(value = "导出角色数据", exception = "导出Excel失败")
-    public void export(QueryRequest queryRequest, Role role, HttpServletResponse response) {
-        List<Role> roles = this.roleService.findRoles(role, queryRequest).getRecords();
+    public void export(QuerySearch querySearch, HttpServletResponse response) {
+        List<Role> roles = this.roleService.findRoles(querySearch).getRecords();
         //使用工具类导出excel
         ExcelUtil.exportExcel(roles, null, "角色", Role.class, "roles", response);
     }

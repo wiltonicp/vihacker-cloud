@@ -1,6 +1,6 @@
 package cc.vihackerframework.system.service;
 
-import cc.vihackerframework.core.datasource.entity.Search;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.VueRouter;
 import cc.vihackerframework.core.entity.system.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -30,10 +30,10 @@ public interface IMenuService extends IService<Menu> {
 
     /**
      * 获取用户菜单
-     * @param search
+     * @param querySearch
      * @return 用户菜单
      */
-    List<VueRouter<Menu>> findMenus(Search search);
+    List<VueRouter<Menu>> findMenus(QuerySearch querySearch);
 
     /**
      * 获取用户路由

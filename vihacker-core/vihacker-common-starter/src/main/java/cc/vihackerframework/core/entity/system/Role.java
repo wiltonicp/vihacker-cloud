@@ -1,5 +1,6 @@
 package cc.vihackerframework.core.entity.system;
 
+import cc.vihackerframework.core.entity.ViHackerEntity;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -19,12 +20,12 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("t_role")
-public class Role implements Serializable {
+public class Role extends ViHackerEntity implements Serializable {
 
     private static final long serialVersionUID = -1714476694755654924L;
 
-    @TableId(value = "ROLE_ID", type = IdType.AUTO)
-    private Long roleId;
+    @TableId(value = "ID", type = IdType.AUTO)
+    private Long id;
 
     @TableField(value = "ROLE_NAME")
     @NotBlank(message = "角色名称不能为空")
@@ -36,14 +37,6 @@ public class Role implements Serializable {
     @Size(max = 50, message = "角色描述长度不能超过50个字符")
     @Excel(name = "角色描述", orderNum = "2", height = 20, width = 30, isImportField = "true_st")
     private String remark;
-
-    @TableField(value = "CREATED_TIME")
-    @Excel(name = "创建时间", orderNum = "3", height = 20, width = 30, isImportField = "true_st")
-    private LocalDateTime createdTime;
-
-    @TableField(value = "MODIFY_TIME")
-    @Excel(name = "修改时间", orderNum = "4", height = 20, width = 30, isImportField = "true_st")
-    private LocalDateTime modifyTime;
 
     private transient String menuIds;
 

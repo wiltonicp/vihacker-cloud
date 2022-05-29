@@ -1,7 +1,7 @@
 package cc.vihackerframework.system.service.impl;
 
 import cc.vihackerframework.core.context.UserContext;
-import cc.vihackerframework.core.datasource.entity.Search;
+import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.MenuTree;
 import cc.vihackerframework.core.entity.RouterMeta;
 import cc.vihackerframework.core.entity.VueRouter;
@@ -15,14 +15,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -46,13 +43,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     }
 
     @Override
-    public List<VueRouter<Menu>> findMenus(Search search) {
+    public List<VueRouter<Menu>> findMenus(QuerySearch querySearch) {
         List<VueRouter<Menu>> routes = new ArrayList<>();
         try {
             List<Menu> menus = new LambdaQueryChainWrapper<>(baseMapper)
-                    .between(StringUtils.isNotBlank(search.getStartDate()),
-                            Menu::getCreatedTime, search.getStartDate(), search.getEndDate())
-                    .like(StringUtils.isNotBlank(search.getKeyword()), Menu::getName, search.getKeyword())
+                    .between(StringUtils.isNotBlank(querySearch.getStartDate()),
+                            Menu::getCreatedTime, querySearch.getStartDate(), querySearch.getEndDate())
+                    .like(StringUtils.isNotBlank(querySearch.getKeyword()), Menu::getName, querySearch.getKeyword())
                     .orderByAsc(Menu::getOrderNum)
                     .list();
             buildVueRouter(routes, menus);
