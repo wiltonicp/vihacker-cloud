@@ -44,18 +44,14 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
     public IPage<OauthClientDetails> findOauthClientDetails(QuerySearch search) {
         LambdaQueryWrapper<OauthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(search.getKeyword())) {
-            queryWrapper.eq(OauthClientDetails::getClientId, search.getKeyword());
+            queryWrapper.like(OauthClientDetails::getClientId, search.getKeyword());
         }
         Page<OauthClientDetails> page = new Page<>(search.getCurrent(), search.getSize());
         IPage<OauthClientDetails> result = this.page(page, queryWrapper);
-
-        List<OauthClientDetails> records = new ArrayList<>();
         result.getRecords().forEach(o -> {
-            o.setOriginSecret(null);
-            o.setClientSecret(null);
-            records.add(o);
+            o.setOriginSecret("---");
+            o.setClientSecret("---");
         });
-        result.setRecords(records);
         return result;
     }
 
@@ -66,7 +62,7 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createOauthClientDetails(OauthClientDetails oauthClientDetails) {
+    public boolean createOauthClientDetails(OauthClientDetails oauthClientDetails) {
         OauthClientDetails byId = this.findById(oauthClientDetails.getClientId());
         if (byId != null) {
             Asserts.fail("该Client已存在");
@@ -78,11 +74,12 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
             log.info("缓存Client -> {}", oauthClientDetails);
             this.redisClientDetailsService.loadClientByClientId(oauthClientDetails.getClientId());
         }
+        return saved;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateOauthClientDetails(OauthClientDetails oauthClientDetails) {
+    public boolean updateOauthClientDetails(OauthClientDetails oauthClientDetails) {
         String clientId = oauthClientDetails.getClientId();
 
         LambdaQueryWrapper<OauthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
@@ -96,11 +93,12 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
             this.redisClientDetailsService.removeRedisCache(clientId);
             this.redisClientDetailsService.loadClientByClientId(clientId);
         }
+        return updated;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteOauthClientDetails(String clientIds) {
+    public boolean deleteOauthClientDetails(String clientIds) {
         Object[] clientIdArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(clientIds, StringPool.COMMA);
         LambdaQueryWrapper<OauthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(OauthClientDetails::getClientId, clientIdArray);
@@ -110,5 +108,6 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
             Arrays.stream(clientIdArray).forEach(c -> this.redisClientDetailsService.removeRedisCache(String.valueOf(c)));
 
         }
+        return removed;
     }
 }

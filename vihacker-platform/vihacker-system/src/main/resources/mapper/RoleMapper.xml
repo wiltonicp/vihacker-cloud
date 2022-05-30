@@ -10,26 +10,7 @@
         LEFT JOIN t_user_role ur ON (r.id = ur.role_id)
         LEFT JOIN t_user u ON (u.id = ur.user_id)
         WHERE
-            u.username = #{username}
-    </select>
-
-    <select id="findRolePage" parameterType="role" resultType="role">
-        SELECT
-        r.id,
-        r.role_name roleName,
-        r.remark,
-        r.created_time createdTime,
-        r.modify_time modifyTime,
-        GROUP_CONCAT( rm.menu_id ) menuIds
-        FROM
-        t_role r
-        LEFT JOIN t_role_menu rm ON ( r.id = rm.role_id )
-        WHERE 1 = 1
-        <if test="role.roleName != null and role.roleName != ''">
-            AND r.role_name like CONCAT('%',#{role.roleName},'%')
-        </if>
-        GROUP BY
-        r.id
+            r.status = 0 and u.username = #{username}
     </select>
 
 </mapper>

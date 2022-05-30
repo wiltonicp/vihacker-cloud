@@ -2,6 +2,7 @@ package cc.vihackerframework.uaa.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.datasource.entity.QuerySearch;
+import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.uaa.entity.OauthClientDetails;
 import cc.vihackerframework.uaa.service.OauthClientDetailsService;
 import cc.vihackerframework.core.exception.Asserts;
@@ -55,6 +56,7 @@ public class OauthClientDetailsController {
     @GetMapping
     @PreAuthorize("hasAuthority('client:view')")
     @ApiOperation(value = "分页查询客户端", notes = "客户端")
+    @LogEndpoint(value = "分页查询客户端", exception = "分页查询客户端失败")
     public ViHackerApiResult oauthClientDetailsList(QuerySearch search) {
         return ViHackerApiResult.data(this.oauthClientDetailsService.findOauthClientDetails(search));
     }
@@ -63,39 +65,24 @@ public class OauthClientDetailsController {
     @PostMapping
     @PreAuthorize("hasAuthority('client:add')")
     @ApiOperation(value = "新增客户端", notes = "客户端")
-    public void addOauthClientDetails(@Valid OauthClientDetails oAuthClientDetails) {
-        try {
-            this.oauthClientDetailsService.createOauthClientDetails(oAuthClientDetails);
-        } catch (Exception e) {
-            String message = "新增客户端失败";
-            log.error(message, e);
-            Asserts.fail(message);
-        }
-    }
-
-    @DeleteMapping
-    @PreAuthorize("hasAuthority('client:delete')")
-    @ApiOperation(value = "删除客户端", notes = "客户端")
-    public void deleteOauthClientDetails(@NotBlank(message = "{required}") String clientIds) {
-        try {
-            this.oauthClientDetailsService.deleteOauthClientDetails(clientIds);
-        } catch (Exception e) {
-            String message = "删除客户端失败";
-            log.error(message, e);
-            Asserts.fail(message);
-        }
+    @LogEndpoint(value = "新增客户端",exception = "新增客户端失败")
+    public ViHackerApiResult addOauthClientDetails(@Valid @RequestBody OauthClientDetails oAuthClientDetails) {
+        return ViHackerApiResult.success(this.oauthClientDetailsService.createOauthClientDetails(oAuthClientDetails));
     }
 
     @PutMapping
     @PreAuthorize("hasAuthority('client:update')")
+    @ApiOperation(value = "修改客户端", notes = "客户端")
+    @LogEndpoint(value = "修改客户端",exception = "修改客户端失败")
+    public ViHackerApiResult updateOauthClientDetails(@Valid @RequestBody OauthClientDetails oAuthClientDetails) {
+       return ViHackerApiResult.success(this.oauthClientDetailsService.updateOauthClientDetails(oAuthClientDetails));
+    }
+
+    @DeleteMapping("/{clientIds}")
+    @PreAuthorize("hasAuthority('client:delete')")
     @ApiOperation(value = "删除客户端", notes = "客户端")
-    public void updateOauthClientDetails(@Valid OauthClientDetails oAuthClientDetails) {
-        try {
-            this.oauthClientDetailsService.updateOauthClientDetails(oAuthClientDetails);
-        } catch (Exception e) {
-            String message = "修改客户端失败";
-            log.error(message, e);
-            Asserts.fail(message);
-        }
+    @LogEndpoint(value = "删除客户端",exception = "删除客户端失败")
+    public ViHackerApiResult deleteOauthClientDetails(@NotBlank(message = "{required}") @PathVariable String clientIds) {
+        return ViHackerApiResult.success(this.oauthClientDetailsService.deleteOauthClientDetails(clientIds));
     }
 }

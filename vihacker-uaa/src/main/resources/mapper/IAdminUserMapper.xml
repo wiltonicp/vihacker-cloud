@@ -19,7 +19,7 @@
         u.modify_time modifyTime,
         u.description,
         u.avatar,
-        d.dept_name deptName,
+        d.name deptName,
         GROUP_CONCAT(r.id) roleId,
         GROUP_CONCAT(r.ROLE_NAME) roleName
         FROM

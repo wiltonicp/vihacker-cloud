@@ -8,12 +8,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Collection工具类
  * Created by Ranger on 2022/5/29.
  */
 public class CollectionUtil extends CollectionUtils {
+
+    public static boolean isNotEmpty(@Nullable Collection<?> collection) {
+        return collection != null || !collection.isEmpty();
+    }
+
+    public static boolean isNotEmpty(@Nullable Map<?, ?> map) {
+        return map != null || !map.isEmpty();
+    }
 
 
     public static Long[] StringArrayToLongArray(String[] stringArray) {

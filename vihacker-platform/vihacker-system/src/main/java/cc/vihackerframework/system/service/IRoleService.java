@@ -47,19 +47,26 @@ public interface IRoleService extends IService<Role> {
      *
      * @param role role
      */
-    void createRole(Role role);
+    boolean createRole(Role role);
 
     /**
      * 删除角色
      *
      * @param roleIds 角色id数组
      */
-    void deleteRoles(String[] roleIds);
+    boolean deleteRoles(String[] roleIds);
 
     /**
      * 更新角色
      *
      * @param role role
      */
-    void updateRole(Role role);
+    boolean updateRole(Role role);
+
+    /**
+     * 修改角色状态
+     * @param role
+     * @return
+     */
+    boolean setStatus(Role role);
 }

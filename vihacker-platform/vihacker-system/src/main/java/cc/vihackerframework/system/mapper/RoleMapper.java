@@ -21,14 +21,4 @@ public interface RoleMapper extends BaseMapper<Role> {
      */
     List<Role> findUserRole(String username);
 
-    /**
-     * 查找角色详情
-     *
-     * @param page 分页
-     * @param role 角色
-     * @param <T>  type
-     * @return IPage<User>
-     */
-    <T> IPage<Role> findRolePage(Page<T> page, @Param("role") Role role);
-
 }

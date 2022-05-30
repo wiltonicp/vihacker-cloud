@@ -34,19 +34,19 @@ public interface OauthClientDetailsService extends IService<OauthClientDetails> 
      *
      * @param oauthClientDetails oauthClientDetails
      */
-    void createOauthClientDetails(OauthClientDetails oauthClientDetails);
+    boolean createOauthClientDetails(OauthClientDetails oauthClientDetails);
 
     /**
      * 修改
      *
      * @param oauthClientDetails oauthClientDetails
      */
-    void updateOauthClientDetails(OauthClientDetails oauthClientDetails);
+    boolean updateOauthClientDetails(OauthClientDetails oauthClientDetails);
 
     /**
      * 删除
      *
      * @param clientIds clientIds
      */
-    void deleteOauthClientDetails(String clientIds);
+    boolean deleteOauthClientDetails(String clientIds);
 }

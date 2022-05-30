@@ -35,7 +35,9 @@ public class RoleController {
     private final IRoleService roleService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('role:view')")
     @ApiOperation(value = "分页查询角色", notes = "查询角色")
+    @LogEndpoint(value = "查询角色列表", exception = "查询角色列表失败")
     public ViHackerApiResult roleList(QuerySearch querySearch) {
         return ViHackerApiResult.data(roleService.findRoles(querySearch));
     }
@@ -48,34 +50,42 @@ public class RoleController {
 
     @GetMapping("check/{roleName}")
     @ApiOperation(value = "校验角色名称", notes = "校验角色")
-    public boolean checkRoleName(@NotBlank(message = "{required}") @PathVariable String roleName) {
+    public ViHackerApiResult checkRoleName(@NotBlank(message = "{required}") @PathVariable String roleName) {
         Role result = this.roleService.findByName(roleName);
-        return result == null;
+        return ViHackerApiResult.success(result == null);
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('role:add')")
     @ApiOperation(value = "新增角色", notes = "新增")
     @LogEndpoint(value = "新增角色", exception = "新增角色失败")
-    public void addRole(@Valid Role role) {
-        this.roleService.createRole(role);
+    public ViHackerApiResult addRole(@Valid @RequestBody Role role) {
+        return ViHackerApiResult.success(this.roleService.createRole(role));
     }
 
     @DeleteMapping("/{roleIds}")
     @PreAuthorize("hasAuthority('role:delete')")
-    @ApiOperation(value = "删除角色", notes = "删除")
-    @LogEndpoint(value = "删除角色", exception = "删除角色失败")
-    public void deleteRoles(@NotBlank(message = "{required}") @PathVariable String roleIds) {
+    @ApiOperation(value = "角色删除", notes = "角色删除，支持批量操作")
+    @LogEndpoint(value = "角色删除", exception = "角色删除失败")
+    public ViHackerApiResult deleteRoles(@NotBlank(message = "{required}") @PathVariable String roleIds) {
         String[] ids = roleIds.split(StringPool.COMMA);
-        this.roleService.deleteRoles(ids);
+        return ViHackerApiResult.success(this.roleService.deleteRoles(ids));
     }
 
     @PutMapping
     @PreAuthorize("hasAuthority('role:update')")
-    @ApiOperation(value = "修改角色", notes = "修改")
-    @LogEndpoint(value = "修改角色", exception = "修改角色失败")
-    public void updateRole(@Valid Role role) {
-        this.roleService.updateRole(role);
+    @ApiOperation(value = "角色修改", notes = "角色修改")
+    @LogEndpoint(value = "角色修改", exception = "角色修改失败")
+    public ViHackerApiResult updateRole(@Valid @RequestBody Role role) {
+        return ViHackerApiResult.success(this.roleService.updateRole(role));
+    }
+
+    @PutMapping("/set-status")
+    @PreAuthorize("hasAuthority('role:update')")
+    @ApiOperation(value = "角色修改状态", notes = "修改")
+    @LogEndpoint(value = "角色修改状态", exception = "角色修改状态失败")
+    public ViHackerApiResult setStatus(@RequestBody Role role) {
+        return ViHackerApiResult.success(this.roleService.setStatus(role));
     }
 
     @PostMapping("excel")
