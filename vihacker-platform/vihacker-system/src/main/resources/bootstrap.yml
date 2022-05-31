@@ -5,16 +5,16 @@ spring:
     active: @spring.active@
   cloud:
     nacos:
-      server-addr: @config.server-addr@
+      server-addr: ${NACOS_IP_PORT:@config.server-addr@}
       config:
-        group: @config.group@
+        group: ${NACOS_GROUP:@config.group@}
         prefix: @artifactId@
         file-extension: yaml
-        namespace: @config.namespace@
+        namespace: ${NACOS_NAMESPACE:@config.namespace@}
         shared-configs[0]:
           data-id: vihacker-common.yaml # 配置文件名-Data Id
           group: COMMON_GROUP   # 默认为DEFAULT_GROUP
           refresh: false   # 是否动态刷新，默认为false
       discovery:
-        namespace: @config.namespace@
-        group: @config.group@
+        namespace: ${NACOS_NAMESPACE:@config.namespace@}
+        group: ${NACOS_GROUP:@config.group@}
