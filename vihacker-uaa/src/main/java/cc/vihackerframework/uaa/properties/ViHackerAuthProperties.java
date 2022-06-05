@@ -35,7 +35,7 @@ public class ViHackerAuthProperties {
     /**
      * JWT加签密钥 过期时间
      */
-    private String jwtExpiration = "36000";
+    private String jwtExpiration = "3600";
 
     /**
      * 社交登录所使用的 Client

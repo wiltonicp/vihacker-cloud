@@ -141,18 +141,6 @@ public class ViHackerAuthorizationServerConfigure extends AuthorizationServerCon
         return accessTokenConverter;
     }
 
-//    @Bean
-//    public ResourceOwnerPasswordTokenGranter resourceOwnerPasswordTokenGranter(AuthenticationManager authenticationManager, OAuth2RequestFactory oAuth2RequestFactory) {
-//        DefaultTokenServices defaultTokenServices = defaultTokenServices();
-//        defaultTokenServices.setTokenEnhancer(jwtAccessTokenConverter());
-//        return new ResourceOwnerPasswordTokenGranter(authenticationManager, defaultTokenServices, redisClientDetailsService, oAuth2RequestFactory);
-//    }
-//
-//    @Bean
-//    public DefaultOAuth2RequestFactory oAuth2RequestFactory() {
-//        return new DefaultOAuth2RequestFactory(redisClientDetailsService);
-//    }
-
     private void addUserDetailsService(DefaultTokenServices tokenServices) {
         if (userDetailService != null) {
             PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
