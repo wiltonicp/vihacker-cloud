@@ -98,6 +98,7 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>true</filtering>
             </resource>
             <resource>
                 <directory>src/main/java</directory>
@@ -162,6 +163,14 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <delimiters>@</delimiters>
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>${docker.maven.plugin.version}</version>
@@ -187,41 +196,26 @@
 
     <profiles>
         <profile>
-            <id>local</id>
+            <id>dev</id>
             <properties>
-                <!--当前环境-->
-                <spring.active>local</spring.active>
-                <config.server-addr>127.0.0.1:8848</config.server-addr>
+                <spring.active>dev</spring.active>
+                <nacos.addr>127.0.0.1:8848</nacos.addr>
                 <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
-                <config.group>TEST_GROUP</config.group>
-                <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
+                <config.group>DEV_GROUP</config.group>
                 <sentinel.port>8719</sentinel.port>
-                <sentinel.dashboard>127.0.0.1:8088</sentinel.dashboard>
+                <sentinel.dashboard>127.0.0.1:8080</sentinel.dashboard>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
         <profile>
-            <id>dev</id>
-            <properties>
-                <spring.active>dev</spring.active>
-                <config.server-addr>127.0.0.1:8848</config.server-addr>
-                <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
-                <config.group>DEV_GROUP</config.group>
-                <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
-                <sentinel.port>8719</sentinel.port>
-                <sentinel.dashboard>127.0.0.1:8080</sentinel.dashboard>
-            </properties>
-        </profile>
-        <profile>
             <id>test</id>
             <properties>
                 <spring.active>test</spring.active>
-                <config.server-addr>cloud.vihacker.top:8101</config.server-addr>
+                <nacos.addr>cloud.vihacker.top:8101</nacos.addr>
                 <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
                 <config.group>DEV_GROUP</config.group>
-                <discovery.server-addr>cloud.vihacker.top:8101</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
                 <sentinel.dashboard>localhost:8080</sentinel.dashboard>
             </properties>
@@ -230,28 +224,12 @@
             <id>prod</id>
             <properties>
                 <spring.active>prod</spring.active>
-                <config.server-addr>172.26.85.32:8848</config.server-addr>
+                <nacos.addr>172.26.85.32:8848</nacos.addr>
                 <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
                 <config.group>DEFAULT_GROUP</config.group>
-                <discovery.server-addr>172.26.85.32:8848</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
                 <sentinel.dashboard>localhost:8080</sentinel.dashboard>
             </properties>
-        </profile>
-        <profile>
-            <id>docker</id>
-            <properties>
-                <spring.active>docker</spring.active>
-                <config.server-addr>172.30.0.48:8848</config.server-addr>
-                <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
-                <config.group>DEFAULT_GROUP</config.group>
-                <discovery.server-addr>172.30.0.48:8848</discovery.server-addr>
-                <sentinel.port>8719</sentinel.port>
-                <sentinel.dashboard>172.30.0.80:8088</sentinel.dashboard>
-            </properties>
-            <!--            <activation>-->
-            <!--                <activeByDefault>true</activeByDefault>-->
-            <!--            </activation>-->
         </profile>
     </profiles>
 

@@ -1,20 +1,28 @@
+vihacker:
+  nacos:
+    ip-port: ${NACOS_IP:@nacos.addr@}
+    namespace: ${NACOS_NAMESPACE:@config.namespace@}
+    group: ${NACOS_GROUP:@config.group@}
 spring:
   application:
-    name: @artifactId@
+    name: '@project.artifactId@'
   profiles:
-    active: @spring.active@
+    active: '@spring.active@'
   cloud:
     nacos:
-      server-addr: ${NACOS_IP_PORT:@config.server-addr@}
+      server-addr: ${vihacker.nacos.ip-port}
       config:
-        group: ${NACOS_GROUP:@config.group@}
-        prefix: @artifactId@
+        group: ${vihacker.nacos.group}
+        prefix: @project.artifactId@
         file-extension: yaml
-        namespace: ${NACOS_NAMESPACE:@config.namespace@}
-        shared-configs[0]:
-          data-id: vihacker-common.yaml # 配置文件名-Data Id
-          group: COMMON_GROUP   # 默认为DEFAULT_GROUP
-          refresh: false   # 是否动态刷新，默认为false
+        namespace: ${vihacker.nacos.namespace}
+        shared-configs:
+          - dataId: vihacker-common.yaml
+            group: COMMON_GROUP   # 默认为DEFAULT_GROUP
+            refresh: true
       discovery:
-        namespace: ${NACOS_NAMESPACE:@config.namespace@}
-        group: ${NACOS_GROUP:@config.group@}
+        namespace: ${vihacker.nacos.namespace}
+        group: ${vihacker.nacos.group}
+        metadata: # 元数据，用于权限服务实时获取各个服务的所有接口
+          management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
+          gray_version: 1.0.7.R
