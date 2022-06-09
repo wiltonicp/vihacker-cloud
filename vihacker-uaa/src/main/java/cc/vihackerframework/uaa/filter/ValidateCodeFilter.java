@@ -57,8 +57,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
     }
 
     private void validateCode(HttpServletRequest httpServletRequest) throws ValidateCodeException {
-        String code = httpServletRequest.getParameter("code");
-        String key = httpServletRequest.getParameter("key");
+        String code = httpServletRequest.getHeader("code");
+        String key = httpServletRequest.getHeader("key");
         validateCodeService.check(key, code);
     }
 }
