@@ -3,6 +3,8 @@ MAINTAINER Ranger wilton.icp@gmail.com
 
 #RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 #  && echo 'Asia/Shanghai' >/etc/timezone
+#下载字体
+RUN apk add --update font-adobe-100dpi ttf-dejavu fontconfig
 
 WORKDIR /vihacker
 VOLUME /tmp
