@@ -1,7 +1,6 @@
 package cc.vihackerframework.uaa.configure;
 
 import cc.vihackerframework.core.security.properties.ViHackerSecurityProperties;
-import cc.vihackerframework.uaa.filter.ValidateCodeFilter;
 import cc.vihackerframework.uaa.handler.ViHackerAuthenticationFailureHandler;
 import cc.vihackerframework.uaa.handler.ViHackerAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * <p> 安全配置
@@ -31,7 +29,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class ViHackerSecurityConfigure extends WebSecurityConfigurerAdapter {
 
-    private final ValidateCodeFilter validateCodeFilter;
     private final ViHackerSecurityProperties properties;
     private final UserDetailsService userDetailsService;
 
@@ -51,15 +48,9 @@ public class ViHackerSecurityConfigure extends WebSecurityConfigurerAdapter {
         return new ViHackerAuthenticationFailureHandler();
     }
 
-//    @Override
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return new ViHackerUserDetailsServiceImpl();
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config
                 = http.requestMatchers().anyRequest()
                 .and()

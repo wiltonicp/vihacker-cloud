@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("social")
-@Api("第三方认证")
+@Api(tags = "第三方认证")
 public class SocialLoginController {
 
     private final AuthRequestFactory factory;
