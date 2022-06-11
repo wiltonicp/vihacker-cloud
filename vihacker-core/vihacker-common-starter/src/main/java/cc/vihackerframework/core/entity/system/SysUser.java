@@ -9,6 +9,7 @@ import cc.vihackerframework.core.entity.enums.SexEnum;
 import cc.vihackerframework.core.entity.enums.StatusEnum;
 import cc.vihackerframework.core.util.EnumUtil;
 import lombok.Data;
+import org.apache.poi.ss.formula.functions.T;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -24,15 +25,9 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("t_user")
-public class SysUser extends ViHackerEntity implements Serializable {
+public class SysUser extends ViHackerEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = -4352868070794165001L;
-
-    /**
-     * 用户 ID
-     */
-    @TableId(value = "ID", type = IdType.AUTO)
-    private Long id;
 
     /**
      * 租户ID

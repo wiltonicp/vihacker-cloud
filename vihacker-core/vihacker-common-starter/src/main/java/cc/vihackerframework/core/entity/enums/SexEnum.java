@@ -49,4 +49,9 @@ public enum SexEnum implements EnumMessage {
     public String getDesc() {
         return null;
     }
+
+    @Override
+    public String getValue() {
+        return this.name();
+    }
 }

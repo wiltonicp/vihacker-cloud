@@ -1,16 +1,15 @@
 package cc.vihackerframework.uaa.entity;
 
-import cc.vihackerframework.core.entity.ViHackerEntity;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.apache.poi.ss.formula.functions.T;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -21,7 +20,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("oauth_client_details")
-public class OauthClientDetails extends ViHackerEntity implements Serializable {
+public class OauthClientDetails implements Serializable {
 
     private static final long serialVersionUID = 421783821058285802L;
 
@@ -121,5 +120,48 @@ public class OauthClientDetails extends ViHackerEntity implements Serializable {
     @TableField("origin_secret")
     @ApiModelProperty(value = "终端明文安全码")
     private String originSecret;
+
+
+    /**
+     * 创建者
+     */
+    @ApiModelProperty(value = "创建者")
+    @TableField(value = "CREATED_BY", fill = FieldFill.INSERT)
+    private T createdBy;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    @TableField(value = "CREATED_TIME", fill = FieldFill.INSERT)
+    private LocalDateTime createdTime;
+
+    /**
+     * 修改者
+     */
+    @ApiModelProperty(value = "修改者")
+    @TableField(value = "MODIFY_BY", fill = FieldFill.INSERT_UPDATE)
+    private T modifyBy;
+
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    @TableField(value = "MODIFY_TIME", fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime modifyTime;
+
+    /**
+     * 版本信息
+     */
+    @Version
+    @TableField(value = "VERSION")
+    private Long version;
+
+    /**
+     * 数据逻辑删除标识字段
+     */
+    @TableLogic
+    @TableField(fill = FieldFill.INSERT)
+    private Integer deleted;
 
 }

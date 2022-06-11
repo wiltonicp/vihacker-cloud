@@ -23,13 +23,9 @@ import java.time.LocalDateTime;
 @Data
 @TableName("t_dept")
 @ApiModel(value = "Depart对象", description = "组织机构表")
-public class Dept extends ViHackerEntity implements Serializable {
+public class Dept extends ViHackerEntity<Long> implements Serializable {
     private static final long serialVersionUID = -7790334862410409053L;
     public static final Long TOP_DEPT_ID = 0L;
-
-
-    @TableId(value = "ID", type = IdType.AUTO)
-    private Long id;
 
     @TableField(value = "PARENT_ID")
     private Long parentId;

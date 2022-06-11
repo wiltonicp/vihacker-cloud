@@ -1,10 +1,7 @@
 package cc.vihackerframework.core.entity.system;
 
 import cc.vihackerframework.core.entity.ViHackerEntity;
-import cn.afterturn.easypoi.excel.annotation.Excel;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,12 +21,9 @@ import java.util.List;
 @Data
 @TableName("t_role")
 @ApiModel(value = "Role对象", description = "角色表")
-public class Role extends ViHackerEntity implements Serializable {
+public class Role extends ViHackerEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = -1714476694755654924L;
-
-    @TableId(value = "ID", type = IdType.AUTO)
-    private Long id;
 
     /**
      * 角色名称

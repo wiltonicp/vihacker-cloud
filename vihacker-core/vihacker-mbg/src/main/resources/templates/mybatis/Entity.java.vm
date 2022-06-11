@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @TableName(value = "${tableName}")
-public class ${className} extends ViHackerEntity {
+public class ${className} extends ViHackerEntity<Long> {
 
 #foreach ($column in $columns)
 	#if(${pk.attrname}!=$column.attrname)

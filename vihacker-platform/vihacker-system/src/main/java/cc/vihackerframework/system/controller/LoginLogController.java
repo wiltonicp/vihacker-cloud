@@ -6,9 +6,9 @@ import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.entity.system.LoginLog;
 import cc.vihackerframework.core.util.ExcelUtil;
 import cc.vihackerframework.core.util.StringPool;
-import cc.vihackerframework.core.util.ViHackerUtil;
 import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.system.service.ILoginLogService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +22,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 当前用户日志管理
  * Created by Ranger on 2022/02/24
  */
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("loginLog")
+@Api(tags = "当前用户日志管理")
 public class LoginLogController {
 
     private final ILoginLogService loginLogService;

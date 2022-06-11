@@ -16,14 +16,9 @@ import java.io.Serializable;
 @TableName("t_dict")
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "Dict对象", description = "字典表")
-public class SysDict extends ViHackerEntity implements Serializable {
+public class SysDict extends ViHackerEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 8869180154879721773L;
-    /**
-     * 主键
-     */
-    @ApiModelProperty(value = "主键")
-    private Long id;
 
     /**
      * 父主键

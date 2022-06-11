@@ -1,11 +1,9 @@
 package cc.vihackerframework.core.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.Version;
-import lombok.Getter;
-import lombok.Setter;
+import com.baomidou.mybatisplus.annotation.*;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,29 +18,43 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-public abstract class ViHackerEntity implements Serializable {
+@Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
+public abstract class ViHackerEntity<T> implements Serializable {
+    private static final long serialVersionUID = -2012001878851225391L;
+
+
+    @TableId(value = "id", type = IdType.AUTO)
+    @ApiModelProperty(value = "主键")
+    private T id;
 
     /**
      * 创建者
      */
+    @ApiModelProperty(value = "创建者")
     @TableField(value = "CREATED_BY", fill = FieldFill.INSERT)
-    private Long createdBy;
+    private T createdBy;
 
     /**
      * 创建时间
      */
+    @ApiModelProperty(value = "创建时间")
     @TableField(value = "CREATED_TIME", fill = FieldFill.INSERT)
     private LocalDateTime createdTime;
 
     /**
      * 修改者
      */
+    @ApiModelProperty(value = "修改者")
     @TableField(value = "MODIFY_BY", fill = FieldFill.INSERT_UPDATE)
-    private Long modifyBy;
+    private T modifyBy;
 
     /**
      * 修改时间
      */
+    @ApiModelProperty(value = "修改时间")
     @TableField(value = "MODIFY_TIME", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime modifyTime;
 

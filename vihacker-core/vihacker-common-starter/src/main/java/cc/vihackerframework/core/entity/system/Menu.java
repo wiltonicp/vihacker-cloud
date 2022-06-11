@@ -18,16 +18,10 @@ import java.io.Serializable;
  */
 @Data
 @TableName("t_menu")
-public class Menu extends ViHackerEntity implements Serializable {
+public class Menu extends ViHackerEntity<Long> implements Serializable {
     private static final long serialVersionUID = 7187628714679791771L;
 
     public static final Long TOP_MENU_ID = 0L;
-
-    /**
-     * 菜单/按钮ID
-     */
-    @TableId(value = "ID", type = IdType.AUTO)
-    private Long id;
 
     /**
      * 上级菜单ID
