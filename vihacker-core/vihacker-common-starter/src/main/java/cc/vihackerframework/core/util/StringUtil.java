@@ -1,5 +1,6 @@
 package cc.vihackerframework.core.util;
 
+import org.apache.commons.lang3.CharSequenceUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
@@ -69,6 +70,40 @@ public class StringUtil extends StringUtils {
             }
         }
         return new String(chars);
+    }
+
+    public static boolean equalsIgnoreCase(CharSequence cs1, CharSequence cs2) {
+        return org.apache.commons.lang3.StringUtils.equalsIgnoreCase(cs1,cs2);
+    }
+
+    /**
+     * 比较
+     * @param cs1
+     * @param cs2
+     * @return
+     */
+    public static boolean equals(CharSequence cs1, CharSequence cs2) {
+        if (cs1 == cs2) {
+            return true;
+        } else if (cs1 != null && cs2 != null) {
+            if (cs1.length() != cs2.length()) {
+                return false;
+            } else if (cs1 instanceof String && cs2 instanceof String) {
+                return cs1.equals(cs2);
+            } else {
+                int length = cs1.length();
+
+                for(int i = 0; i < length; ++i) {
+                    if (cs1.charAt(i) != cs2.charAt(i)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     /**

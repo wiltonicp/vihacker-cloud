@@ -56,6 +56,13 @@ public class CurrentUser implements Serializable {
      */
     @ApiModelProperty(hidden = true)
     private String roleId;
+
+    /**
+     * 角色编码
+     */
+    @ApiModelProperty(hidden = true)
+    private String roleCode;
+
     /**
      * 角色名
      */

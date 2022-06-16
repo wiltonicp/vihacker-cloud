@@ -1,8 +1,8 @@
 package cc.vihackerframework.core.web.support;
 
+import cc.vihackerframework.core.annotation.user.LoginAuth;
 import cc.vihackerframework.core.entity.CurrentUser;
 import cc.vihackerframework.core.util.SecurityUtil;
-import cc.vihackerframework.core.web.annotation.LoginAuth;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

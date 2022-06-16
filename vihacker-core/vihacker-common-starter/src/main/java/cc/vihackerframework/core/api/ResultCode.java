@@ -256,6 +256,11 @@ public enum ResultCode implements IErrorCode {
         this.message = message;
     }
 
+    public ResultCode build(String msg, Object... param) {
+        this.message = String.format(msg, param);
+        return this;
+    }
+
     @Override
     public long getCode() {
         return code;

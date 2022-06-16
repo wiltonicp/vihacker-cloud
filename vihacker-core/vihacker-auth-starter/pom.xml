@@ -15,6 +15,10 @@
     <dependencies>
         <dependency>
             <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-annotation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
             <artifactId>vihacker-common-starter</artifactId>
             <scope>provided</scope>
         </dependency>

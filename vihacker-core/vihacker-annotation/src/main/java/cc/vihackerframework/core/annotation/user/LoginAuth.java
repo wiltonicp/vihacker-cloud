@@ -1,4 +1,4 @@
-package cc.vihackerframework.core.web.annotation;
+package cc.vihackerframework.core.annotation.user;
 
 import java.lang.annotation.*;
 

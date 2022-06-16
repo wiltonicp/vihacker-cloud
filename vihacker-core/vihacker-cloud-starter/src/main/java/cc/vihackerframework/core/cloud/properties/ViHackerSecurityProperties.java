@@ -29,22 +29,12 @@ public class ViHackerSecurityProperties {
     /**
      * 是否启用网关鉴权模式
      */
-    private Boolean enable = false;
-
-    /**
-     * 配置需要认证的uri，默认为所有/**
-     */
-    private String authUri = "/**";
+    private Boolean enable = true;
 
     /**
      * 免认证资源路径，忽略URL，List列表形式
      */
     private List<String> ignoreUrls = new ArrayList<>();
-
-    /**
-     * 是否只能通过网关获取资源
-     */
-    private Boolean onlyFetchByGateway = Boolean.TRUE;
 
     /**
      * 监控中心和swagger需要访问的url

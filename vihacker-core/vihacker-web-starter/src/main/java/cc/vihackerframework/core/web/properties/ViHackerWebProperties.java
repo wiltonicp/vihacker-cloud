@@ -13,6 +13,5 @@ public class ViHackerWebProperties {
     /**
      * 是否只能通过网关获取资源
      */
-
     private Boolean onlyFetchByGateway = Boolean.TRUE;
 }

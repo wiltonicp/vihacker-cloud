@@ -7,11 +7,12 @@ package cc.vihackerframework.core.exception;
  * @email wilton.icp@gmail.com
  * @since 2020/6/4
  */
-public class ViHackerAuthException extends RuntimeException {
+public class ViHackerAuthException extends ViHackerRuntimeException {
 
     private static final long serialVersionUID = -6916154462432027437L;
 
     public ViHackerAuthException(String message) {
         super(message);
     }
+
 }
