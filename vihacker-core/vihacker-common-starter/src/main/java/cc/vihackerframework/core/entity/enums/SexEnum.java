@@ -17,26 +17,26 @@ import java.util.Objects;
 @Getter
 public enum SexEnum implements EnumMessage {
 
-    SEX_MALE(0, "男"),
-    SEX_FEMALE(1, "女"),
-    SEX_UNKNOW(2, "保密");
+    SEX_MALE("0", "男"),
+    SEX_FEMALE("1", "女"),
+    SEX_UNKNOW("2", "保密");
 
 
     /**
      * 标记数据库存的值是code
      */
     @EnumValue
-    private final Integer code;
+    private final String code;
     @JsonValue
     private final String title;
 
-    SexEnum(Integer code, String title) {
+    SexEnum(String code, String title) {
         this.code = code;
         this.title = title;
     }
 
     @JsonCreator
-    public static SexEnum getByCode(int code) {
+    public static SexEnum getByCode(String code) {
         for (SexEnum value : SexEnum.values()) {
             if (Objects.equals(code, value.getCode())) {
                 return value;
