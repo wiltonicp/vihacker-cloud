@@ -14,8 +14,8 @@
     <description>ViHacker-Cloud：Spring Cloud，Spring Security OAuth2 微服务统一认证中心 --公众号:【边城手记】</description>
 
     <modules>
-        <module>../vihacker-core</module>
         <module>../vihacker-uaa</module>
+        <module>../vihacker-gateway</module>
         <module>../vihacker-platform</module>
         <module>../vihacker-thirdparty</module>
     </modules>
