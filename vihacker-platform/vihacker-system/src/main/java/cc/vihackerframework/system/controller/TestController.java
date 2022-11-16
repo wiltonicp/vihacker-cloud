@@ -3,7 +3,7 @@ package cc.vihackerframework.system.controller;
 import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.context.UserContext;
 import cc.vihackerframework.core.entity.CurrentUser;
-import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.annotation.log.LogEndpoint;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 

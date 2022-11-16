@@ -1,7 +1,7 @@
 package cc.vihackerframework.core.log.aspect;
 
+import cc.vihackerframework.core.annotation.log.LogEndpoint;
 import cc.vihackerframework.core.util.SecurityUtil;
-import cc.vihackerframework.core.log.annotation.LogEndpoint;
 import cc.vihackerframework.core.log.event.LogEvent;
 import cc.vihackerframework.core.util.StringPool;
 import com.alibaba.fastjson.JSON;
@@ -154,8 +154,8 @@ public class LogEndpointAspect {
                 .setLocation(region)
                 .setMethod(method)
                 .setUrl(url)
-                //.setTitle(logAnn.value())
-                .setException(ThrowableUtil.getStackTrace(e));
+                .setTitle(logAnn.value())
+                .setException(ThrowableUtil.getStackTrace(e).substring(0,800));
         // 发布事件
         applicationContext.publishEvent(new LogEvent(sysLog));
         log.info("Error Result: {}", sysLog);

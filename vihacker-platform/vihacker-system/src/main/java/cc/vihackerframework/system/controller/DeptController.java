@@ -5,7 +5,7 @@ import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.system.Dept;
 import cc.vihackerframework.core.util.CollectionUtil;
 import cc.vihackerframework.core.util.ExcelUtil;
-import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.annotation.log.LogEndpoint;
 import cc.vihackerframework.system.service.IDeptService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

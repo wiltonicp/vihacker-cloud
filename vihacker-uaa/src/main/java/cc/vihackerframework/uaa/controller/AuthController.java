@@ -5,7 +5,7 @@ import cc.vihackerframework.core.auth.entity.UserInfo;
 import cc.vihackerframework.core.auth.util.ViHackerAuthUser;
 import cc.vihackerframework.core.entity.CurrentUser;
 import cc.vihackerframework.core.exception.ValidateCodeException;
-import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.annotation.log.LogEndpoint;
 import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.uaa.entity.enums.LoginType;
 import cc.vihackerframework.uaa.manager.AdminUserManager;

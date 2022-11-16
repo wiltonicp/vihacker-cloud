@@ -2,7 +2,7 @@ package cc.vihackerframework.uaa.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.datasource.entity.QuerySearch;
-import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.annotation.log.LogEndpoint;
 import cc.vihackerframework.uaa.entity.OauthClientDetails;
 import cc.vihackerframework.uaa.service.OauthClientDetailsService;
 import cc.vihackerframework.core.exception.Asserts;

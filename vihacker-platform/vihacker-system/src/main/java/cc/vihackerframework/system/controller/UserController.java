@@ -7,7 +7,7 @@ import cc.vihackerframework.core.entity.system.SysUser;
 import cc.vihackerframework.core.exception.ViHackerException;
 import cc.vihackerframework.core.util.ExcelUtil;
 import cc.vihackerframework.core.util.StringPool;
-import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.annotation.log.LogEndpoint;
 import cc.vihackerframework.system.service.IUserDataPermissionService;
 import cc.vihackerframework.system.service.IUserService;
 import io.swagger.annotations.Api;

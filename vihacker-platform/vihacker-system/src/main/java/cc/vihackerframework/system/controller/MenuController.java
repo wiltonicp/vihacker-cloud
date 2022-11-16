@@ -6,7 +6,7 @@ import cc.vihackerframework.core.entity.CurrentUser;
 import cc.vihackerframework.core.entity.system.Menu;
 import cc.vihackerframework.core.util.CollectionUtil;
 import cc.vihackerframework.core.util.ExcelUtil;
-import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.annotation.log.LogEndpoint;
 import cc.vihackerframework.core.annotation.user.LoginAuth;
 import cc.vihackerframework.system.service.IMenuService;
 import io.swagger.annotations.Api;

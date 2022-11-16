@@ -113,6 +113,7 @@ public class SysLog implements Serializable {
     /**
      * 异常信息
      */
+    @TableField("EXCEPTION")
     private String exception;
 
     private transient String createTimeFrom;

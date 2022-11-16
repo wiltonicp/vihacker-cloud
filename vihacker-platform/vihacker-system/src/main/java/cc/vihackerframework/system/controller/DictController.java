@@ -3,7 +3,7 @@ package cc.vihackerframework.system.controller;
 import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.datasource.entity.QuerySearch;
 import cc.vihackerframework.core.entity.system.SysDict;
-import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.annotation.log.LogEndpoint;
 import cc.vihackerframework.core.util.CollectionUtil;
 import cc.vihackerframework.system.service.IDictService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

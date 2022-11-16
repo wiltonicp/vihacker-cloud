@@ -4,7 +4,7 @@ import cc.vihackerframework.core.api.ViHackerResult;
 import cc.vihackerframework.core.auth.entity.AdminAuthUser;
 import cc.vihackerframework.core.auth.util.ViHackerAuthUser;
 import cc.vihackerframework.core.util.SecurityUtil;
-import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.annotation.log.LogEndpoint;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 

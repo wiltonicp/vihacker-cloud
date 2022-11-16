@@ -2,7 +2,7 @@ package cc.vihackerframework.uaa.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.exception.ValidateCodeException;
-import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.annotation.log.LogEndpoint;
 import cc.vihackerframework.core.util.RequestUtil;
 import cc.vihackerframework.uaa.properties.ValidateCodeProperties;
 import cc.vihackerframework.uaa.service.ValidateCodeService;

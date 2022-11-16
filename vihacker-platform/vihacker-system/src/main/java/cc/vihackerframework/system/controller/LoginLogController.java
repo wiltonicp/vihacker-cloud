@@ -6,7 +6,7 @@ import cc.vihackerframework.core.util.SecurityUtil;
 import cc.vihackerframework.core.entity.system.LoginLog;
 import cc.vihackerframework.core.util.ExcelUtil;
 import cc.vihackerframework.core.util.StringPool;
-import cc.vihackerframework.core.log.annotation.LogEndpoint;
+import cc.vihackerframework.core.annotation.log.LogEndpoint;
 import cc.vihackerframework.system.service.ILoginLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
