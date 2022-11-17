@@ -54,7 +54,7 @@ public class LogEndpointAspect {
         this.applicationContext = applicationContext;
     }
 
-    @Pointcut("@annotation(cc.vihackerframework.core.log.annotation.LogEndpoint)")
+    @Pointcut("@annotation(cc.vihackerframework.core.annotation.log.LogEndpoint)")
     public void pointcut() {
     }
 
