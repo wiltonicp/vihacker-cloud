@@ -2,7 +2,6 @@ package cc.vihackerframework.core.handler;
 
 import cc.vihackerframework.core.api.ResultCode;
 import cc.vihackerframework.core.api.ViHackerApiResult;
-import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.exception.ValidateCodeException;
 import cc.vihackerframework.core.exception.ViHackerAuthException;
 import cc.vihackerframework.core.exception.ViHackerException;
@@ -16,9 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -40,8 +37,6 @@ import java.util.Set;
  * @Email: wilton.icp@gmail.com
  */
 @Slf4j
-@ResponseBody
-@RestControllerAdvice
 public class BaseExceptionHandler {
 
 
