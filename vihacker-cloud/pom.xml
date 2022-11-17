@@ -199,9 +199,9 @@
             <id>dev</id>
             <properties>
                 <spring.active>dev</spring.active>
-                <nacos.addr>192.168.1.100:10001</nacos.addr>
-                <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
-                <config.group>DEV_GROUP</config.group>
+                <NACOS_ADDR>192.168.1.100:10001</NACOS_ADDR>
+                <NACOS_NAMESPACE>07230e1a-12e6-4209-838f-fa60cf013e7e</NACOS_NAMESPACE>
+                <NACOS_GROUP>DEV_GROUP</NACOS_GROUP>
                 <sentinel.port>8719</sentinel.port>
                 <sentinel.dashboard>127.0.0.1:8080</sentinel.dashboard>
             </properties>
@@ -213,9 +213,9 @@
             <id>test</id>
             <properties>
                 <spring.active>test</spring.active>
-                <nacos.addr>cloud.vihacker.top:8101</nacos.addr>
-                <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
-                <config.group>DEV_GROUP</config.group>
+                <NACOS.ADDR>cloud.vihacker.top:8101</NACOS.ADDR>
+                <NACOS_NAMESPACE>07230e1a-12e6-4209-838f-fa60cf013e7e</NACOS_NAMESPACE>
+                <NACOS_GROUP>DEV_GROUP</NACOS_GROUP>
                 <sentinel.port>8719</sentinel.port>
                 <sentinel.dashboard>localhost:8080</sentinel.dashboard>
             </properties>
@@ -224,9 +224,9 @@
             <id>prod</id>
             <properties>
                 <spring.active>prod</spring.active>
-                <nacos.addr>172.26.85.32:8848</nacos.addr>
-                <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
-                <config.group>DEFAULT_GROUP</config.group>
+                <NACOS.ADDR>172.26.85.32:8848</NACOS.ADDR>
+                <NACOS_NAMESPACE>07230e1a-12e6-4209-838f-fa60cf013e7e</NACOS_NAMESPACE>
+                <NACOS_GROUP>DEFAULT_GROUP</NACOS_GROUP>
                 <sentinel.port>8719</sentinel.port>
                 <sentinel.dashboard>localhost:8080</sentinel.dashboard>
             </properties>

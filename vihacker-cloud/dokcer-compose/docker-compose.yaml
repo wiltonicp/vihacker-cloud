@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  vihacker-gateway:
+    image: registry.cn-shanghai.aliyuncs.com/vihacker/vihacker-gateway:1.0.7.R
+    container_name: vihacker-gateway
+    ports:
+      - 8199:10001
+    environment:
+      - NACOS_ADDR=192.168.1.100:10001
+      - NACOS_NAMESPACE=07230e1a-12e6-4209-838f-fa60cf013e7e
+      - NACOS_GROUP=DEV_GROUP
+    volumes:
+      - "./log:/log"
+    mem_limit: 700m
+  vihacker-uaa:
+    image: registry.cn-shanghai.aliyuncs.com/vihacker/vihacker-uaa:1.0.7.R
+    container_name: vihacker-uaa
+    ports:
+      - 8130:8130
+    environment:
+      - NACOS_ADDR=192.168.1.100:10001
+      - NACOS_NAMESPACE=07230e1a-12e6-4209-838f-fa60cf013e7e
+      - NACOS_GROUP=DEV_GROUP
+    volumes:
+      - "./log:/log"
+    mem_limit: 700m
+  vihacker-system:
+    image: registry.cn-shanghai.aliyuncs.com/vihacker/vihacker-system:1.0.7.R
+    container_name: vihacker-system
+    environment:
+      - NACOS_ADDR=192.168.1.100:10001
+      - NACOS_NAMESPACE=07230e1a-12e6-4209-838f-fa60cf013e7e
+      - NACOS_GROUP=DEV_GROUP
+    volumes:
+      - "./log:/log"
+    mem_limit: 700m

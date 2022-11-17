@@ -2,7 +2,6 @@ package cc.vihackerframework.uaa.controller;
 
 import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.auth.entity.UserInfo;
-import cc.vihackerframework.core.auth.util.ViHackerAuthUser;
 import cc.vihackerframework.core.entity.CurrentUser;
 import cc.vihackerframework.core.exception.ValidateCodeException;
 import cc.vihackerframework.core.annotation.log.LogEndpoint;
@@ -15,7 +14,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
