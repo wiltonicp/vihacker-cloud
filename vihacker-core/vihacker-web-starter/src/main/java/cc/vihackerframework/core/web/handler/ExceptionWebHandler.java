@@ -4,8 +4,10 @@ import cc.vihackerframework.core.api.ViHackerApiResult;
 import cc.vihackerframework.core.handler.BaseExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
@@ -24,6 +26,7 @@ public class ExceptionWebHandler extends BaseExceptionHandler {
      * @return Result
      */
     @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ViHackerApiResult handleException(Exception ex) {
         log.error("程序异常：" + ex.toString());
         String message = ex.getMessage();
