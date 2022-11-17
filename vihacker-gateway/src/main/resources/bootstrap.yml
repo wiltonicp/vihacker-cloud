@@ -1,8 +1,8 @@
 vihacker:
   nacos:
-    ip-port: ${NACOS_IP_PORT:@nacos.addr@}
-    namespace: ${NACOS_NAMESPACE:@config.namespace@}
-    group: ${NACOS_GROUP:@config.group@}
+    ip-port: ${NACOS_ADDR}
+    namespace: ${NACOS_NAMESPACE}
+    group: ${NACOS_GROUP}
 spring:
   application:
     name: '@project.artifactId@'
