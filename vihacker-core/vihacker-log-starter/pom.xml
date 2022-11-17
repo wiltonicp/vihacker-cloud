@@ -38,5 +38,9 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>cc.vihackerframework</groupId>
+            <artifactId>vihacker-annotation</artifactId>
+        </dependency>
     </dependencies>
 </project>
