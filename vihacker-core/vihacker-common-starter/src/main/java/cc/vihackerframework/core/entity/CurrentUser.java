@@ -73,7 +73,7 @@ public class CurrentUser implements Serializable {
      * 登录类型
      */
     @ApiModelProperty(hidden = true)
-    private int type;
+    private String type;
 
     /**
      * 权限集合

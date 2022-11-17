@@ -85,7 +85,7 @@ public class SecurityUtil {
             currentUser.setAccount((String) claims.get(Oauth2Constant.VIHACKER_USER_NAME));
             currentUser.setRoleId(String.valueOf(claims.get(Oauth2Constant.VIHACKER_ROLE_ID)));
             currentUser.setTenantId(String.valueOf(claims.get(Oauth2Constant.VIHACKER_TENANT_ID)));
-            currentUser.setType(claims.get(Oauth2Constant.VIHACKER_TYPE,Integer.class));
+            currentUser.setType(claims.get(Oauth2Constant.VIHACKER_TYPE,String.class));
             Object permissions = claims.get(Oauth2Constant.VIHACKER_AUTHORITIES);
             List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(permissions.toString());
             currentUser.setAuthorities(new HashSet<GrantedAuthority>(authorities));

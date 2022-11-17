@@ -199,7 +199,7 @@
             <id>dev</id>
             <properties>
                 <spring.active>dev</spring.active>
-                <nacos.addr>127.0.0.1:8848</nacos.addr>
+                <nacos.addr>192.168.1.100:10001</nacos.addr>
                 <config.namespace>07230e1a-12e6-4209-838f-fa60cf013e7e</config.namespace>
                 <config.group>DEV_GROUP</config.group>
                 <sentinel.port>8719</sentinel.port>

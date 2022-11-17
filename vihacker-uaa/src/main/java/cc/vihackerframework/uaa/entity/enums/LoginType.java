@@ -14,17 +14,17 @@ public enum LoginType implements EnumMessage {
     /**
      * 用户名
      */
-    USERNAME(1,"username"),
+    USERNAME("1","username"),
 
     /**
      * 手机号码
      */
-    MOBILE(2,"mobile");
+    MOBILE("2","mobile");
 
     /**
      * 类型
      */
-    final int type;
+    final String type;
 
     /**
      * 名称
@@ -32,7 +32,7 @@ public enum LoginType implements EnumMessage {
     final String desc;
 
     @Override
-    public Object getCode() {
+    public String getCode() {
         return type;
     }
 

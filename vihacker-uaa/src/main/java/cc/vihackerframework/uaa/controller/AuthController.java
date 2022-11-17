@@ -55,7 +55,7 @@ public class AuthController {
         CurrentUser currentUser = SecurityUtil.getCurrentUser(request);
         UserInfo userInfo = null;
 
-        if(currentUser.getType() == LoginType.USERNAME.getType()){
+        if(currentUser.getType().equals(LoginType.USERNAME.getType())){
             userInfo = adminUserManager.findByName(currentUser.getAccount());
         }else {
             userInfo = adminUserManager.findByMobile(currentUser.getAccount());
