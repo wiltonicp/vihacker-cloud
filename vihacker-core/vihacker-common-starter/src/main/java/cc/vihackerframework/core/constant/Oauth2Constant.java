@@ -22,8 +22,8 @@ public class Oauth2Constant {
     /**
      * 登录类型
      */
-    public static final int LOGIN_USERNAME_TYPE = 1;
-    public static final int LOGIN_MOBILE_TYPE = 2;
+    public static final String LOGIN_USERNAME_TYPE = "1";
+    public static final String LOGIN_MOBILE_TYPE = "2";
 
     public static final String ADMIN = "admin";
 

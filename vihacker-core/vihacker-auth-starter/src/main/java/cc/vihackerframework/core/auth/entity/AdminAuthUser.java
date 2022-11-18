@@ -33,7 +33,7 @@ public class AdminAuthUser extends User {
     /**
      * 登录类型
      */
-    private int type;
+    private String type;
 
     /**
      * 租户ID
@@ -70,7 +70,7 @@ public class AdminAuthUser extends User {
     }
 
     public AdminAuthUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
-                         Collection<? extends GrantedAuthority> authorities, Long userId, String avatar, String email, String mobile, Long sex, int type, String tenantId,
+                         Collection<? extends GrantedAuthority> authorities, Long userId, String avatar, String email, String mobile, Long sex, String type, String tenantId,
                          Long deptId, String deptName, Long roleId, String roleName, LocalDateTime lastLoginTime, Long status) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.userId = userId;

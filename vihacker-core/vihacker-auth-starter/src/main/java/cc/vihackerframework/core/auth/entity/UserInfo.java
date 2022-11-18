@@ -40,7 +40,7 @@ public class UserInfo implements Serializable {
      * 登录类型　1：用户名密码登录　2：手机号登录　3：社交登录
      */
     @ApiModelProperty(value = "登录类型")
-    private int type;
+    private String type;
 
     /**
      * 用户名
