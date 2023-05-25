@@ -57,6 +57,7 @@
         <module>vihacker-sharding-starter</module>
         <module>vihacker-mbg</module>
         <module>vihacker-annotation</module>
+        <module>../vihacker-test</module>
     </modules>
 
     <properties>
